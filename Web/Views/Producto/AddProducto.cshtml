@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewBag.Title = "AddProducto";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/js/angular/controller/producto/productoController.js")></script>
+}
+
+<!-- Main content -->
+<section class="content">
+    <!-- Default box -->
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">REGISTRO DE PRODUCTO / SERVICIO</h3>
+        </div>
+        <!--body -->
+        <div class="box-body">
+            <div ng-controller="productoController" class="col-md-12 formulario-mediano">
+                <div class="form-horizontal col-md-12">                    
+                    <br />
+                    <form name="producto" novalidate>
+                        <div class="form-group col-md-6">
+                            <label class="control-label col-md-4">Codigo</label>
+                            <div class="col-md-8">
+                                <input class="form-control lowercase padding-left-right-3" placeholder="Ingrese Codigo" ng-model="model.codigo" required/>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label col-md-4">Nombre</label>
+                            <div class="col-md-8">
+                                <input class="form-control lowercase padding-left-right-3" placeholder="Ingrese Nombre del Producto" ng-model="model.nombre" required />
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label col-md-4" for="selectPersonal">Tipo Producto</label>
+                            <div class="col-md-8">
+                                <select id="cmbTipoProducto" class="select2 form-control" ng-model="model.idTipoProductoServicio" ng-options="item.Id as item.Nombre for item in cmbTipoProducto" required></select>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label col-md-4">Stock</label>
+                            <div class="col-md-8">
+                                <input class="form-control lowercase padding-left-right-3" onkeypress="return soloNumeros(event);" placeholder="Ingrese Stok" ng-model="model.stock" required/>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label col-md-4">Costo</label>
+                            <div class="col-md-8">
+                                <input class="form-control lowercase padding-left-right-3" placeholder="Ingrese Costo" onkeypress="return soloDecimal(event);" ng-model="model.costo" required/>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label col-md-4">Precio</label>
+                            <div class="col-md-8">
+                                <input class="form-control lowercase padding-left-right-3" placeholder="Ingrese Precio" onkeypress="return soloDecimal(event);" ng-model="model.precio" required />
+                            </div>
+                        </div>                        
+                        <div class="form-group col-md-6">
+                            <label class="control-label col-md-4" for="selectPersonal">Estado</label>
+                            <div class="col-md-8">
+                                <select class="select2 form-control" ng-model="model.estado" required>
+                                    <option value="ACTIVO">ACTIVO</option>
+                                    <option value="INACTIVO">INACTIVO</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label col-md-4">Descripcion</label>
+                            <div class="col-md-8">
+                                <input class="form-control lowercase padding-left-right-3" placeholder="Ingrese Descripción" ng-model="model.descripcion" required/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-4 col-md-8" style="margin-top: 20px">
+                                <a class="btn btn-sm btn-primary" ng-click="validacion(producto)">GUARDAR</a>
+                                @Html.ActionLink("CANCELAR", "ViewAllProducto", null, new { @class = "btn btn-sm btn-danger cancelar" })
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.box -->
+</section>

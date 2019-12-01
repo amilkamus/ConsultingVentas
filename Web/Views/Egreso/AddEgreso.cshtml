@@ -1,0 +1,69 @@
+﻿
+@{
+    ViewBag.Title = "AddEgreso";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/js/angular/controller/egreso/egresoController.js")></script>
+}
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">REGISTRO DE EGRESOS</h3>
+        </div>
+        <!--body -->
+        <div class="box-body">
+            <div ng-controller="egresoController" class="col-md-12 formulario-mediano">
+                <div class="form-horizontal col-md-12">
+                    <br />
+                    <form name="egreso" novalidate>
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-3">Nombre</label>
+                            <div class="col-md-6">
+                                <input class="form-control lowercase padding-left-right-3" onkeypress="return soloLetras(event);" placeholder="Ingrese nombre de egreso" ng-model="model.egreso" required/>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-3">Descripcion</label>
+                            <div class="col-md-6">
+                                <input class="form-control lowercase padding-left-right-3" onkeypress="return soloLetras(event);" placeholder="Ingrese descripción" ng-model="model.descripcion" required/>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-3">Cantidad</label>
+                            <div class="col-md-6">
+                                <input class="form-control lowercase padding-left-right-3" onkeypress="return soloNumeros(event);" placeholder="Ingrese cantidad" ng-model="model.cantidad" required/>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-3">Monto</label>
+                            <div class="col-md-6">
+                                <input class="form-control lowercase padding-left-right-3" onkeypress="return soloDecimal(event);" placeholder="Ingrese monto" ng-model="model.monto" required/>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-3">Total</label>
+                            <div class="col-md-6">
+                                <input class="form-control lowercase padding-left-right-3" onkeypress="return soloDecimal(event);" placeholder="Ingrese total" ng-model="model.total" required/>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <div class="col-md-offset-4 col-md-8">
+                                <a class="btn btn-sm btn-primary" ng-click="validacion(egreso)">GUARDAR</a>
+                                @Html.ActionLink("CANCELAR", "ViewAllEgreso", null, new { @class = "btn btn-sm btn-danger cancelar" })
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.box -->
+</section>

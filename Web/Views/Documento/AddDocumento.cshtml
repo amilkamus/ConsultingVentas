@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = "AddDocumento";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/js/angular/controller/documento/documentoController.js")></script>
+}
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">REGISTRO DE DOCUMENTOS</h3>
+        </div>
+        <!--body -->
+        <div class="box-body">
+            <div ng-controller="documentoController" class="col-md-12 formulario-mediano">
+                <div class="form-horizontal col-md-12">
+                    <br />
+                    <form name="documento" novalidate>
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-3">Nombre</label>
+                            <div class="col-md-6">
+                                <input class="form-control lowercase padding-left-right-3" onkeypress="return soloLetras(event);" placeholder="Ingrese nombre de documento" ng-model="model.nombre" required />
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-3">Estado</label>
+                            <div class="col-md-6">
+                                <select id="cmbEstado" class="form-control lowercase padding-left-right-3" ng-model="model.estado" required>
+                                    <option value="ACTIVO">ACTIVO</option>
+                                    <option value="INACTIVO">INACTIVO</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <div class="col-md-offset-4 col-md-8">
+                                <a class="btn btn-sm btn-primary" ng-click="validacion(documento)">GUARDAR</a>
+                                @Html.ActionLink("CANCELAR", "ViewAllDocumento", null, new { @class = "btn btn-sm btn-danger cancelar" })
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.box -->
+</section>

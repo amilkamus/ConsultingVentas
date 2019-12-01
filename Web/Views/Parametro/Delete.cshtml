@@ -1,0 +1,90 @@
+﻿@model Web.Models.Parametro.Parametro
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+<h2>Eliminar Parámetro</h2>
+
+<h4>¿Estás seguro que deseas eliminar este Parámetro?, tener en cuenta que no se podrá recuperar posteriormente.</h4>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CodParametro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CodParametro)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ParametroDescripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ParametroDescripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Metodologia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Metodologia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Estado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UsuarioCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UsuarioCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UsuarioModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UsuarioModificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaModificacion)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color" style="text-align:center">
+            <input type="submit" value="Delete" class="btn btn-sm btn-primary" /> |
+
+            @Html.ActionLink("Regresar a Listado", "Index", null, new { @class = "btn btn-sm btn-danger cancelar" })
+        </div>
+    }
+</div>

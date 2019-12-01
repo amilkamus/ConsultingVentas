@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d391495910744a15be558c4981ada70f" Name="Diagram1">
+        <EntityTypeShape EntityType="DBRouillonConsultinVentasModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBRouillonConsultinVentasModel.AspNetRoles" Width="1.5" PointX="3" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBRouillonConsultinVentasModel.AspNetUserClaims" Width="1.5" PointX="7.5" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBRouillonConsultinVentasModel.AspNetUserLogins" Width="1.5" PointX="7.5" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBRouillonConsultinVentasModel.AspNetUsers" Width="1.5" PointX="5.25" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBRouillonConsultinVentasModel.Caja" Width="1.5" PointX="7.5" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBRouillonConsultinVentasModel.CambioMoneda" Width="1.5" PointX="7.5" PointY="29.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBRouillonConsultinVentasModel.Cliente" Width="1.5" PointX="5.25" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBRouillonConsultinVentasModel.CO_Comprobante" Width="1.5" PointX="7.5" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBRouillonConsultinVentasModel.CO_ComprobanteDetalle" Width="1.5" PointX="9.75" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBRouillonConsultinVentasModel.CO_Egreso" Width="1.5" PointX="7.5" PointY="17.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBRouillonConsultinVentasModel.CO_Moneda" Width="1.5" PointX="5.25" PointY="16.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBRouillonConsultinVentasModel.CO_TipoComprobante" Width="1.5" PointX="3" PointY="19.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBRouillonConsultinVentasModel.Compania" Width="1.5" PointX="5.25" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBRouillonConsultinVentasModel.CorrelativoMast" Width="1.5" PointX="5.25" PointY="19.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBRouillonConsultinVentasModel.IGVMast" Width="1.5" PointX="5.25" PointY="22" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBRouillonConsultinVentasModel.PersonaMast" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBRouillonConsultinVentasModel.TipoDocumento" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBRouillonConsultinVentasModel.TipoPersona" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBRouillonConsultinVentasModel.WH_Inventario" Width="1.5" PointX="7.5" PointY="21.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBRouillonConsultinVentasModel.WH_InventarioDetalle" Width="1.5" PointX="9.75" PointY="18.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBRouillonConsultinVentasModel.WH_ProductoServicio" Width="1.5" PointX="7.5" PointY="24.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBRouillonConsultinVentasModel.WH_TipoProductoServicio" Width="1.5" PointX="5.25" PointY="25.5" IsExpanded="true" />
+        <AssociationConnector Association="DBRouillonConsultinVentasModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="DBRouillonConsultinVentasModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="DBRouillonConsultinVentasModel.FK_Caja_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="DBRouillonConsultinVentasModel.FK_CO_Comprobante_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="DBRouillonConsultinVentasModel.FK_CO_Egreso_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="DBRouillonConsultinVentasModel.FK_WH_InventarioDetalle_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="DBRouillonConsultinVentasModel.FK_CambioMoneda_CO_Moneda" ManuallyRouted="false" />
+        <AssociationConnector Association="DBRouillonConsultinVentasModel.FK_Cliente_PersonaMast" ManuallyRouted="false" />
+        <AssociationConnector Association="DBRouillonConsultinVentasModel.FK_Cliente_PersonaMast1" ManuallyRouted="false" />
+        <AssociationConnector Association="DBRouillonConsultinVentasModel.FK_Cliente_PersonaMast2" ManuallyRouted="false" />
+        <AssociationConnector Association="DBRouillonConsultinVentasModel.FK_CO_Comprobante_Cliente" ManuallyRouted="false" />
+        <AssociationConnector Association="DBRouillonConsultinVentasModel.FK_CO_Comprobante_CO_Moneda" ManuallyRouted="false" />
+        <AssociationConnector Association="DBRouillonConsultinVentasModel.FK_CO_Comprobante_CorrelativoMast" ManuallyRouted="false" />
+        <AssociationConnector Association="DBRouillonConsultinVentasModel.FK_CO_Comprobante_IGVMast" ManuallyRouted="false" />
+        <AssociationConnector Association="DBRouillonConsultinVentasModel.FK_CO_ComprobanteDetalle_CO_Comprobante" ManuallyRouted="false" />
+        <AssociationConnector Association="DBRouillonConsultinVentasModel.FK_DetalleOperacion_Producto" ManuallyRouted="false" />
+        <AssociationConnector Association="DBRouillonConsultinVentasModel.FK_CorrelativoMast_CO_TipoComprobante" ManuallyRouted="false" />
+        <AssociationConnector Association="DBRouillonConsultinVentasModel.FK_Compania_PersonaMast" ManuallyRouted="false" />
+        <AssociationConnector Association="DBRouillonConsultinVentasModel.FK_Compania_PersonaMast1" ManuallyRouted="false" />
+        <AssociationConnector Association="DBRouillonConsultinVentasModel.FK_PersonaMast_TipoDocumento" ManuallyRouted="false" />
+        <AssociationConnector Association="DBRouillonConsultinVentasModel.FK_PersonaMast_TipoPersona" ManuallyRouted="false" />
+        <AssociationConnector Association="DBRouillonConsultinVentasModel.FK_WH_DetalleInventario_WH_Inventario" ManuallyRouted="false" />
+        <AssociationConnector Association="DBRouillonConsultinVentasModel.FK_DetalleInventario_Producto" ManuallyRouted="false" />
+        <AssociationConnector Association="DBRouillonConsultinVentasModel.FK_WH_ProductoServicio_WH_TipoProductoServicio" ManuallyRouted="false" />
+        <AssociationConnector Association="DBRouillonConsultinVentasModel.AspNetUserRoles" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

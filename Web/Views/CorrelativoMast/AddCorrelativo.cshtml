@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "AddCorrelativo";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/js/angular/controller/correlativo/correlativoController.js")></script>
+}
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">REGISTRO DE CORRELATIVO</h3>
+        </div>
+        <!--body -->
+        <div class="box-body">
+            <div ng-controller="correlativoController" class="col-md-12 formulario-mediano">
+                <div class="form-horizontal col-md-12">
+                    <br />
+                    <form name="correlativo" novalidate>
+                        <div class="form-group col-md-12">
+                            <label class="titulo1 texto-centrado control-label col-md-4" for="selectPersonal">COMPROBANTE</label>
+                            <div class="col-md-6">
+                                <select id="cmbTipoComprobante" class="select2 form-control" ng-model="model.idTipoComprobante" ng-options="item.Id as item.Nombre for item in cmbTipoComprobante" required></select>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-4">Serie</label>
+                            <div class="col-md-6">
+                                <input class="form-control lowercase padding-left-right-3" placeholder="Ingrese Serie" ng-model="model.serie" required />
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-4">Correlativo</label>
+                            <div class="col-md-6">
+                                <input class="form-control lowercase padding-left-right-3" placeholder="Ingrese Correlativo" ng-model="model.correlativo" required />
+                            </div>
+                        </div>
+                        <!-- BOTONES -->
+                        <div class="form-group col-md-12">
+                            <div class="col-md-offset-5 col-md-7">
+                                <a class="btn btn-sm btn-primary" ng-click="validacion(correlativo)">GUARDAR</a>
+                                @Html.ActionLink("CANCELAR", "ViewAllCorrelativoMast", null, new { @class = "btn btn-sm btn-danger cancelar" })
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.box -->
+</section>

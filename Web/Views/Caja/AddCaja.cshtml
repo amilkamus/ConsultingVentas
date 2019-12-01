@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "AddCaja";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/js/angular/controller/caja/cajaController.js")></script>
+}
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">REGISTRO DE CAJA</h3>
+        </div>
+        <!--body -->
+        <div class="box-body">
+            <div ng-controller="cajaController" class="col-md-12 formulario-mediano">
+                <div class="form-horizontal col-md-12">
+                    <br />
+                    <form name="caja" novalidate>
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-3">Ingreso</label>
+                            <div class="col-md-6">
+                                <input class="form-control lowercase padding-left-right-3" onkeypress="return soloDecimal(event);" placeholder="Ingrese monto de ingreso" ng-model="model.ingresos" required/>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-3">Saldo Inicial</label>
+                            <div class="col-md-6">
+                                <input class="form-control lowercase padding-left-right-3" onkeypress="return soloDecimal(event);" placeholder="Ingrese saldo inicial" ng-model="model.saldoInicial" required/>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-3">Saldo Final</label>
+                            <div class="col-md-6">
+                                <input class="form-control lowercase padding-left-right-3" onkeypress="return soloDecimal(event);" placeholder="Ingrese saldo final" ng-model="model.saldoFinal" required/>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-3">Estado</label>
+                            <div class="col-md-6">
+                                <select class="form-control lowercase padding-left-right-3" ng-model="model.estado" required>
+                                    <option value="ACTIVO">ACTIVO</option>
+                                    <option value="INACTIVO">INACTIVO</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <div class="col-md-offset-4 col-md-8">
+                                <a class="btn btn-sm btn-primary" ng-click="validacion(caja)">GUARDAR</a>
+                                @Html.ActionLink("CANCELAR", "ViewAllCaja", null, new { @class = "btn btn-sm btn-danger cancelar" })
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.box -->
+</section>

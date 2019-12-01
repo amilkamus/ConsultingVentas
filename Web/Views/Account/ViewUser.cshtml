@@ -1,0 +1,76 @@
+﻿@model IEnumerable<Web.Models.UserToRolViewModel>
+@using Web.Models
+
+@{
+    ViewBag.Title = "ViewUser";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/js/angular/controller/admin/adminController.js")></script>
+}
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">BANDEJA DE USUARIOS</h3>
+        </div>
+        <!--body -->
+        <div class="box-body">
+            <div ng-controller="bandejaUsuariosController" ng-cloak>
+                <br />
+                <div class="input-small formulario-mediano col-md-7 table-options">
+                    @Html.ActionLink("NUEVO USUARIO", "Register", null, new { @class = "btn btn-sm btn-primary" })
+                </div>
+                <table id="tabla-correos" datatable="ng" dt-options="dtOptions" dt-column-defs="elementos.dtColumnDefs" class="row-border hover table table-stripped table-bordered tabla-bandeja">
+                    <thead>
+                        <tr>
+                            <th>NOMBRE</th>
+                            <th>APELLIDOS</th>
+                            <th>CONF. EMAiL</th>
+                            <th>EMAiL</th>
+                            <th>ROL</th>
+                            <th>ACCI&Oacute;N</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in elementos.lista" ng-cloak class="lowercase">
+                            <td>{{item.FirstName}}</td>
+                            <td>{{item.LastName}}</td>
+                            <td>{{item.EmailConfirmed}}</td>
+                            <td>{{item.Email}}</td>
+                            <td>{{item.Role}}</td>
+                            <td class="right">                                
+                                <a title="Editar Usuario" class="btn btn-xs btn-warning" data-ng-href="@Url.Action("EditUser", "Account")?UserId={{item.UserId}}"><span class="glyphicon glyphicon-edit"></span></a>
+                                <a title="Eliminar Usuario" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modal-usuario" ng-show="item.EsUsuarioPrincipal" ng-click="cargarModal(item.UserId)"><span class="glyphicon glyphicon-trash"></span></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- MODAL ELIMINAR -->
+                <div id="modal-usuario" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                     aria-hidden="true" data-backdrop="static">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <a class="close" data-dismiss="modal">&times;</a>
+                                <h4 class="modal-title"> Eliminar Usuario</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p> Esta seguro de eliminar este Usuario?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <a class="btn btn-primary" data-dismiss="modal" ng-click="eliminar()">ACEPTAR</a>
+                                <a class="btn btn-danger" data-dismiss="modal">CANCELAR</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.box -->
+</section>

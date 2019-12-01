@@ -1,0 +1,154 @@
+﻿@model Web.Models.OrdenServicio.OrdenServicio
+
+@{
+    ViewBag.Title = "Eliminar Orden de Servicio";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+<h2>Eliminar Orden de Servicio</h2>
+
+<h4>¿Estás seguro que deseas eliminar esta Orden de Servicio?, tener en cuenta que no se podrá recuperar posteriormente.</h4>
+<div>
+    <h4>Orden de Servicio</h4>
+    <dl class="dl-horizontal">
+        <dt>
+            N°. Orden de Servicio:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumeroOrdenServicio)
+        </dd>
+        <dt>
+            N°. Cotización:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumeroCotizacion)
+        </dd>
+    </dl>
+    <h4>Emisión de informes</h4>
+    <dl class="dl-horizontal">
+        <dt>
+            Número de copias:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumeroCopiasInforme)
+        </dd>
+        <dt>
+            Observaciones:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ObservacionesInforme)
+        </dd>
+    </dl>
+    <h4>Preparación de materiales</h4>
+    <dl class="dl-horizontal">
+        <dt>
+            Dirección de envío:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DireccionEnvioMateriales)
+        </dd>
+        <dt>
+            Fecha de envío:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FechaEnvioMateriales)
+        </dd>
+        <dt>
+            Contacto:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ContactoMateriales)
+        </dd>
+    </dl>
+    <h4>Inspección / muestreo</h4>
+    <dl class="dl-horizontal">
+        <dt>
+            Contacto:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ContactoInspeccion)
+        </dd>
+        <dt>
+            Email:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EmailInspeccion)
+        </dd>
+        <dt>
+            Teléfono:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TelefonoInspeccion)
+        </dd>
+        <dt>
+            Coordinador:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CoordinadorInspeccion)
+        </dd>
+        <dt>
+            Lugar:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LugarInspeccion)
+        </dd>
+        <dt>
+            Fecha:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FechaInspeccion)
+        </dd>
+
+        <dt>
+            Hora:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HoraInspeccion)
+        </dd>
+        <dt>
+            Tipo de servicio:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TipoServicioInspeccion)
+        </dd>
+        <dt>
+            Nombre de producto:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NombreProductoInspeccion)
+        </dd>
+        <dt>
+            Cantidad de lote:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CantidadLoteInspeccion)
+        </dd>
+        <dt>
+            Códigos de lote:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CodigosLoteInspeccion)
+        </dd>
+        <dt>
+            Presentación:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PresentacionInspeccion)
+        </dd>
+        <dt>
+            Observaciones:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ObservacionesInspeccion)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-actions no-color" style="text-align:center">
+            <input type="submit" value="Eliminar" class="btn btn-sm btn-primary" /> |
+            @Html.ActionLink("Regresar a Listado", "Index", null, new { @class = "btn btn-sm btn-danger cancelar" })
+        </div>
+    }
+</div>

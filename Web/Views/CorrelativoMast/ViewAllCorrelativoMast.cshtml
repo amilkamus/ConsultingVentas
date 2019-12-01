@@ -1,0 +1,111 @@
+﻿
+@{
+    ViewBag.Title = "ViewAllCorrelativoMast";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/js/angular/controller/correlativo/correlativoController.js")></script>
+}
+
+<!-- Main content -->
+<section class="content">
+    <!-- Default box -->
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">BANDEJA DE CORRELATIVO</h3>
+        </div>
+        <!-- BODY -->
+        <div class="box-body">
+            <div ng-controller="correlativoController" ng-cloak>
+                <div class="table-responsive">
+                    <div class="input-small formulario-mediano col-md-7 table-options">
+                        @Html.ActionLink("NUEVO CORRELATIVO", "AddCorrelativo", null, new { @class = "btn btn-sm btn-primary" })
+                        @*@Html.ActionLink("VER DOCUMENTOS", "ViewAllDocumento", null, new { @class = "btn btn-sm btn-success" })*@
+                    </div>
+                    <!-- TABLA -->
+                    <table id="tabla-correos" datatable="ng" dt-options="dtOptions" dt-column-defs="elementos.dtColumnDefs" class="row-border hover table table-striped table-bordered tabla-bandeja">
+                        <thead>
+                            <tr>
+                                <th>Comprobante</th>
+                                <th>Serie</th>
+                                <th>Correlativo</th>
+                                <th>ACCI&Oacute;N</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in elementos.lista" ng-cloak class="lowercase">
+                                <td>{{item.tipoComprobante}}</td>
+                                <td>{{item.serie}}</td>
+                                <td>{{item.correlativo}}</td>
+                                <td class="right" style="text-align: center;">
+                                    <a title="Editar Correlativo" class="btn btn-xs btn-warning" data-toggle="modal" data-target="#modal-editarCorrelativo" ng-click="editarCorrelativoMast(item)"><span class="glyphicon glyphicon-edit"></span></a>
+                                    <a title="Eliminar Correlativo" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modal-eliminarCorrelativo" ng-click="cargarModalEliminar(item.idCorrelativo)"><span class="glyphicon glyphicon-trash"></span></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- MODAL ELIMINAR -->
+                <div id="modal-eliminarCorrelativo" class="modal fade" tabindex="-1" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <a class="close" data-dismiss="modal">&times;</a>
+                                <h4 class="modal-title"> Eliminar Correlativo</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p> Esta seguro de eliminar este Correlativo?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <a class="btn btn-sm btn-success" data-dismiss="modal" ng-click="eliminarCorrelativoMast()">Aceptar</a>
+                                <a class="btn btn-sm btn-danger" data-dismiss="modal">Cancelar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- MODAL EDITAR -->
+                <div id="modal-editarCorrelativo" class="modal fade" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <a class="close" data-dismiss="modal">&times;</a>
+                                <h4 class="modal-title"> Editar Correlativo</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container" style="width:auto">
+                                    <br />
+                                    <form name="correlativo" ng-cloak>
+                                        <div class="form-group col-md-12">
+                                            <label class="titulo1 texto-centrado control-label col-md-4" for="selectPersonal"> TIPO COMPROBANTE </label>
+                                            <div class="col-md-6">
+                                                <select id="cmbTipoComprobante" class="select2 form-control" ng-model="model.idTipoComprobante" ng-options="item.Id as item.Nombre for item in cmbTipoComprobante" required></select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label class="control-label col-md-3">Serie</label>
+                                            <div class="col-md-6">
+                                                <input class="form-control lowercase padding-left-right-3" ng-model="model.serie" required />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label class="control-label col-md-3">Correlativo</label>
+                                            <div class="col-md-6">
+                                                <input class="form-control lowercase padding-left-right-3" ng-model="model.correlativo" required />
+                                            </div>
+                                        </div>                                        
+                                    </form>
+                                </div>
+                            </div>                            
+                            <div class="modal-footer">
+                                <a class="btn btn-sm btn-primary" ng-disabled="correlativo.$invalid" ng-click="guardarCorrelativoMast()">GUARDAR</a>
+                                @Html.ActionLink("CANCELAR", "ViewAllCorrelativoMast", null, new { @class = "btn btn-sm btn-danger cancelar" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.box -->
+</section>

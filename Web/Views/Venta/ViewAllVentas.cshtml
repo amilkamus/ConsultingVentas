@@ -1,0 +1,142 @@
+﻿
+@{
+    ViewBag.Title = "ViewAllVentas";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/js/angular/controller/comprobante/comprobanteController.js")></script>
+}
+<link data-require="bootstrap-css@3.3.6" data-semver="3.3.6" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css" />
+
+<section class="content">
+    <!-- Default box -->
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">BANDEJA DE VENTAS</h3>
+        </div>
+        <!-- BODY -->
+        <div class="box-body">
+            <div ng-controller="comprobanteController" ng-cloak>
+                <div class="table-responsive">
+                    <div class="input-small formulario-mediano col-md-7 table-options">
+                        @Html.ActionLink("NUEVA VENTA", "AddVenta", null, new { @class = "btn btn-sm btn-primary" })
+                        @*@Html.ActionLink("PDF", "imprimirVentas", new {ReportType="PDF" }, new { @class = "btn btn-sm btn-primary" })
+                        @Html.ActionLink("EXCEL", "imprimirVentasExcel", new { ReportType = "Excel" }, new { @class = "btn btn-sm btn-primary" })*@
+                    </div>
+                    <!-- TABLA -->
+                    <table id="tabla-correos" datatable="ng" dt-options="dtOptions" dt-column-defs="elementos.dtColumnDefs" class="row-border hover table table-striped table-bordered tabla-bandeja sorting_desc" aria-sort="descending">
+                        <thead>
+                            <tr>
+                                <th>Comprobante</th>
+                                <th>Cliente</th>
+                                <th>Moneda</th>
+                                <th>Total</th>
+                                <th>Estado</th>
+                                <th>Acci&oacute;n</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in elementos.lista | orderBy:'-serieCorrelativo'" class="lowercase sorting_desc" aria-sort="descending">
+                                <td>{{item.tipoComprobante}} {{item.serieCorrelativo}}</td>
+                                <td>{{item.cliente}}</td>
+                                <td>{{item.moneda}}</td>
+                                <td>{{item.total}}</td>
+                                <td>{{item.estado}}</td>
+                                <td class="right" style="text-align: center;">
+                                    <a title="Detalle de Venta" class="btn btn-xs btn-success" data-toggle="modal" data-target="#modal-verDetalle" ng-click="verVentaDetalle(item)"><span class="glyphicon glyphicon-eye-open"></span></a>
+                                    <a title="Imprimir" class="btn btn-xs btn-primary" href="../Venta/imprimirVentas/?idComprobante={{item.idComprobante.toString()}}"><span class="glyphicon glyphicon-save-file"></span></a>
+                                    @*<a title="Imprimir" class="btn btn-xs btn-primary" href="../Venta/imprimirVentas/?comprobante={{item.idComprobante}}"><span class="glyphicon glyphicon-save-file"></span></a>*@
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- MODAL VER -->
+                <div id="modal-verDetalle" class="modal fade" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <a class="close" data-dismiss="modal">&times;</a>
+                                <h4 class="modal-title"> Ver Detalle de Venta</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container" style="width:auto">
+                                    <br />
+                                    <form name="cliente" class="form-horizontal" ng-cloak>
+                                        <div class="form-group col-md-12">
+                                            <label class="titulo1 texto-centrado control-label col-md-4" for="selectPersonal"> TIPO COMPROBANTE</label>
+                                            <div class="col-md-6">
+                                                <input class="form-control lowercase padding-left-right-3" ng-model="modelDetalle.tipoComprobante" disabled />
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="col-md-12">
+                                            <h4 class="titulo1 texto-centrado"> DETALLE DEL CLIENTE</h4>
+                                        </div>
+                                        <br />
+                                        <div class="form-group col-md-12">
+                                            <label class="control-label col-md-4">Cliente</label>
+                                            <div class="col-md-8">
+                                                <input class="form-control lowercase padding-left-right-3" ng-model="modelDetalle.cliente" disabled />
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="col-md-12">
+                                            <h4 class="titulo1 texto-centrado"> DETALLE DE COMPRA</h4>
+                                        </div>
+                                        <br />
+                                        <!-- TABLA -->
+                                        <div class="form-group col-md-12">
+                                            <div class="table-responsive">
+                                                <table id="tabla-cliente" datatable="ng" dt-options="dtOptions" dt-column-defs="elementos.dtColumnDefs" class="row-border hover table table-bordered table-striped tabla-bandeja">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Producto</th>
+                                                            <th>Tipo</th>
+                                                            <th>Stock</th>
+                                                            <th>Precio</th>
+                                                            <th>Cantidad</th>
+                                                            <th>P. Unitario</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="item in elementosDetalle.lista">
+                                                            <td>{{item.producto}}</td>
+                                                            <td>{{item.tipoProducto}}</td>
+                                                            <td>{{item.stock}}</td>
+                                                            <td>{{item.precio}}</td>
+                                                            <td>{{item.cantidad}}</td>
+                                                            <td>{{item.montoUnitario}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <!-- FIN TABLA -->
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label col-md-4">Monto Total</label>
+                                            <div class="col-md-8">
+                                                <input class="form-control lowercase padding-left-right-3" ng-model="modelDetalle.total" disabled />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="titulo1 texto-centrado control-label col-md-4" for="selectPersonal">Tipo Moneda</label>
+                                            <div class="col-md-8">
+                                                <input class="form-control lowercase padding-left-right-3" ng-model="modelDetalle.moneda" disabled />
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                @Html.ActionLink("ACEPTAR", "ViewAllVentas", null, new { @class = "btn btn-sm btn-primary" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.box -->
+</section>

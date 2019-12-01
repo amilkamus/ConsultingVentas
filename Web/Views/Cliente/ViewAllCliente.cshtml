@@ -1,0 +1,391 @@
+﻿
+@{
+    ViewBag.Title = "ViewAllCliente";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/js/angular/controller/cliente/clienteController.js")></script>
+}
+
+<section class="content">
+    <!-- Default box -->
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">BANDEJA DE CLIENTES</h3>
+        </div>
+        <!-- BODY -->
+        <div class="box-body">
+            <div ng-controller="clienteController" ng-cloak>
+                <!-- TABLA -->
+                <div class="table-responsive">
+                    <div class="input-small formulario-mediano col-md-7 table-options">
+                        @Html.ActionLink("NUEVO CLIENTE", "AddCliente", null, new { @class = "btn btn-sm btn-primary" })
+                        @*@Html.ActionLink("VER TIPO DE PRODUCTOS", "ViewAllTipoProducto", null, new { @class = "btn btn-sm btn-success" })*@
+                    </div>
+                    <table id="tabla-cliente" datatable="ng" dt-options="dtOptions" dt-column-defs="elementos.dtColumnDefs" class="row-border hover table table-bordered table-striped tabla-bandeja">
+                        <thead>
+                            <tr>
+                                <th>Cliente</th>
+                                <th>Tipo Documento</th>
+                                <th>N° Documento</th>
+                                <th>Rubro</th>
+                                <th>Contacto</th>
+                                <th>ACCI&Oacute;N</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in elementos.lista">
+                                <td>{{item.cliente}}</td>
+                                <td>{{item.tipoDocumento}}</td>
+                                <td>{{item.numeroDocumento}}</td>
+                                <td>{{item.rubros}}</td>
+                                <td>{{item.contacto}}</td>
+                                <td class="right" style="text-align: center;">
+                                    <a title="Editar Cliente" class="btn btn-xs btn-warning" data-toggle="modal" data-target="#modal-editarCliente" ng-click="editarCliente(item)"><span class="glyphicon glyphicon-edit"></span></a>
+                                    <a title="Eliminar Cliente" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modal-eliminarCliente" ng-click="cargarModalEliminar(item.idCliente)"><span class="glyphicon glyphicon-trash"></span></a>
+                                    <a title="Ver Cliente" class="btn btn-xs btn-success" data-toggle="modal" data-target="#modal-verCliente" ng-click="verCliente(item)"><span class="glyphicon glyphicon-eye-open"></span></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- MODAL ELIMINAR -->
+                <div id="modal-eliminarCliente" class="modal fade" tabindex="-1" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <a class="close" data-dismiss="modal">&times;</a>
+                                <h4 class="modal-title"> Eliminar Cliente</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p> Esta seguro de eliminar este Cliente?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <a class="btn btn-sm btn-primary" data-dismiss="modal" ng-click="eliminarCliente()">ACEPTAR</a>
+                                <a class="btn btn-sm btn-danger" data-dismiss="modal">CANCELAR</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- MODAL EDITAR -->
+                <div id="modal-editarCliente" class="modal fade" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <a class="close" data-dismiss="modal">&times;</a>
+                                <h4 class="modal-title"> Editar Cliente</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container" style="width:auto">
+                                    <br />
+                                    <form name="cliente" class="form-horizontal" ng-cloak>
+                                        <div class="form-group col-md-12">
+                                            <label class="titulo1 texto-centrado control-label col-md-4" for="selectPersonal"> TIPO PERSONA</label>
+                                            <div class="col-md-6">
+                                                <select id="cmbTipoPersona" class="select2 form-control" ng-model="model.idTipoPersona" ng-options="item.Id as item.Nombre for item in cmbTipoPersona" ng-change="desabilitarCampos()" required></select>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="col-md-12 with-border">
+                                            <h4 class="titulo1 texto-centrado"> DATOS DE LA EMPRESA</h4>
+                                        </div>
+                                        <br />
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label col-md-4">Razon Social</label>
+                                            <div class="col-md-8">
+                                                <input class="form-control lowercase padding-left-right-3" onkeypress="return soloLetras(event);" placeholder="Ingrese razon social" ng-model="model.empresaNombre" ng-disabled="desabilitarCamposDatosEmpresa" ng-required="requeridoEmpresa" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label col-md-4">Domicilio</label>
+                                            <div class="col-md-8">
+                                                <input class="form-control lowercase padding-left-right-3" ng-model="model.empresaDomicilio" ng-disabled="desabilitarCamposDatosEmpresa" ng-required="requeridoEmpresa" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label col-md-5" for="selectPersonal">Tipo Documento</label>
+                                            <div class="col-md-7">
+                                                <select class="select2 form-control" ng-model="model.empresaIdTipoDocumento" ng-options="item.Id as item.Nombre for item in cmbTipoDocumento" ng-disabled="desabilitarCamposDatosEmpresa" ng-required="requeridoEmpresa"></select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label col-md-4">N° Documento</label>
+                                            <div class="col-md-8">
+                                                <input class="form-control lowercase padding-left-right-3" onkeypress="return soloNumeros(event);" placeholder="Ingrese numero documento" ng-model="model.empresaNumeroDocumento" ng-disabled="desabilitarCamposDatosEmpresa" ng-required="requeridoEmpresa" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label col-md-4">Correo</label>
+                                            <div class="col-md-8">
+                                                <input class="form-control lowercase padding-left-right-3" placeholder="Ingrese correo" ng-model="model.empresaCorreo" ng-disabled="desabilitarCamposDatosEmpresa" ng-required="requeridoEmpresa" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label col-md-4">Rubro</label>
+                                            <div class="col-md-8">
+                                                <input class="form-control lowercase padding-left-right-3" onkeypress="return soloLetras(event);" placeholder="Ingrese rubro" ng-model="model.empresaRubro" ng-disabled="desabilitarCamposDatosEmpresa" ng-required="requeridoEmpresa" />
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="col-md-12">
+                                            <h4 class="titulo1 texto-centrado"> DATOS DEL TITULAR</h4>
+                                        </div>
+                                        <br />
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label col-md-4">Nombre</label>
+                                            <div class="col-md-8">
+                                                <input class="form-control lowercase padding-left-right-3" onkeypress="return soloLetras(event);" placeholder="Ingrese nombre" ng-model="model.titularNombre" ng-disabled="desabilitarCamposDatosPersona" ng-required="requeridoTitular" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label col-md-4">Apellidos</label>
+                                            <div class="col-md-8">
+                                                <input class="form-control lowercase padding-left-right-3" onkeypress="return soloLetras(event);" placeholder="Ingrese apellidos" ng-model="model.titularApellidos" ng-disabled="desabilitarCamposDatosPersona" ng-required="requeridoTitular" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label col-md-5" for="selectPersonal">Tipo Documento</label>
+                                            <div class="col-md-7">
+                                                <select class="select2 form-control" ng-model="model.titularIdTipoDocumento" ng-options="item.Id as item.Nombre for item in cmbTipoDocumento" ng-disabled="desabilitarCamposDatosPersona" ng-required="requeridoTitular"></select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label col-md-4">N° Documento</label>
+                                            <div class="col-md-8">
+                                                <input class="form-control lowercase padding-left-right-3" onkeypress="return soloNumeros(event);" placeholder="Ingrese numero documento" ng-model="model.titularNumeroDocumento" ng-disabled="desabilitarCamposDatosPersona" ng-required="requeridoTitular" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label col-md-4">Correo</label>
+                                            <div class="col-md-8">
+                                                <input class="form-control lowercase padding-left-right-3" placeholder="Ingrese correo" ng-model="model.titularCorreo" ng-disabled="desabilitarCamposDatosPersona" ng-required="requeridoTitular" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label col-md-4">Telefono</label>
+                                            <div class="col-md-8">
+                                                <input class="form-control lowercase padding-left-right-3" onkeypress="return soloNumeros(event);" placeholder="Ingrese telefono" ng-model="model.titularTelefono" ng-disabled="desabilitarCamposDatosPersona" ng-required="requeridoTitular" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label col-md-4">Domicilio</label>
+                                            <div class="col-md-8">
+                                                <input class="form-control lowercase padding-left-right-3" onkeypress="return soloLetras(event);" placeholder="Ingrese cargo" ng-model="model.titularDomicilio" ng-disabled="desabilitarCamposDatosPersona" ng-required="requeridoTitular" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label col-md-4">Rubro</label>
+                                            <div class="col-md-8">
+                                                <input class="form-control lowercase padding-left-right-3" onkeypress="return soloLetras(event);" placeholder="Ingrese rubro" ng-model="model.titularRubro" ng-disabled="desabilitarCamposDatosPersona" ng-required="requeridoTitular" />
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="col-md-12">
+                                            <h4 class="titulo1 texto-centrado"> DATOS DEL CONTACTO</h4>
+                                        </div>
+                                        <br />
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label col-md-2">Nombre</label>
+                                            <div class="col-md-10">
+                                                <input class="form-control lowercase padding-left-right-3" onkeypress="return soloLetras(event);" placeholder="Ingrese nombre" ng-model="model.contactoNombre" required />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label col-md-2">Apellidos</label>
+                                            <div class="col-md-10">
+                                                <input class="form-control lowercase padding-left-right-3" onkeypress="return soloLetras(event);" placeholder="Ingrese apellidos" ng-model="model.contactoApellidos" required />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label col-md-2">Correo</label>
+                                            <div class="col-md-10">
+                                                <input class="form-control lowercase padding-left-right-3" placeholder="Ingrese correo" ng-model="model.contactoCorreo" required />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label col-md-2">Telefono</label>
+                                            <div class="col-md-10">
+                                                <input class="form-control lowercase padding-left-right-3" onkeypress="return soloNumeros(event);" placeholder="Ingrese telefono" ng-model="model.contactoTelefono" required />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label col-md-2">Cargo</label>
+                                            <div class="col-md-10">
+                                                <input class="form-control lowercase padding-left-right-3" onkeypress="return soloLetras(event);" placeholder="Ingrese cargo" ng-model="model.contactoCargo" required />
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <a class="btn btn-sm btn-primary" ng-disabled="cliente.$invalid" ng-click="guardarCliente()">GUARDAR</a>
+                                @Html.ActionLink("CANCELAR", "ViewAllCliente", null, new { @class = "btn btn-sm btn-danger cancelar" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- MODAL VER -->
+                <div id="modal-verCliente" class="modal fade" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <a class="close" data-dismiss="modal">&times;</a>
+                                <h4 class="modal-title"> Ver Cliente</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container" style="width:auto">
+                                    <br />
+                                    <form name="cliente" class="form-horizontal" ng-cloak>
+                                        <div class="form-group col-md-12">
+                                            <label class="titulo1 texto-centrado control-label col-md-4" for="selectPersonal">TIPO PERSONA</label>
+                                            <div class="col-md-6">
+                                                <input class="form-control lowercase padding-left-right-3" ng-model="model.tipoPersona" disabled />
+                                            </div>
+                                        </div>
+                                        <div id="empresa">
+                                            <br />
+                                            <div class="col-md-12 with-border">
+                                                <h4 class="titulo1 texto-centrado"> DATOS DE LA EMPRESA</h4>
+                                            </div>
+                                            <br />
+                                            <div class="form-group col-md-6">
+                                                <label id="lblRazonSocial" class="control-label col-md-4">Razon Social</label>
+                                                <div class="col-md-8">
+                                                    <input id="txtRazonSocial" class="form-control lowercase padding-left-right-3" ng-model="model.empresaNombre" disabled />
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="control-label col-md-4">Domicilio</label>
+                                                <div class="col-md-8">
+                                                    <input class="form-control lowercase padding-left-right-3" ng-model="model.empresaDomicilio" disabled />
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="control-label col-md-5" for="selectPersonal">Tipo Documento</label>
+                                                <div class="col-md-7">
+                                                    <input class="form-control lowercase padding-left-right-3" ng-model="model.empresaTipoDocumento" disabled />
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="control-label col-md-4">N° Documento</label>
+                                                <div class="col-md-8">
+                                                    <input class="form-control lowercase padding-left-right-3" ng-model="model.empresaNumeroDocumento" disabled />
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="control-label col-md-4">Correo</label>
+                                                <div class="col-md-8">
+                                                    <input class="form-control lowercase padding-left-right-3" ng-model="model.empresaCorreo" disabled />
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="control-label col-md-4">Rubro</label>
+                                                <div class="col-md-8">
+                                                    <input class="form-control lowercase padding-left-right-3" ng-model="model.empresaRubro" disabled />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="col-md-12">
+                                            <h4 class="titulo1 texto-centrado"> DATOS DEL TITULAR</h4>
+                                        </div>
+                                        <br />
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label col-md-4">Nombre</label>
+                                            <div class="col-md-8">
+                                                <input class="form-control lowercase padding-left-right-3" ng-model="model.titularNombre" disabled />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label col-md-4">Apellidos</label>
+                                            <div class="col-md-8">
+                                                <input class="form-control lowercase padding-left-right-3" ng-model="model.titularApellidos" disabled />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label col-md-5" for="selectPersonal">Tipo Documento</label>
+                                            <div class="col-md-7">
+                                                <input class="form-control lowercase padding-left-right-3" ng-model="model.titularTipoDocumento" disabled />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label col-md-4">N° Documento</label>
+                                            <div class="col-md-8">
+                                                <input class="form-control lowercase padding-left-right-3" ng-model="model.titularNumeroDocumento" disabled />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label col-md-4">Correo</label>
+                                            <div class="col-md-8">
+                                                <input class="form-control lowercase padding-left-right-3" ng-model="model.titularCorreo" disabled />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label col-md-4">Telefono</label>
+                                            <div class="col-md-8">
+                                                <input class="form-control lowercase padding-left-right-3" ng-model="model.titularTelefono" disabled />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label col-md-4">Domicilio</label>
+                                            <div class="col-md-8">
+                                                <input class="form-control lowercase padding-left-right-3" ng-model="model.titularDomicilio" disabled />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label col-md-4">Rubro</label>
+                                            <div class="col-md-8">
+                                                <input class="form-control lowercase padding-left-right-3" ng-model="model.titularRubro" disabled />
+                                            </div>
+                                        </div>
+                                        <div id="contacto">
+                                            <br />
+                                            <div class="col-md-12">
+                                                <h4 class="titulo1 texto-centrado"> DATOS DEL CONTACTO</h4>
+                                            </div>
+                                            <br />
+                                            <div class="form-group col-md-6">
+                                                <label class="control-label col-md-2">Nombre</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control lowercase padding-left-right-3" ng-model="model.contactoNombre" disabled />
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="control-label col-md-2">Apellidos</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control lowercase padding-left-right-3" ng-model="model.contactoApellidos" disabled />
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="control-label col-md-2">Correo</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control lowercase padding-left-right-3" ng-model="model.contactoCorreo" disabled />
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="control-label col-md-2">Telefono</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control lowercase padding-left-right-3" ng-model="model.contactoTelefono" disabled />
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="control-label col-md-2">Cargo</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control lowercase padding-left-right-3" ng-model="model.contactoCargo" disabled />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                @Html.ActionLink("ACEPTAR", "ViewAllCliente", null, new { @class = "btn btn-sm btn-primary" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

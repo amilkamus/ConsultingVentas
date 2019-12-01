@@ -1,0 +1,99 @@
+﻿@model Web.Models.Parametro.Parametro
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+<h3>Detalle de Parámetro</h3>
+
+<div style="padding-left:5px">
+    <h4>Parámetro</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CodParametro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CodParametro)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ParametroDescripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ParametroDescripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Metodologia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Metodologia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Precio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Precio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LimiteDeteccion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LimiteDeteccion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Estado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UsuarioCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UsuarioCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UsuarioModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UsuarioModificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaModificacion)
+        </dd>
+
+    </dl>
+</div>
+<p  style="padding-left:5px">
+    @Html.ActionLink("Editar", "Edit", new { id = Model.ID }, new { @class = "btn btn-sm btn-primary" }) |
+    @Html.ActionLink("Regresar a Listado", "Index", null, new { @class = "btn btn-sm btn-danger cancelar" })
+</p>

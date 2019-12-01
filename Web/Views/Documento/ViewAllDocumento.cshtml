@@ -1,0 +1,106 @@
+﻿
+@{
+    ViewBag.Title = "ViewAllDocumento";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/js/angular/controller/documento/documentoController.js")></script>
+}
+
+<!-- Main content -->
+<section class="content">
+    <!-- Default box -->
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">BANDEJA DE DOCUMENTOS</h3>
+        </div>
+        <!-- BODY -->
+        <div class="box-body">
+            <div ng-controller="documentoController" ng-cloak>
+                <div class="table-responsive">
+                    <div class="input-small formulario-mediano col-md-7 table-options">
+                        @Html.ActionLink("NUEVO DOCUMENTO", "AddDocumento", null, new { @class = "btn btn-sm btn-primary" })
+                        @*@Html.ActionLink("VER DOCUMENTOS", "ViewAllDocumento", null, new { @class = "btn btn-sm btn-success" })*@
+                    </div>
+                    <!-- TABLA -->
+                    <table id="tabla-correos" datatable="ng" dt-options="dtOptions" dt-column-defs="elementos.dtColumnDefs" class="row-border hover table table-striped table-bordered tabla-bandeja">
+                        <thead>
+                            <tr>
+                                <th>Documento</th>
+                                <th>Estado</th>
+                                <th>ACCI&Oacute;N</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in elementos.lista" ng-cloak class="lowercase">
+                                <td>{{item.nombre}}</td>
+                                <td>{{item.estado}}</td>
+                                <td class="right" style="text-align: center;">
+                                    <a title="Editar Documento" class="btn btn-xs btn-warning" data-toggle="modal" data-target="#modal-editarDocumento" ng-click="editarDocumento(item)"><span class="glyphicon glyphicon-edit"></span></a>
+                                    <a title="Eliminar Documento" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modal-eliminarDocumento" ng-click="cargarModalEliminar(item.idTipoDocumento)"><span class="glyphicon glyphicon-trash"></span></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- MODAL ELIMINAR -->
+                <div id="modal-eliminarDocumento" class="modal fade" tabindex="-1" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <a class="close" data-dismiss="modal">&times;</a>
+                                <h4 class="modal-title"> Eliminar Documento</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p> Esta seguro de eliminar este Documento?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <a class="btn btn-sm btn-success" data-dismiss="modal" ng-click="eliminarDocumento()">Aceptar</a>
+                                <a class="btn btn-sm btn-danger" data-dismiss="modal">Cancelar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- MODAL EDITAR -->
+                <div id="modal-editarDocumento" class="modal fade" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <a class="close" data-dismiss="modal">&times;</a>
+                                <h4 class="modal-title"> Editar Documento</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container" style="width:auto">
+                                    <br />
+                                    <form name="documento" class="form-horizontal" ng-cloak>
+                                        <div class="form-group col-md-12">
+                                            <label class="control-label col-md-3">Nombre</label>
+                                            <div class="col-md-6">
+                                                <input class="form-control lowercase padding-left-right-3" onkeypress="return soloLetras(event);" ng-model="model.nombre" required />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label class="control-label col-md-3">Estado</label>
+                                            <div class="col-md-6">
+                                                <select class="form-control lowercase padding-left-right-3" ng-model="model.estado" required>
+                                                    <option value="ACTIVO">ACTIVO</option>
+                                                    <option value="INACTIVO">INACTIVO</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <a class="btn btn-sm btn-primary" ng-disabled="documento.$invalid" ng-click="guardarDocumento()">GUARDAR</a>
+                                @Html.ActionLink("CANCELAR", "ViewAllDocumento", null, new { @class = "btn btn-sm btn-danger cancelar" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.box -->
+</section>

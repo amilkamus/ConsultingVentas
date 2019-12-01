@@ -1,0 +1,51 @@
+﻿
+@{
+    ViewBag.Title = "Crear Tipo Persona";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/js/angular/controller/tipoPersona/tipoPersonaController.js")></script>
+}
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">REGISTRO TIPO PERSONAS</h3>
+        </div>
+        <!--body -->
+        <div class="box-body">
+            <div ng-controller="tipoPersonaController" class="col-md-12 formulario-mediano">
+                <div class="form-horizontal col-md-12">
+                    <br />
+                    <form name="tipoPersona" novalidate>
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-3">Nombre</label>
+                            <div class="col-md-6">
+                                <input class="form-control lowercase padding-left-right-3" onkeypress="return soloLetras(event);" placeholder="Ingrese tipo persona" ng-model="model.nombre" required />
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-3">Descripcion</label>
+                            <div class="col-md-6">
+                                <input class="form-control lowercase padding-left-right-3" onkeypress="return soloLetras(event);" placeholder="Ingrese descripción" ng-model="model.descripcion" required/>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <div class="col-md-offset-4 col-md-8">
+                                <a class="btn btn-sm btn-primary" ng-click="validacion(tipoPersona)">GUARDAR</a>
+                                @Html.ActionLink("CANCELAR", "ViewAllTipoPersona", null, new { @class = "btn btn-sm btn-danger cancelar" })
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.box -->
+</section>

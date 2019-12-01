@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="https://www.quypay.com/FactElect/Service1.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/FactElec.CapaEntidad.RegistroComprobante" />
+  <xs:element name="RegistroComprobante">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/FactElec.CapaEntidad.RegistroComprobante" minOccurs="0" name="Comprobante" nillable="true" type="q1:En_ComprobanteElectronico" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RegistroComprobanteResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/FactElec.CapaEntidad.RegistroComprobante" minOccurs="0" name="RegistroComprobanteResult" nillable="true" type="q2:En_Respuesta" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

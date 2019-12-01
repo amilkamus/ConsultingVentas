@@ -1,0 +1,243 @@
+﻿@model Web.Models.Cotizacion.Cotizacion
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+<h2>Eliminar Cotización</h2>
+
+<h4>¿Estás seguro que deseas eliminar esta cotización?, tener en cuenta que no se podrá recuperar posteriormente.</h4>
+<div>
+    @*<h4>Cotizacion</h4>*@
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IdCotizacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdCotizacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoCotizacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoCotizacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumeroCotizacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumeroCotizacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Solicitante)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Solicitante)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RUC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RUC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Contacto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Contacto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fecha)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoDocumentoSolicitado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoDocumentoSolicitado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DescripcionProducto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DescripcionProducto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CantidadMuestra)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CantidadMuestra)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Telefono)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Telefono)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SubTotal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubTotal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IGV)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IGV)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Total)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DiasEntrega)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DiasEntrega)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CorreoConfirmacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CorreoConfirmacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CondicionPago_1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CondicionPago_1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CondicionPago_2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CondicionPago_2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Banco)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Banco)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Moneda)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Moneda)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CuentaCorriente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CuentaCorriente)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CuentaAhorro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CuentaAhorro)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CCI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CCI)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Observaciones)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Observaciones)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CondicionPago_De)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CondicionPago_De)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Detracciones)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Detracciones)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color" style="text-align:center">
+            <input type="submit" value="Delete" class="btn btn-sm btn-primary" /> |
+            @*@Html.ActionLink("Back to List", "Index")*@
+
+            @Html.ActionLink("Regresar a Listado", "Index", null, new { @class = "btn btn-sm btn-danger cancelar" })
+        </div>
+    }
+</div>

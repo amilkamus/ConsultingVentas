@@ -1,0 +1,486 @@
+﻿@model Web.Models.Cotizacion.CotizacionViewModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+@section Scripts{
+    <script src=@Url.Content("~/Scripts/js/angular/controller/cotizacion/cotizacionController.js")></script>
+}
+
+@{
+    var listaProductos = (from d in Model.Detalles
+                          select d.producto).ToList().Distinct();
+}
+<style type="text/css">
+    th {
+        padding: 5px;
+        text-align: center;
+    }
+
+    td {
+        padding: 5px
+    }
+
+    .modalDetalle {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content/Box */
+    .modalDetalle-content {
+        background-color: #fefefe;
+        margin: 15% auto; /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 30%; /* Could be more or less, depending on screen size */
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+</style>
+<h3>Detalle de Cotización</h3>
+<div ng-controller="cotizacionController">
+    <div style="background-color:white">
+        <div class="row" style="margin-left:40px">
+            <div>
+                <p>
+                    <table border="0" width="95%" style="font-weight:bold">
+                        <tr>
+                            <td Width="38%"><img src="~/Imagen/LogoITS.png" /></td>
+                            <td Width="36%" Font-Bold="true" Font-Size="20px" valign="bottom">COTIZACIÓN - N° @Html.DisplayFor(model => model.Cotizacion.IdCotizacion) @Html.DisplayFor(model => model.Cotizacion.NumeroCotizacion)</td>
+                            <td Width="24%"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="100%">Fecha: @Html.DisplayFor(model => model.Cotizacion.Fecha)</td>
+                        </tr>
+                    </table>
+                </p>
+                <p>
+                    <table class="cssTable" border="1" width="95%" style="font-weight:bold">
+                        <tr>
+                            <td Width="38%" colspan="2" align="center" style="background-color:Highlight">Datos del Solicitante</td>
+                        </tr>
+                        <tr>
+                            <td Width="38%">Empresa: @Html.DisplayFor(model => model.Cotizacion.Solicitante)</td>
+                            <td Width="36%" Font-Bold="true" Font-Size="16px">RUC: @Html.DisplayFor(model => model.Cotizacion.RUC)</td>
+                        </tr>
+                        <tr>
+                            <td Width="38%">Dirección: @Html.DisplayFor(model => model.Cliente.titularDomicilio)</td>
+                            <td Width="36%" Font-Bold="true" Font-Size="16px">Teléfono: @Html.DisplayFor(model => model.Cotizacion.Telefono)</td>
+                        </tr>
+                        <tr>
+                            <td Width="38%">Responsable: @Html.DisplayFor(model => model.Cotizacion.Contacto)</td>
+                            <td Width="36%" Font-Bold="true" Font-Size="16px">E-mail: @Html.DisplayFor(model => model.Cotizacion.Email)</td>
+                        </tr>
+                        @if (Model.Cotizacion.TipoCotizacion == "AMB")
+                        {
+                            <tr>
+                                <td colspan="2">Proyecto: @Html.DisplayFor(model => model.Cotizacion.Proyecto)</td>
+                            </tr>
+                        }
+                        <tr>
+                            <td colspan="2" style="background-color:Highlight">NOS DIRIGIMOS A USTED CON EL FIN DE COTIZARLE LOS SERVICIOS SOLICITADOS</td>
+                        </tr>
+                    </table>
+                </p>
+
+                <p>
+                    <table border="0" width="95%" style="font-weight:bold">
+                        <tr>
+                            <td style="width:20%">Tipo de Documento Solicitado:</td>
+                            <td>@Html.DisplayFor(model => model.Cotizacion.TipoDocumentoSolicitado)</td>
+                        </tr>
+                        <tr>
+                            <td>Descripción del Producto:</td>
+                            <td>@Html.DisplayFor(model => model.Cotizacion.DescripcionProducto)</td>
+                        </tr>
+                        <tr>
+                            <td>Cantidad de Muestra:</td>
+                            <td>@Html.DisplayFor(model => model.Cotizacion.CantidadMuestra)</td>
+                        </tr>
+                    </table>
+                </p>
+                <br />
+                <p>
+                    <table class="cssTable" border="1" width="95%" style="font-weight:bold">
+                        <tr>
+                            <td colspan="6" align="center" style="background-color:Highlight">ANÁLISIS</td>
+                        </tr>
+                        <tr style="background-color:Highlight;">
+                            <th width="20%">Parámetro</th>
+                            <th width="32%">Metodología</th>
+                            <th width="12%">Tipo de Parámetro</th>
+                            <th width="12%">Nº de muestras</th>
+                            <th width="12%">Precio Unit. Neto</th>
+                            <th width="12%">Subtotal</th>
+                        </tr>
+                        @foreach (var item in listaProductos)
+                        {
+                            <tbody>
+                                <tr style="background-color:lightskyblue">
+                                    <th colspan="6" style="text-align:center">@item.nombre</th>
+                                </tr>
+                                @{ var elementosDetalle = (from n in Model.Detalles
+                                                            where n.producto.idProducto == item.idProducto
+                                                            select n).ToList();
+                                }
+                                @foreach (var item2 in elementosDetalle)
+                                {
+                                    var subTotalDetalle = item2.productoCotizacion.Cantidad * item2.Precio;
+                                    if (Model.Cotizacion.TipoCotizacion == "AMB")
+                                    {
+                                        <tr>
+                                            <td>@item2.parametro.ParametroDescripcion</td>
+                                            <td>@item2.parametro.Metodologia</td>
+                                            <td>@item2.tipoParametro.TipoParametroDescripcion</td>
+                                            <td>@item2.productoCotizacion.Cantidad</td>
+                                            <td>S/ @item2.Precio</td>
+                                            <td>S/ @subTotalDetalle</td>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td>@item2.parametro.ParametroDescripcion</td>
+                                            <td>@item2.parametro.Metodologia</td>
+                                            <td>@item2.tipoParametro.TipoParametroDescripcion</td>
+                                            <td>@item2.productoCotizacion.Cantidad</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        }
+                    </table>
+                </p>
+                <br />
+                <p>
+                    <table class="cssTable" border="1" width="95%" style="font-weight:bold">
+                        <tr>
+                            <td colspan="4" align="center" style="background-color:Highlight">CERTIFICADOS</td>
+                        </tr>
+                        <tr style="background-color:Highlight">
+                            <th>Documento</th>
+                            <th>Norma de referencia</th>
+                            <th>Precio Unit. Neto</th>
+                        </tr>
+                        @foreach (var item in Model.Certificados)
+                        {
+                            if (Model.Cotizacion.TipoCotizacion == "AMB")
+                            {
+                                <tr>
+                                    <td>@item.Documento</td>
+                                    <td>@item.NormaReferencia</td>
+                                    <td>S/ @item.Precio</td>
+                                </tr>
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td>@item.Documento</td>
+                                    <td>@item.NormaReferencia</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                            }
+                        }
+                    </table>
+                </p>
+                <br />
+                <p>
+                    <table class="cssTable" border="1" width="95%" style="font-weight:bold">
+                        <thead style="background-color:Highlight">
+                            <tr>
+                                <th colspan="9" style="text-align:center">INSPECCION / MUESTREO</th>
+                            </tr>
+                            <tr>
+                                <th>Actividad de Inspección / Muestreo</th>
+                                <th>Procedimiento de inspección / Muestreo</th>
+                                <th>Referencia Normativa</th>
+                                <th>Referencia de muestreo</th>
+                                <th>Plan de muestreo / Nivel / NCA</th>
+                                <th>Lugar de muestreo</th>
+                                <th>Precio</th>
+                                <th>Cantidad</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Inspeccion)
+                            {
+                                if (Model.Cotizacion.TipoCotizacion == "AMB")
+                                {
+                                    <tr>
+                                        <td>@item.Actividad</td>
+                                        <td>@item.Procedimiento</td>
+                                        <td>@item.ReferenciaNormativa</td>
+                                        <td>@item.ReferenciaMuestreo</td>
+                                        <td>@item.PlanMuestreo</td>
+                                        <td>@item.LugarMuestreo</td>
+                                        <td>S/ @item.Precio</td>
+                                        <td>@item.Cantidad</td>
+                                        <td>S/ @item.Subtotal</td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td>@item.Actividad</td>
+                                        <td>@item.Procedimiento</td>
+                                        <td>@item.ReferenciaNormativa</td>
+                                        <td>@item.ReferenciaMuestreo</td>
+                                        <td>@item.PlanMuestreo</td>
+                                        <td>@item.LugarMuestreo</td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </p>
+                <br />
+                <p>
+                    <table class="cssTable" border="1" width="95%" style="font-weight:bold">
+                        <thead style="background-color:Highlight">
+                            <tr>
+                                <th>Resumen</th>
+                                <th style="width:120px">Precio Unitario</th>
+                                <th style="width:120px">N° de Días</th>
+                                <th style="width:120px">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ int index = 1;}
+                            @foreach (var item in listaProductos)
+                            {
+                                var elementosDetalle = (from n in Model.Detalles
+                                                        where n.producto.idProducto == item.idProducto
+                                                        select n).ToList();
+
+                                var suma = elementosDetalle.Where(x => x.producto.idProducto == item.idProducto).Sum(x => x.productoCotizacion.Cantidad * x.Precio);
+
+                                <tr>
+                                    <td>@index.- @item.descripcion</td>
+                                    <td>S/ @suma</td>
+                                    <td>-</td>
+                                    <td>S/ @suma</td>
+                                </tr>
+                                index++;
+                            }
+                            @foreach (var item in Model.Certificados)
+                            {
+                                <tr>
+                                    <td>@index.- @item.Documento</td>
+                                    <td>S/ @item.Precio</td>
+                                    <td>-</td>
+                                    <td>S/ @item.Precio</td>
+                                </tr>
+                                index++;
+                            }
+                            @foreach (var item in Model.Inspeccion)
+                            {
+                                <tr>
+                                    <td>@index.- @item.Actividad</td>
+                                    <td>S/ @item.Precio</td>
+                                    <td>@item.Cantidad</td>
+                                    <td>S/ @item.Subtotal</td>
+                                </tr>
+                                index++;
+                            }
+                            @foreach (var item in Model.Resumen)
+                            {
+                                <tr>
+                                    <td>@index.- @item.Descripcion</td>
+                                    <td>S/ @item.Precio</td>
+                                    <td>@item.NumeroDias</td>
+                                    <td>S/ @item.Total</td>
+                                </tr>
+                                index++;
+                            }
+                            <tr>
+                                <td style="background-color:#fff;border-left:hidden;border-bottom:hidden">&nbsp;</td>
+                                <td colspan="2" style="text-align:right"><strong>Sub - total</strong></td>
+                                <td>S/ @Model.Cotizacion.SubTotal</td>
+                            </tr>
+                            <tr>
+                                <td style="background-color:#fff;border-left:hidden;border-bottom:hidden">&nbsp;</td>
+                                <td colspan="2" style="text-align:right"><strong>Descuento @Model.Cotizacion.PorcentajeDescuento %</strong></td>
+                                <td>S/ @Model.Cotizacion.MontoDescuento</td>
+                            </tr>
+                            <tr>
+                                <td style="background-color:#fff;border-left:hidden;border-bottom:hidden">&nbsp;</td>
+                                <td colspan="2" style="text-align:right"><strong>Sub total final</strong></td>
+                                <td>S/ @Model.Cotizacion.SubTotalFinal</td>
+                            </tr>
+                            <tr>
+                                <td style="background-color:#fff;border-left:hidden;border-bottom:hidden">&nbsp;</td>
+                                <td colspan="2" style="text-align:right"><strong>IGV</strong></td>
+                                <td>S/ @Model.Cotizacion.IGV</td>
+                            </tr>
+                            <tr>
+                                <td style="background-color:#fff;border-left:hidden;border-bottom:hidden">&nbsp;</td>
+                                <td colspan="2" style="text-align:right;background-color:Highlight"><strong>Total</strong></td>
+                                <td>S/ @Model.Cotizacion.Total</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </p>
+                <br />
+                <p style="text-align:right;">
+                    <table class="cssTable" border="1" width="45%" style="font-weight:bold; background-color:Highlight">
+                        <tr>
+                            <td width="45%">TIEMPO DE ENTREGA DE INFORME(S) Y/O CERTIFICADO(S)</td>
+                        </tr>
+                    </table>
+                </p>
+                <p style="width:95%">
+                    * La impresión del informe y/o certificado se realizará a los __@Html.DisplayFor(model => model.Cotizacion.DiasEntrega)__ útiles días luego del ingreso de las muestras al laboratorio.
+                    <br /><br />
+                    <strong><u>SOLICITUD DE MATERIALES Y RECOJO DE MUESTRAS:</u> </strong>
+                    <br />
+                    * En caso de requerir materiales para la toma de muestra, le solicitamos confirmar la fecha y hora de recojo con 02 días de anticipación.
+                    <BR />* En caso de requerir se recojan las muestras de sus instalaciones o agencias, pedimos realizar la solicitud con 01 día mínimo de anticipación para asegurar el análisis de parámetros perecibles dentro de los tiempos de preservación establecidos.
+                    <BR />* Confirmar dichos requerimientos al correo electrónico:<strong> @Html.DisplayFor(model => model.Cotizacion.CorreoConfirmacion)</strong>
+                    <BR /><strong>HORARIO DE ATENCION:</strong> De lunes a viernes de 8:00 am a 6:00 pm en horario corrido.
+
+                    <br /><br />
+                    <strong><u>CONDICIONES DE PAGO:</u> </strong>
+                    <br />
+                    <table class="cssTable" border="1" width="95%" style="font-weight:bold; background-color:yellow">
+                        <tr>
+                            <td>@Html.DisplayFor(model => model.Cotizacion.CondicionPago_1) / @Html.DisplayFor(model => model.Cotizacion.CondicionPago_2)</td>
+                        </tr>
+                    </table>
+
+                    <br />
+                    El pago del servicio puede efectuarse en cualquiera de nuestras cuentas bancarias:
+                    <table class="cssTable" border="1" width="95%">
+                        <tr align="center" style="background-color:Highlight; font-weight:bold">
+                            <td width="20%">Banco</td>
+                            <td width="35%">Moneda</td>
+                            <td>No. Cuenta Corriente</td>
+                            <td>No. Cuenta Ahorros</td>
+                            <td>Código interbancario - CCI</td>
+                        </tr>
+                        <tr align="center">
+                            <td width="20%">@Html.DisplayFor(model => model.Cotizacion.Banco)</td>
+                            <td width="35%">@Html.DisplayFor(model => model.Cotizacion.Moneda)</td>
+                            <td>@Html.DisplayFor(model => model.Cotizacion.CuentaCorriente)</td>
+                            <td>@Html.DisplayFor(model => model.Cotizacion.CuentaAhorro)</td>
+                            <td>@Html.DisplayFor(model => model.Cotizacion.CCI)</td>
+                        </tr>
+                    </table>
+                </p>
+                <p style="color:red; font-weight:bold; font-size:10px; width:95%">
+                    AL MOMENTO DE REALIZAR EL DEPOSITO SÍRVANSE A IDENTIFICARSE CON EL RUC DEL DEPOSITANTE PARA LA CORRECTA EMISIÓN DE LA FACTURA, CASO CONTRARIO SE EMITIRÁ UNA BOLETA DE VENTA Y NO HABRÁ LUGAR A CAMBIO.
+                </p>
+                <p>
+                    <table class="cssTable" border="1" width="95%" style="font-weight:bold; background-color:yellow; font-size:12px; color:red">
+                        <tr>
+                            <td>DETRACCIONES: @Html.DisplayFor(model => model.Cotizacion.Detracciones)</td>
+                        </tr>
+                    </table>
+                </p>
+                <br />
+                <strong><u>OBSERVACIONES</u></strong>
+                <p style="background-color:orange; width:95%">
+                    @Html.DisplayFor(model => model.Cotizacion.Observaciones)                    
+                </p>
+
+                <p style="width:95%; text-align:justify; font-size:10px; color:black">
+                    <br />
+                    <strong>CONDICIONES CONTRACTUALES PARA EMISIÓN DE INFORME DE ENSAYO:</strong>
+                    <br />1) ITS el Peru S.A.C. inicia el proceso al recibir la muestra según la cotización respectiva, cuando la muestra presente alguna desviación, anomalía, informacion incompleta o no coincida con lo declarado inicialmente en su solicitud, se notificará al cliente via correo electronico para absolver la observación, en caso el cliente envíe su muestra por un tercero y éste no confirme la información, la identificación, envase, etc. de la muestra, se notificará al cliente via correo electronico para absolver la observación, en ambos casos el plazo no debe ser mayor a 24 horas. De no recibir respuesta alguna se asumirá la información contemplada en el acta de recepcion de muestras como correcta; ante cualquier observación posterior, el cliente asumirá el tiempo que implique la corrección, esto siempre y cuando proceda.
+                    <br />2) Cuando el cliente solicite un reensayo: Si el resultado se encuentra dentro del rango de control de calidad, el cliente correrá con los costos que se generen(precio de lista de cada parámetro solicitado). Si el resultado no se encuentra dentro del rango de control de calidad, ITS del Peru S.A.C. asumirá el costo generado.
+                    <br />3) ITS del Peru S.A.C. solo expide informes de ensayo, sobre la base de información, documentos y/o muestras suministradas por o a nombre del cliente y únicamente para beneficio del cliente quienes el responsable de actuar como lo considere conveniente sobre la base de dichos documento emitidos. ITS del Peru S.A.C. no se hace responsable por resultados incorrectos que resulten por información confusa, errónea, incompleta, desorientadora o falsa suministrada por el cliente.
+                    <br />4) ITS del Peru S.A.C. tiene una política de confidencialidad, documentada en su sistema de calidad, por el cual se compromete a mantener la confidencialidad de la información y datos proporcionados por el cliente y los obtenidos en los servicios brindados; excepto cuando la autoridad reguladora lo requiera y establezca como obligación para el Organismos Evaluador de la Conformidad informarle sobre los incumplimientos a los requerimientos y normativas sanitarias y/o de calidad respecto a las inspecciones y/o ensayos realizados. En este caso el cliente será notificado por escrito, salvo que esté prohibido por ley, acerca de la información proporcionada.
+                    <br />5) Si el cliente no especificara los métodos de ensayo, ITS del Peru S.A.C. podrá sugerir y aplicar los más apropiados para el servicio en particular, los mismos deben ser aceptado por el cliente al aprobar la cotizacion.
+                    <br />6) En caso de requerirse subcontratar los servicios a un tercero, se realizará previa aceptación del cliente.
+                    <br />7) Cualquier modificación a la Cotización inicial se hará por escrito.
+                    <br />8) El Informe de Ensayo emitido por ITS del Peru S.A.C. podrá entregarse a un tercero previa autorización escrita del cliente.
+                    <br />9) En caso el cliente suspenda el servicio:
+                    <br />- De análisis: lo deberá realizar con un máximo de 6 hrs luego de ingresada la muestra a laboratorio, de no ser el caso deberá pagar por los análisis ya realizados.
+                    <br />10) ITS del Peru S.A.C. tendrá derecho, inmediatamente y sin responsabilidad alguna, a suspender o a dar por terminada la prestación de los servicios en caso de que ocurra alguno de los siguientes eventos:
+                    <br />- El cliente no ha cumplido con el compromiso de pago indicado en la Cotización.
+                    <br />- El cliente presentó información errada sobre la muestra.
+                    <br />11) El Informe de Ensayo emitido por ITS del Peru S.A.C. tiene el alcance y vigencia solo para el producto, muestra o lote analizado, siempre y cuando mantenga las mismas condiciones en que se realizaron los análisis, el muestreo o tma de muestra se encuentra fuera del alcance de la acreditación.
+                    <br />12) No está permitido el uso del nombre de ITS del Peru S.A.C. para fines publicitarios, sin previa autorización escrita de ITS del Peru S.A.C.
+                    <br />13) Si tuviese alguna queja y/o sugerencia del servicio prestado, por favor contactarse al correo electrónico: ventas@itsper.com
+                    <br />14) La muestra proporcionada por el cliente al laboratorio es única, no puede ser complementada con otra muestra.
+                    <br />
+                    <br /><strong>CONDICIONES GENERALES PARA EL SERVICIO DE INSPECCIÓN:</strong>
+                    <br />1) ITS del Peru S.A.C. es un Organismo de Inspección “TipoA” por la cual garantiza que: la organización y su personal no está comprometido con ninguna actividad que suponga un conflicto con su independencia de juicio e integridad relativa a las actividades de inspección y sin ningún tipo de presión comercial o financiera proveniente de personas u organizaciones internas o externas que pueda afectar las diversas actividades relacionadas con el servicio de Inspección. ITS del Peru S.A.C. y su personal no se encuentra relacionado con el diseño, fabricación, suministro, instalación, uso o mantenimiento, ni es instalador, comprador, propietario, usuario o mantenedor los objetos inspeccionados.
+                    <br />2) En caso el cliente o la entidad legal lo solicite, ITS del Peru S.A.C. tomarán muestras dirimentes y/o contra muestras que serán custodiadas y almacenadas en condiciones ambientales controladas por un periodo de 3 meses salvo que la naturaleza del producto debido a su perecibilidad exija un periodo menor. El cliente puede solicitar la devolución de sus muestras dirimentes /o contra muestras antes de la fecha de descarte de estas por escrito, de lo contrario se procede a la eliminación segura en cumplimiento con la legislación vigente.
+                    <br />3) El cliente debe brindar las facilidades necesarias para el acceso del personal a las instalaciones en donde se va realizar el servicio, asi como las facilidades que garanticen la ausencia de interrupciones durante el desarrollo del servicio.
+                    <br />4) El cliente debe verificar que se tomen todas las medidas necesarias para la seguridad de las condiciones de trabajo, los sitios y las instalaciones durante la ejecución de los servicios, asi mismo debe Informar oportunamente a ITS del Peru S.A.C. acerca de los peligros y riesgos conocidos, fueren estos reales o potenciales.
+                    <br />5) Toda observación de la entidad reguladora que involucre inspección adicionales, serán asumidos por el cliente.
+                    <br />6) ITS del Peru S.A.C. solo expide informes y/o certificados de inspección sobre la base de información, documentos y/o resultados del servicio de inspección realizado a nombre del cliente y únicamente para beneficio del cliente, quienes el responsable de actuar como lo considere conveniente sobre la base de dichos documento emitidos. ITS del Peru S.A.C. no se hace responsable por resultados incorrectos que resulten por información confusa, errónea, incompleta, desorientadora o falsa suministrada por el cliente.
+                    <br />7) ITS del Peru S.A.C. cuenta con un seguro de responsabilidad civil profesional, el cual cubre las responsabilidades derivadas de las actividades de inspección y/o reclamo acreditado que le pudiera ser atribuido, el monto no será mayor a 3 veces el costo del servicio y con un monto máximo de S/.5000.00. Entiéndase por un reclamo debidamente acreditado y avalado mediante resolución de la autoridad competente.
+                    <br />
+                    <br />8) ITS del Peru S.A.C. tiene una política de confidencialidad, documentada en su sistema de calidad, por el cual se compromete a mantener la confidencialidad de la información y datos proporcionados por el cliente y los obtenidos en los servicios brindados; excepto cuando la autoridad reguladora lo requiera y establezca como obligación para el Organismo Evaluador de la Conformidad informarle sobre los incumplimientos a los requerimientos y normativas sanitarias y/o de calidad respecto a las inspecciones y/o ensayos realizados. En este caso el cliente será notificado por escrito, salvo que esté prohibido porley, acerca de la información proporcionada.
+                    <br />9) En caso de requerirse subcontratar una parte del servicio a un tercero, se realizará previa aceptación del cliente.
+                    <br />10) Cualquier modificación a la Cotización inicial se hará por escrito.
+                    <br />11) El documento emitido por ITS del Peru S.A.C. podrá entregarse a un tercero previa autorización escrita.
+                    <br />12) En caso el cliente suspenda el servicio : deberá solicitarlo con un máximo de 24 hrs antes del inicio del servicio, de lo contrario deberá pagar por los gastos generados de transporte u otros.
+                    <br />13) ITS del Peru S.A.C. tendrá derecho, inmediatamente y sin responsabilidad alguna, a suspender o a dar por terminada la prestación de los servicios en caso de que ocurra alguno de los siguientes eventos:
+                    <br />- El cliente no ha cumplido con el compromiso de pago indicado en la Cotización.
+                    <br />- El cliente no brinde las condiciones mínimas de seguridad para el personal de ITS del Peru S.A.C. en los sitios e instalaciones donde se realizará el servicio (Muestreo o Inspecciones)
+                    <br />- La planta no se encuentra produciendo ( inspección de proceso) o no se encuentra el responsable de planta.
+                    <br />- Desviaciones en el proceso inspeccionado o con respecto al lote, producto declarado (Puntos de corte según procedimientos internos ITS del Peru S.A.C.)
+                    <br />14) El documento emitido por ITS del Peru S.A.C. (Informe o Certificado) tiene el alcance y vigencia sólo para el lote o línea de proceso sometido a inspección, siempre y cuando mantenga las mismas condiciones en que se realizó el servicio.
+                    <br />15) No está permitido el uso del nombre corporativo de ITS del Peru S.A.C. para fines publicitarios, sin previa autorización escrita de ITS del Peru S.A.C.
+                    <br />16) Si tuviese alguna queja, apelación y/o sugerencia del servicio prestado, por favor contactarse al correo electrónico: ventas@itsper.com
+                </p>
+                <br />
+                <p>
+                    Atentamente
+                    <br /><strong>@Model.NombreUsuario</strong>
+                    <br />Area Comercial
+                    <br />ITS del Perú S.A.C.
+                    <br />Telf. (01) 7504454
+                    <br /><a href="http://www.itsper.com">www.itsper.com</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <p style="width:95%; text-align:center">
+
+        @Html.ActionLink("Editar", "Edit", new { id = Model.Cotizacion.ID }, new { @class = "btn btn-sm btn-primary" }) |
+        @Html.ActionLink("Imprimir", "PrintCotizacion", new { id = Model.Cotizacion.ID }, new { @class = "btn btn-sm btn-primary" }) |
+        @if (string.IsNullOrEmpty(Model.Cotizacion.SerieNumero))
+        {
+            <a id="linkRegistrarComprobante" ng-click="registrarComprobante(@Model.Cotizacion.ID)" class="btn btn-sm btn-primary">Generar factura</a>
+        }
+        @Html.ActionLink("Regresar a Listado", "Index", null, new { @class = "btn btn-sm btn-danger cancelar" })
+    </p>
+    <div id="myModal" class="modalDetalle">
+        <div class="modalDetalle-content">
+            <span class="close">&times;</span>
+            <p>Se está registrando el comprobante, esta acción tomará unos segundos...</p>
+        </div>
+    </div>
+</div>

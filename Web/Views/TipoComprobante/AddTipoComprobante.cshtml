@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "AddTipoComprobante";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/js/angular/controller/tipoComprobante/tipoComprobanteController.js")></script>
+}
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">REGISTRO TIPO DE COMPROBANTE</h3>
+        </div>
+        <!--body -->
+        <div class="box-body">
+            <div ng-controller="tipoComprobanteController" class="col-md-12 formulario-mediano">
+                <div class="form-horizontal col-md-12">
+                    <br />
+                    <form name="tipoComprobante" novalidate>
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-3">Nombre</label>
+                            <div class="col-md-6">
+                                <input class="form-control lowercase padding-left-right-3" onkeypress="return soloLetras(event);" placeholder="Ingrese Tipo documento" ng-model="model.tipoComprobante" required/>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-3">Descripcion</label>
+                            <div class="col-md-6">
+                                <input class="form-control lowercase padding-left-right-3" onkeypress="return soloLetras(event);" placeholder="Ingrese Descripción" ng-model="model.descripcion" required/>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-3">Estado</label>
+                            <div class="col-md-6">
+                                <select class="form-control lowercase padding-left-right-3" ng-model="model.estado" required>
+                                    <option value="ACTIVO">ACTIVO</option>
+                                    <option value="INACTIVO">INACTIVO</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <div class="col-md-offset-4 col-md-8">
+                                <a class="btn btn-sm btn-primary" ng-click="validacion(tipoComprobante)">GUARDAR</a>
+                                @Html.ActionLink("CANCELAR", "ViewAllTipoComprobante", null, new { @class = "btn btn-sm btn-danger cancelar" })
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.box -->
+</section>

@@ -1,0 +1,133 @@
+﻿
+@{
+    ViewBag.Title = "AddCompania";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/js/angular/controller/compania/companiaController.js")></script>
+}
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">CREAR COMPANIA</h3>
+        </div>
+        <!--body -->
+        <div class="box-body">
+            <div ng-controller="companiaController" class="col-md-12 formulario-mediano">
+                <div class="form-horizontal col-md-12">                    
+                    <br />
+                    <form name="compania" ng-cloak>
+                        <div class="form-group col-md-6">
+                            <label class="control-label col-md-4">Razon Social</label>
+                            <div class="col-md-8">
+                                <input class="form-control lowercase padding-left-right-3" ng-model="model.razonSocial" ng-disabled="desabilitarCampos" required/>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label col-md-4">Ruc</label>
+                            <div class="col-md-8">
+                                <input class="form-control lowercase padding-left-right-3" ng-model="model.ruc" ng-disabled="desabilitarCampos" required/>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label col-md-4">Domicilio Fiscal</label>
+                            <div class="col-md-8">
+                                <input class="form-control lowercase padding-left-right-3" ng-model="model.domicilioFiscal" ng-disabled="desabilitarCampos" required/>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label col-md-4">Correo</label>
+                            <div class="col-md-8">
+                                <input class="form-control lowercase padding-left-right-3" ng-model="model.correo" ng-disabled="desabilitarCampos" required/>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="col-md-12">
+                            <h4 class="titulo1 texto-centrado"> DATOS DEL TITULAR</h4>
+                        </div>
+                        <br />
+                        <div class="form-group col-md-6">
+                            <label class="control-label col-md-4">Nombre</label>
+                            <div class="col-md-8">
+                                <input class="form-control lowercase padding-left-right-3" ng-model="model.titularNombre" ng-disabled="desabilitarCampos" required/>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label col-md-4">Apellidos</label>
+                            <div class="col-md-8">
+                                <input class="form-control lowercase padding-left-right-3" ng-model="model.titularApellidos" ng-disabled="desabilitarCampos" required/>
+                            </div>
+                        </div>                        
+                        <div class="form-group col-md-6">
+                            <label class="control-label col-md-4">Correo</label>
+                            <div class="col-md-8">
+                                <input class="form-control lowercase padding-left-right-3" ng-model="model.titularCorreo" ng-disabled="desabilitarCampos" required/>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label col-md-4">Telefono</label>
+                            <div class="col-md-8">
+                                <input class="form-control lowercase padding-left-right-3" ng-model="model.titularTelefono" ng-disabled="desabilitarCampos" required/>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group col-md-6">
+                                <label class="control-label col-md-4">Cargo</label>
+                                <div class="col-md-8">
+                                    <input class="form-control lowercase padding-left-right-3" ng-model="model.titularCargo" ng-disabled="desabilitarCampos" required />
+                                </div>
+                            </div> 
+                        </div>
+                        <br />                                    
+                        <div class="col-md-12">
+                            <h4 class="titulo1 texto-centrado"> DATOS DEL CONTACTO</h4>
+                        </div>
+                        <br />
+                        <div class="form-group col-md-6">
+                            <label class="control-label col-md-2">Nombre</label>
+                            <div class="col-md-10">
+                                <input class="form-control lowercase padding-left-right-3" ng-model="model.contactoNombre" ng-disabled="desabilitarCampos" required/>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label col-md-2">Apellidos</label>
+                            <div class="col-md-10">
+                                <input class="form-control lowercase padding-left-right-3" ng-model="model.contactoApellidos" ng-disabled="desabilitarCampos" required/>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label col-md-2">Correo</label>
+                            <div class="col-md-10">
+                                <input class="form-control lowercase padding-left-right-3" ng-model="model.contactoCorreo" ng-disabled="desabilitarCampos" required/>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label col-md-2">Telefono</label>
+                            <div class="col-md-10">
+                                <input class="form-control lowercase padding-left-right-3" ng-model="model.contactoTelefono" ng-disabled="desabilitarCampos" required/>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label col-md-2">Cargo</label>
+                            <div class="col-md-10">
+                                <input class="form-control lowercase padding-left-right-3" ng-model="model.contactoCargo" ng-disabled="desabilitarCampos" required />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-4 col-md-8" style="margin-top: 20px">
+                                <a class="btn btn-sm btn-primary" ng-disabled="compania.$invalid" ng-click="guardarCompania()">GUARDAR</a>
+                                <a class="btn btn-sm btn-warning" ng-disabled="!desabilitarCampos"  ng-click="editarCompania()">EDITAR</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.box -->
+</section>

@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="icon" type="image/png" href="~/Imagen/LogoQuyIco.png" />
+    <title>Quy - Sistema de Facturación</title>
+    <link href="https://fonts.googleapis.com/css?family=Oswald:300,400,700" rel="stylesheet">
+    @Styles.Render("~/Css")
+    <link href="~/Content/ngPrint.css" rel="stylesheet" />
+    <link href="~/Scripts/datatable/datatables.min.css" rel="stylesheet" />
+    <link href="~/Scripts/datatable/css/angular-datatables.css" type="text/css" rel="stylesheet" />
+    <link href="~/Content/angucomplete.css" type="text/css" rel="stylesheet" />
+    <link href="~/Scripts/datatable/css/colReorder.dataTables.min.css" type="text/css" rel="stylesheet" />
+    <link href="~/Scripts/datatable/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet" />
+    <link href="~/Content/scroller.dataTables.min.css" type="text/css" rel="stylesheet" />
+    <link href="~/Content/fixedColumns.dataTables.min.css" type="text/css" rel="stylesheet" />
+</head>
+<body class="hold-transition skin-blue sidebar-mini" ng-app="app">
+    <!-- Site wrapper -->
+    <div class="wrapper">
+        @Html.Partial("Partial/_Header")
+        <!-- =============================================== -->
+        <!-- Column Sidebar | Columna del lado izquierdo contiene la barra lateral -->
+        @*@Html.Partial("Partial/_Sidebar")*@
+        @Html.Action("_Sidebar", "Home")
+        <!-- =============================================== -->
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            @RenderBody()
+        </div>
+        <!-- Content Footer -->
+        @Html.Partial("Partial/_Footer")
+    </div>
+    @Scripts.Render("~/Js")    
+    <script src="~/Scripts/js/angular.min.js"></script>
+    <script src="~/Scripts/js/angular/angular-sanitize.js"></script>
+    <script src="~/Scripts/js/angular/angular-resource.min.js"></script>
+    <script src="~/Scripts/js/angular/angular-animate.min.js"></script>
+    <script src="~/Scripts/js/angular/plugin/blockUI/angular-block-ui.min.js"></script>
+    <script src="~/Scripts/js/angular/ui.select2.js"></script>
+    <script src="~/Scripts/js/angular/ui-bootstrap-tpls.min.js"></script>
+    <script src="~/Scripts/js/angular/plugin/blockUI/angular-block-ui.min.js"></script>
+    <script src="~/Scripts/js/angular/plugin/print/ngPrint.min.js"></script>
+    <script src="~/Scripts/js/angular/bootstrap-notify.min.js"></script>
+    <script src="~/Scripts/js/angular/angucomplete-alt.js"></script>
+    <script src="~/Scripts/js/angular/angucomplete.js"></script>
+    <script src="~/Scripts/js/angular/app.js"></script>
+    <script src="~/Scripts/js/angular/service/administratorService.js"></script>
+    <script src="~/Scripts/js/angular/ngPrint.min.js"></script>
+    <!--scrip datatables-->
+    <script src="~/scripts/datatable/datatables.min.js"></script>
+    <script src="~/scripts/datatable/angular-datatables.min.js"></script>
+    <script src="~/scripts/datatable/datatables.lightcolumnfilter.min.js"></script>
+    <script src="~/scripts/datatable/datatables.scroller.min.js"></script>
+    <script src="~/scripts/datatable/datatables.fixedcolumns.min.js"></script>
+    <script src="~/scripts/datatable/angular-datatables.colreorder.js"></script>
+    <script src="~/scripts/datatable/plugins/buttons/angular-datatables.buttons.min.js"></script>
+    <script src="~/scripts/datatable/plugins/columnfilter/angular-datatables.columnfilter.min.js"></script>
+    <script src="~/scripts/datatable/plugins/light-columnfilter/angular-datatables.light-columnfilter.min.js"></script>
+    <script src="~/scripts/datatable/plugins/fixedcolumns/angular-datatables.fixedcolumns.min.js"></script>
+    <script src="~/scripts/datatable/plugins/scroller/angular-datatables.scroller.min.js"></script>
+    <script src="~/scripts/datatable/datatables.buttons.min.js"></script>
+    <script src="~/scripts/datatable/datatables.colreorder.min.js"></script>
+    <script src="~/scripts/datatable/buttons.colvis.min.js"></script>
+    <script src="~/scripts/datatable/buttons.flash.js"></script>
+    <!--end scrip datatables-->
+    <script>
+        var URL = "@this.Request.Url.GetLeftPart( UriPartial.Authority )";
+        URL = URL + "@Request.ApplicationPath";
+    </script>    
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

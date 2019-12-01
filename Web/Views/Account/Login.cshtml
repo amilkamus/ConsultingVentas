@@ -1,0 +1,54 @@
+﻿@using Web.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Login";
+}
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="well well-edit" style="align-content:center">
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <a href="@Url.Action("Login", "Account")"><img src="~/Content/dist/img/logo.png" class="img-edit" /></a>
+                <br />
+                <br />
+                <div class="form-group">
+                    <span class="fa fa-user col-md-2 control-label "></span>
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(m => m.Email, new { placeholder = "Nombre de Usuario", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="fa fa-lock col-md-2 control-label "></span>
+                    <div class="col-md-9">
+                        @Html.PasswordFor(m => m.Password, new { placeholder = "Contraseña de Usuario", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-9">
+                        <button type="submit" class="btn btn-lg btn-info btn-block" style="width: 260px;float: left; color:#ffffff"><strong>Ingresar</strong></button>
+                    </div>
+                </div>
+                <div class="form-group text-right">
+                    <div class="col-md-9">
+                        <p>
+                            <strong>
+                                @Html.ActionLink("¿Olvidaste tu contraseña?", "ForgotPassword")
+                            </strong>
+                        </p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+@*@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}*@

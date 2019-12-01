@@ -1,0 +1,114 @@
+﻿
+@{
+    ViewBag.Title = "ViewAllTipoProducto";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/js/angular/controller/tipoProducto/tipoProductoController.js")></script>
+}
+
+<!-- Main content -->
+<section class="content">
+    <!-- Default box -->
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">BANDEJA TIPO DE PRODUCTO</h3>
+        </div>
+        <!-- BODY -->
+        <div class="box-body">
+            <div ng-controller="tipoProductoController" ng-cloak>
+                <div class="table-responsive">
+                    <div class="input-small formulario-mediano col-md-7 table-options">
+                        @Html.ActionLink("NUEVO TIPO DE PRODUCTO", "AddTipoProducto", null, new { @class = "btn btn-sm btn-primary" })
+                        @*@Html.ActionLink("VER TIPO DE PRODUCTO", "ViewAllTipoProducto", null, new { @class = "btn btn-sm btn-success" })*@
+                    </div>
+                    <!-- TABLA -->
+                    <table id="tabla-correos" datatable="ng" dt-options="dtOptions" dt-column-defs="elementos.dtColumnDefs" class="row-border hover table table-striped table-bordered tabla-bandeja">
+                        <thead>
+                            <tr>
+                                <th>Tipo Persona</th>
+                                <th>Descripcion</th>
+                                <th>Estado</th>
+                                <th>ACCI&Oacute;N</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in elementos.lista" ng-cloak class="lowercase">
+                                <td>{{item.nombre}}</td>
+                                <td>{{item.descripcion}}</td>
+                                <td>{{item.estado}}</td>
+                                <td class="right" style="text-align: center;">
+                                    <a title="Editar Tipo de Producto" class="btn btn-xs btn-warning" data-toggle="modal" data-target="#modal-editarTipoProducto" ng-click="editarTipoProducto(item)"><span class="glyphicon glyphicon-edit"></span></a>
+                                    <a title="Eliminar Tipo de Producto" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modal-eliminarTipoProducto" ng-click="cargarModalEliminar(item.idTipoProductoServicio)"><span class="glyphicon glyphicon-trash"></span></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- MODAL ELIMINAR -->
+                <div id="modal-eliminarTipoProducto" class="modal fade" tabindex="-1" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <a class="close" data-dismiss="modal">&times;</a>
+                                <h4 class="modal-title"> Eliminar Tipo de Producto</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p> Esta seguro de eliminar este Tipo de Producto?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <a class="btn btn-info" data-dismiss="modal" ng-click="eliminarTipoProducto()">Aceptar</a>
+                                <a class="btn btn-info" data-dismiss="modal">Cancelar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- MODAL EDITAR -->
+                <div id="modal-editarTipoProducto" class="modal fade" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <a class="close" data-dismiss="modal">&times;</a>
+                                <h4 class="modal-title"> Editar Tipo de Producto</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container" style="width:auto">
+                                    <br />
+                                    <form name="tipoProducto" class="form-horizontal" ng-cloak>
+                                        <div class="form-group col-md-12">
+                                            <label class="control-label col-md-4">Nombre</label>
+                                            <div class="col-md-6">
+                                                <input class="form-control lowercase padding-left-right-3" onkeypress="return soloLetras(event);" ng-model="model.nombre" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label class="control-label col-md-4">Descripcion</label>
+                                            <div class="col-md-6">
+                                                <input class="form-control lowercase padding-left-right-3" onkeypress="return soloLetras(event);" ng-model="model.descripcion" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label class="control-label col-md-4">Estado</label>
+                                            <div class="col-md-6">
+                                                <select class="form-control lowercase padding-left-right-3" ng-model="model.estado" required>
+                                                    <option value="ACTIVO">ACTIVO</option>
+                                                    <option value="INACTIVO">INACTIVO</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <a class="btn btn-sm btn-primary" ng-disabled="tipoProducto.$invalid" ng-click="guardarTipoProducto()">GUARDAR</a>
+                                @Html.ActionLink("CANCELAR", "ViewAllTipoProducto", null, new { @class = "btn btn-sm btn-danger cancelar" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.box -->
+</section>

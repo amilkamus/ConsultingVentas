@@ -1,0 +1,673 @@
+﻿@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+@section Scripts{
+    <script src=@Url.Content("~/Scripts/js/angular/controller/cotizacion/cotizacionController.js")></script>
+}
+<input type="hidden" id="idDetalle" value="@ViewBag.ID" />
+<h2>Editar Cotización</h2>
+<div ng-controller="cotizacionController" class="col-md-12 formulario-mediano" style="background-color:white">
+    <div class="form-horizontal col-md-12">
+        <br />
+        <form name="cotizacion" style="background-color:white">
+
+            <div class="form-horizontal" style="text-align:left">
+                <hr />
+                <div class="form-group">
+                    <label for="TipoCotizacion" class="control-label col-md-2">Tipo de cotización:</label>
+                    <div class="col-md-2">
+                        <select class="select2 form-control" ng-model="model.TipoCotizacion" ng-options="item.Codigo as item.Descripcion for item in elementosTipoCotizacion" required disabled>
+                            <option value="">Seleccione</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2"></div>
+
+                    <label for="NumeroCotizacion" class="control-label col-md-2">Número de cotización:</label>
+                    <div class="col-md-2">
+                        <input class="form-control" placeholder="Número de cotización" ng-model="model.NumeroCotizacion" disabled />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="Solicitante" class="control-label col-md-2">Solicitante:</label>
+                    <div class="col-md-3">
+                        <input class="form-control" placeholder="Solicitante" ng-model="cliente.cliente" required disabled />
+                    </div>
+
+                    <div class="col-md-1"></div>
+                    <label for="RUC" class="control-label col-md-2">RUC:</label>
+                    <div class="col-md-2">
+                        <input class="form-control" placeholder="RUC" ng-model="cliente.numeroDocumento" required disabled />
+                    </div>
+                    <div class="col-md-1">
+                        <a title="Buscar Cliente" class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-buscarCliente" ng-click="listarCliente()"><span class="glyphicon glyphicon-search"></span></a>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="Contacto" class="control-label col-md-2">Contacto:</label>
+                    <div class="col-md-3">
+                        <input class="form-control" placeholder="Contacto" ng-model="cliente.contacto" required disabled />
+                    </div>
+
+                    <div class="col-md-1"></div>
+                    <label for="Email" class="control-label col-md-2">Email:</label>
+                    <div class="col-md-2">
+                        <input class="form-control" placeholder="Email" ng-model="cliente.contactoCorreo" required disabled />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="Fecha" class="control-label col-md-2">Fecha:</label>
+                    <div class="col-md-2">
+                        <input type="text" id="Fecha" class="form-control" ng-model="model.Fecha" required />
+                    </div>
+                    <div class="col-md-2"></div>
+
+                    <label for="TipoDocumentoSolicitado" class="control-label col-md-2">Tipo de documento solicitado:</label>
+                    <div class="col-md-2">
+                        <input class="form-control" placeholder="Tipo de documento solicitado" ng-model="model.TipoDocumentoSolicitado" required />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="DescripcionProducto" class="control-label col-md-2">Descripción de producto:</label>
+                    <div class="col-md-5">
+                        <textarea class="form-control" placeholder="Descripción de producto" ng-model="model.DescripcionProducto" rows="3" required></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="DescripcionProducto" class="control-label col-md-2">Observaciones del producto:</label>
+                    <div class="col-md-5">
+                        <textarea class="form-control" placeholder="Observaciones del producto" ng-model="model.Observaciones" rows="3" required></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="CantidadMuestra" class="control-label col-md-2">Cantidad de muestra:</label>
+                    <div class="col-md-4">
+                        <input class="form-control" placeholder="Cantidad de muestra" ng-model="model.CantidadMuestra" required />
+                    </div>
+
+                    <label for="Telefono" class="control-label col-md-2">Telefono:</label>
+                    <div class="col-md-2">
+                        <input class="form-control" placeholder="Telefono" ng-model="model.Telefono" onkeypress="return soloNumeros(event);" required />
+                    </div>
+                </div>
+
+                <div class="form-group" ng-if="model.TipoCotizacion=='AMB'">
+                    <label for="DescripcionProducto" class="control-label col-md-2">Proyecto:</label>
+                    <div class="col-md-5">
+                        <input class="form-control" placeholder="Proyecto" ng-model="model.Proyecto" required />
+                    </div>
+                </div>
+
+                <!-- INICIO DE ADICIONAR PRODUCTOS -->
+                <div class="col-md-12">
+                    <h4 class="titulo1 texto-centrado"> DETALLE A ANALIZAR</h4>
+                </div>
+                <br />
+                <div class="form-group col-md-12">
+                    <div class="col-md-offset-1">
+                        <a title="Agregar" class="btn btn-sm btn-success" ng-click="agregarDetalle()"><span class="glyphicon glyphicon-plus"></span></a>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="control-label col-md-4">Análisis:</label>
+                    <div class="col-md-6">
+                        <input class="form-control lowercase padding-left-right-3" placeholder="Nombre del análisis" ng-model="producto.nombre" disabled />
+                    </div>
+                    <div class="col-md-2">
+                        <a title="Buscar Producto" class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-buscarProducto" ng-click="listarProducto()"><span class="glyphicon glyphicon-search"></span></a>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="control-label col-md-4">Tipo Parámetro:</label>
+                    <div class="col-md-6">
+                        <input class="form-control lowercase padding-left-right-3" placeholder="Tipo de parámetro" ng-model="tipoParametro.TipoParametroDescripcion" disabled />
+                    </div>
+                    <div class="col-md-2">
+                        <a title="Buscar tipo parámetro" class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-buscarTipoParametro" ng-click="listarTipoParametro()"><span class="glyphicon glyphicon-search"></span></a>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="control-label col-md-4">Parámetro:</label>
+                    <div class="col-md-6">
+                        <input class="form-control lowercase padding-left-right-3" placeholder="Parámetro" ng-model="parametro.ParametroDescripcion" disabled />
+                    </div>
+                    <div class="col-md-2">
+                        <a title="Buscar Parámetro" class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-buscarParametro" ng-click="listarParametro()"><span class="glyphicon glyphicon-search"></span></a>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="control-label col-md-4">Metodología:</label>
+                    <div class="col-md-6">
+                        <input class="form-control lowercase padding-left-right-3" placeholder="Metodología" ng-model="parametro.Metodologia" disabled />
+                    </div>
+                    <div class="col-md-2">
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="control-label col-md-4">Precio:</label>
+                    <div class="col-md-4">
+                        <input class="form-control lowercase padding-left-right-3" placeholder="Precio" ng-model="parametro.Precio" onkeypress="return soloDecimal(event);" />
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="control-label col-md-4">N° de Muestras:</label>
+                    <div class="col-md-4">
+                        <input class="form-control lowercase padding-left-right-3" onkeypress="return soloNumeros(event);" placeholder="Número de muestras" ng-model="producto.cantidad" />
+                    </div>
+                </div>
+                <br />
+                <div class="form-group col-md-12" style="padding-left:3%">
+                    <div class="table-responsive">
+                        <table id="tabla-productos-cotizacion" class="row-border hover table table-bordered table-striped tabla-bandeja">
+                            <thead>
+                                <tr>
+                                    <th>Parámetro</th>
+                                    <th>Metodología</th>
+                                    <th>Tipo de Parámetro</th>
+                                    <th>Nº de muestras</th>
+                                    <th>Precio Unit. Neto</th>
+                                </tr>
+                            </thead>
+                            <tbody ng-repeat="item in productosDetalle">
+                                <tr>
+                                    <th colspan="5" style="text-align:center">{{item.nombre}}</th>
+                                </tr>
+                                <tr ng-repeat="item2 in elementosDetalle.lista" ng-if="item.idProducto==item2.producto.idProducto">
+                                    <td>{{item2.parametro.ParametroDescripcion}}</td>
+                                    <td>{{item2.parametro.Metodologia}}</td>
+                                    <td>{{item2.tipoParametro.TipoParametroDescripcion}}</td>
+                                    <td>{{item2.producto.cantidad}}</td>
+                                    <td>{{formatearDecimales(item2.Precio)}}</td>
+                                    <td class="right" style="text-align: center;">
+                                        <a title="Eliminar item" class="btn btn-xs btn-danger" ng-click="quitarDetalle($index)"><span class="glyphicon glyphicon-trash"></span></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- FIN DE ADICIONAR PRODUCTOS -->
+                <!-- INICIO DE ADICIONAR CERTIFICADOS -->
+                <div class="col-md-12">
+                    <h4 class="titulo1 texto-centrado"> ADICIONAR CERTIFICADOS</h4>
+                </div>
+                <br />
+                <div class="form-group col-md-12">
+                    <div class="col-md-offset-1">
+                        <a title="Agregar" class="btn btn-sm btn-success" ng-click="agregarCertificado()"><span class="glyphicon glyphicon-plus"></span></a>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="control-label col-md-4">Documento:</label>
+                    <div class="col-md-6">
+                        <input class="form-control lowercase padding-left-right-3" placeholder="Documento" ng-model="certificado.Documento" />
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="control-label col-md-4">Norma de referencia:</label>
+                    <div class="col-md-6">
+                        <input class="form-control lowercase padding-left-right-3" placeholder="Norma de referencia" ng-model="certificado.NormaReferencia" />
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="control-label col-md-4">Precio:</label>
+                    <div class="col-md-4">
+                        <input class="form-control lowercase padding-left-right-3" placeholder="Precio" ng-model="certificado.Precio" onkeypress="return soloDecimal(event);" />
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                </div>
+                <br />
+                <div class="form-group col-md-12" style="padding-left:3%">
+                    <div class="table-responsive">
+                        <table id="tabla-certificados-cotizacion" class="row-border hover table table-bordered table-striped tabla-bandeja">
+                            <thead>
+                                <tr>
+                                    <th>Documento</th>
+                                    <th>Norma de referencia</th>
+                                    <th>Precio Unit. Neto</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in elementosCertificado.lista">
+                                    <td>{{item.Documento}}</td>
+                                    <td>{{item.NormaReferencia}}</td>
+                                    <td>{{formatearDecimales(item.Precio)}}</td>
+                                    <td class="right" style="text-align: center;">
+                                        <a title="Eliminar item" class="btn btn-xs btn-danger" ng-click="quitarCertificado($index)"><span class="glyphicon glyphicon-trash"></span></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- FIN DE ADICIONAR CERTIFICADOS -->
+                <!-- INICIO DE ADICIONAR INSPECCION -->
+                <div id="inspeccionMuestreo">
+                    <div class="col-md-12">
+                        <h4 class="titulo1 texto-centrado"> INSPECCIÓN MUESTREO</h4>
+                    </div>
+                    <br />
+                    <div class="form-group col-md-12">
+                        <div class="col-md-offset-1">
+                            <a title="Agregar" class="btn btn-sm btn-success" ng-click="agregarInspeccion()"><span class="glyphicon glyphicon-plus"></span></a>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label col-md-4">Actividad:</label>
+                        <div class="col-md-8">
+                            <input class="form-control lowercase padding-left-right-3" placeholder="Actividad de Inspección / Muestreo" ng-model="inspeccion.Actividad" />
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label col-md-4">Procedimiento:</label>
+                        <div class="col-md-8">
+                            <input class="form-control lowercase padding-left-right-3" placeholder="Procedimiento de inspección / Muestreo" ng-model="inspeccion.Procedimiento" />
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label col-md-4">Referencia Normativa:</label>
+                        <div class="col-md-8">
+                            <input class="form-control lowercase padding-left-right-3" placeholder="Referencia Normativa" ng-model="inspeccion.ReferenciaNormativa" />
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label col-md-4">Referencia de muestreo:</label>
+                        <div class="col-md-8">
+                            <input class="form-control lowercase padding-left-right-3" placeholder="Referencia de muestreo" ng-model="inspeccion.ReferenciaMuestreo" />
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label col-md-4">Plan de muestreo:</label>
+                        <div class="col-md-8">
+                            <input class="form-control lowercase padding-left-right-3" placeholder="Plan de muestreo / Nivel / NCA" ng-model="inspeccion.PlanMuestreo" />
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label col-md-4">Lugar de muestreo:</label>
+                        <div class="col-md-8">
+                            <input class="form-control lowercase padding-left-right-3" placeholder="Lugar de muestreo" ng-model="inspeccion.LugarMuestreo" />
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label col-md-4">Cantidad:</label>
+                        <div class="col-md-4">
+                            <input class="form-control lowercase padding-left-right-3" placeholder="Cantidad" ng-model="inspeccion.Cantidad" onkeypress="return soloNumeros(event);" />
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label col-md-4">Precio:</label>
+                        <div class="col-md-4">
+                            <input class="form-control lowercase padding-left-right-3" placeholder="Precio" ng-model="inspeccion.Precio" onkeypress="return soloDecimal(event);" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group col-md-12" style="padding-left:3%">
+                        <div class="table-responsive">
+                            <table id="tabla-inspeccion-cotizacion" class="row-border hover table table-bordered table-striped tabla-bandeja">
+                                <thead>
+                                    <tr>
+                                        <th colspan="9" style="text-align:center">INSPECCION / MUESTREO</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Actividad de Inspección / Muestreo</th>
+                                        <th>Procedimiento de inspección / Muestreo</th>
+                                        <th>Referencia Normativa</th>
+                                        <th>Referencia de muestreo</th>
+                                        <th>Plan de muestreo / Nivel / NCA</th>
+                                        <th>Lugar de muestreo</th>
+                                        <th>Precio</th>
+                                        <th>Cantidad</th>
+                                        <th>Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in elementosInspeccion.lista">
+                                        <td>{{item.Actividad}}</td>
+                                        <td>{{item.Procedimiento}}</td>
+                                        <td>{{item.ReferenciaNormativa}}</td>
+                                        <td>{{item.ReferenciaMuestreo}}</td>
+                                        <td>{{item.PlanMuestreo}}</td>
+                                        <td>{{item.LugarMuestreo}}</td>
+                                        <td>{{formatearDecimales(item.Precio)}}</td>
+                                        <td>{{item.Cantidad}}</td>
+                                        <td>{{formatearDecimales(item.Subtotal)}}</td>
+                                        <td class="right" style="text-align: center;">
+                                            <a title="Eliminar item" class="btn btn-xs btn-danger" ng-click="quitarInspeccion($index)"><span class="glyphicon glyphicon-trash"></span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- FIN DE ADICIONAR INSPECCION -->
+                <div id="resumenCotizacion">
+                    <div class="col-md-12">
+                        <h4 class="titulo1 texto-centrado"> RESUMEN</h4>
+                    </div>
+                    <br />
+                    <div class="form-group col-md-12">
+                        <div class="col-md-offset-1">
+                            <a title="Agregar" class="btn btn-sm btn-success" ng-click="agregarResumen()"><span class="glyphicon glyphicon-plus"></span></a>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label col-md-4">Descripcion resumen:</label>
+                        <div class="col-md-8">
+                            <input class="form-control lowercase padding-left-right-3" placeholder="Descripción resumen" ng-model="resumen.Descripcion" />
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label col-md-4">Precio unitario:</label>
+                        <div class="col-md-8">
+                            <input class="form-control lowercase padding-left-right-3" placeholder="Precio unitario" ng-model="resumen.Precio" onkeypress="return soloDecimal(event);" />
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label col-md-4">
+                            <input ng-model="resumen.HabilitarNroDias" ng-change="habilitarNroDias()" class="lowercase padding-left-right-3" type="checkbox" />&nbsp;&nbsp;Incluir n° de días:
+                        </label>
+                        <div class="col-md-8">
+                            <input id="txtActivarNroDias" class="form-control lowercase padding-left-right-3" placeholder="N° de Días" ng-model="resumen.NumeroDias" onkeypress="return soloNumeros(event);" disabled />
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                    </div>
+                    <br />
+                    <div class="form-group col-md-12" style="padding-left:3%">
+                        <div class="table-responsive">
+                            <table id="tabla-inspeccion-cotizacion" class="row-border hover table table-bordered table-striped tabla-bandeja">
+                                <thead>
+                                    <tr>
+                                        <th>Resumen</th>
+                                        <th style="width:120px">Precio Unitario</th>
+                                        <th style="width:120px">N° de Días</th>
+                                        <th style="width:120px">Total</th>
+                                        <th style="width:40px">&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in productosDetalle">
+                                        <td>{{$index+1}}.- {{item.nombre}}</td>
+                                        <td>{{formatearDecimales(mostrarSubtotalEdicion(item.idProducto))}}</td>
+                                        <td>-</td>
+                                        <td>{{formatearDecimales(mostrarSubtotalEdicion(item.idProducto))}}</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                    <tr ng-repeat="item in elementosCertificado.lista">
+                                        <td>{{$index+1+productosDetalle.length}}.- {{item.Documento}}</td>
+                                        <td>{{formatearDecimales(item.Precio)}}</td>
+                                        <td>-</td>
+                                        <td>{{formatearDecimales(item.Precio)}}</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                    <tr ng-repeat="item in elementosInspeccion.lista">
+                                        <td>{{$index+1+productosDetalle.length+elementosCertificado.lista.length}}.- {{item.Actividad}}</td>
+                                        <td>{{formatearDecimales(item.Precio)}}</td>
+                                        <td>{{item.Cantidad}}</td>
+                                        <td>{{formatearDecimales(item.Subtotal)}}</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                    <tr ng-repeat="item in elementosResumen.lista">
+                                        <td>{{$index+1+productosDetalle.length+elementosCertificado.lista.length+elementosInspeccion.lista.length}}.- {{item.Descripcion}}</td>
+                                        <td>{{formatearDecimales(item.Precio)}}</td>
+                                        <td>{{item.NumeroDias}}</td>
+                                        <td>{{formatearDecimales(item.Total)}}</td>
+                                        <td class="right" style="text-align: center;">
+                                            <a title="Eliminar item" class="btn btn-xs btn-danger" ng-click="quitarResumen($index)"><span class="glyphicon glyphicon-trash"></span></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color:#fff;border-left:hidden;border-bottom:hidden">&nbsp;</td>
+                                        <td colspan="2" style="text-align:right"><strong>Sub - total</strong></td>
+                                        <td>{{formatearDecimales(model.SubTotal)}}</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color:#fff;border-left:hidden;border-bottom:hidden">&nbsp;</td>
+                                        <td colspan="2" style="text-align:right"><strong>Descuento </strong><input type="text" ng-model="model.PorcentajeDescuento" style="width:50px" ng-change="calculcarDescuento(model.PorcentajeDescuento)" onkeypress="return soloDecimal(event);" value="0" /><strong> %</strong></td>
+                                        <td>{{formatearDecimales(model.MontoDescuento)}}</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color:#fff;border-left:hidden;border-bottom:hidden">&nbsp;</td>
+                                        <td colspan="2" style="text-align:right"><strong>Sub total final</strong></td>
+                                        <td>{{formatearDecimales(model.SubTotalFinal)}}</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color:#fff;border-left:hidden;border-bottom:hidden">&nbsp;</td>
+                                        <td colspan="2" style="text-align:right"><strong>IGV</strong></td>
+                                        <td>{{formatearDecimales(model.IGV)}}</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color:#fff;border-left:hidden;border-bottom:hidden">&nbsp;</td>
+                                        <td colspan="2" style="text-align:right"><strong>Total</strong></td>
+                                        <td>{{formatearDecimales(model.Total)}}</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label for="DiasEntrega" class="control-label col-md-2">Días de entrega:</label>
+                    <div class="col-md-2">
+                        <input class="form-control" placeholder="Días de entrega" ng-model="model.DiasEntrega" onkeypress="return soloNumeros(event);" required />
+                    </div>
+                    <div class="col-md-2"></div>
+
+                    <label for="CorreoConfirmacion" class="control-label col-md-2">Correo de confirmación:</label>
+                    <div class="col-md-3">
+                        <input class="form-control" placeholder="Correo de confirmación" ng-model="model.CorreoConfirmacion" required />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="CondicionPago_1" class="control-label col-md-2">Condición de pago 1:</label>
+                    <div class="col-md-3">
+                        <input class="form-control" placeholder="Condición de pago 1" ng-model="model.CondicionPago_1" required />
+                    </div>
+
+                    <div class="col-md-1"></div>
+                    <label for="CondicionPago_2" class="control-label col-md-2">Condición de pago 2:</label>
+                    <div class="col-md-3">
+                        <input class="form-control" placeholder="Condición de pago 2" ng-model="model.CondicionPago_2" required />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="Banco" class="control-label col-md-2">Banco:</label>
+                    <div class="col-md-3">
+                        <input class="form-control" placeholder="Banco" ng-model="model.Banco" required />
+                    </div>
+
+                    <div class="col-md-1"></div>
+                    <label for="Moneda" class="control-label col-md-2">Moneda:</label>
+                    <div class="col-md-2">
+                        <select class="select2 form-control" ng-model="model.Moneda" ng-options="item.Nombre as item.Nombre for item in elementosMoneda" required>
+                            <option value="">Seleccione</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="CuentaCorriente" class="control-label col-md-2">Cuenta corriente:</label>
+                    <div class="col-md-3">
+                        <input class="form-control" placeholder="Cuenta corriente" ng-model="model.CuentaCorriente" />
+                    </div>
+
+                    <div class="col-md-1"></div>
+                    <label for="CuentaAhorro" class="control-label col-md-2">Cuenta de ahorro:</label>
+                    <div class="col-md-3">
+                        <input class="form-control" placeholder="Cuenta de ahorro" ng-model="model.CuentaAhorro" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="CCI" class="control-label col-md-2">CCI:</label>
+                    <div class="col-md-3">
+                        <input class="form-control" placeholder="CCI" ng-model="model.CCI" />
+                    </div>
+
+                    <div class="col-md-1"></div>
+                    <label for="Detracciones" class="control-label col-md-2">Detracciones:</label>
+                    <div class="col-md-2">
+                        <input class="form-control" placeholder="Detracciones" ng-model="model.Detracciones" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-4 col-md-8" style="margin-top: 20px">
+                    <a id="btnRegistraCotizacion" class="btn btn-sm btn-primary" ng-click="validacion(cotizacion)">Modificar cotización</a>
+                    @Html.ActionLink("Regresar a Listado", "Index", null, new { @class = "btn btn-sm btn-danger cancelar" })
+                </div>
+            </div>
+        </form>
+        <!-- MODAL BUSCAR CLIENTE -->
+        <div id="modal-buscarCliente" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <a class="close" data-dismiss="modal">&times;</a>
+                        <h4 class="modal-title"> Búsqueda de Cliente</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="table-responsive">
+                            <table datatable="ng" dt-options="dtOptions" dt-column-defs="elementos.dtColumnDefs" class="row-border hover table table-bordered table-striped tabla-bandeja">
+                                <thead>
+                                    <tr>
+                                        <th>Cliente</th>
+                                        <th>Tipo Documento</th>
+                                        <th>N° Documento</th>
+                                        <th>Contacto</th>
+                                        <th>Email</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="itemCliente in elementosCliente.lista" ng-click="seleccionCliente(itemCliente)" data-dismiss="modal">
+                                        <td>{{itemCliente.cliente}}</td>
+                                        <td>{{itemCliente.tipoDocumento}}</td>
+                                        <td>{{itemCliente.numeroDocumento}}</td>
+                                        <td>{{itemCliente.contacto}}</td>
+                                        <td>{{itemCliente.contactoCorreo}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL BUSCAR PRODUCTO -->
+        <div id="modal-buscarProducto" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <a class="close" data-dismiss="modal">&times;</a>
+                        <h4 class="modal-title"> Búsqueda de Análisis</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="table-responsive">
+                            <!-- TABLA -->
+                            <table datatable="ng" dt-options="dtOptions" dt-column-defs="elementos.dtColumnDefs" class="row-border hover table table-striped table-bordered tabla-bandeja">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Producto</th>
+                                        <th>Tipo Producto</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="itemProducto in elementosProducto.lista" ng-click="seleccionProducto(itemProducto)" data-dismiss="modal">
+                                        <td>{{itemProducto.codigo}}</td>
+                                        <td>{{itemProducto.nombre}}</td>
+                                        <td>{{itemProducto.tipoProducto}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL BUSCAR PARAMETRO -->
+        <div id="modal-buscarParametro" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <a class="close" data-dismiss="modal">&times;</a>
+                        <h4 class="modal-title"> Búsqueda de Parámetro</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="table-responsive">
+                            <!-- TABLA -->
+                            <table datatable="ng" dt-options="dtOptions" dt-column-defs="elementos.dtColumnDefs" class="row-border hover table table-striped table-bordered tabla-bandeja">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Parámetro</th>
+                                        <th>Metodología</th>
+                                        <th>Precio</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="itemParametro in elementosParametro.lista" ng-click="seleccionParametro(itemParametro)" data-dismiss="modal">
+                                        <td>{{itemParametro.CodParametro}}</td>
+                                        <td>{{itemParametro.ParametroDescripcion}}</td>
+                                        <td>{{itemParametro.Metodologia}}</td>
+                                        <td>{{itemParametro.Precio}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL BUSCAR TIPO PARAMETRO -->
+        <div id="modal-buscarTipoParametro" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <a class="close" data-dismiss="modal">&times;</a>
+                        <h4 class="modal-title"> Búsqueda de tipo de parámetro</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="table-responsive">
+                            <!-- TABLA -->
+                            <table datatable="ng" dt-options="dtOptions" dt-column-defs="elementos.dtColumnDefs" class="row-border hover table table-striped table-bordered tabla-bandeja">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Parámetro</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="itemTipoParametro in elementosTipoParametro.lista" ng-click="seleccionTipoParametro(itemTipoParametro)" data-dismiss="modal">
+                                        <td>{{itemTipoParametro.CodTipoParametro}}</td>
+                                        <td>{{itemTipoParametro.TipoParametroDescripcion}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "Inicio";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title"></h3>
+        </div>
+        <!--body -->
+        <div class="box-body">
+            <div class="row center-block" style="width:90%">
+                <div>
+                    @*<img class="center-block" style="width:50%" src="@Url.Content("~/Content/dist/img/logo.png")">*@
+                    <a href="~/Cotizacion/Index"><label class="btn btn-info" style="width:130px; height:100px; text-align:center; vertical-align:central; background-color:#7e2a7a"><br />Cotización</label></a>
+                    <a href="~/OrdenServicio/Index"><label class="btn btn-info" style="width:130px; height:100px; text-align:center; vertical-align:central; background-color:#26B99A"><br />Orden<br /> de Servicio</label></a>
+                    <a href="~/Producto/ViewAllProducto"><label class="btn btn-info" style="width:130px; height:100px; text-align:center; vertical-align:central; background-color:#fefa57; color:darkblue"><br />Productos/ <br />Servicios</label></a>
+                    <a href="~/Cliente/ViewAllCliente"><label class="btn btn-info" style="width:130px; height:100px; text-align:center; vertical-align:central; background-color:#fe6315"><br />Clientes</label></a>
+                    <a href="~/Parametro/Index"><label class="btn btn-info" style="width:130px; height:100px; text-align:center; vertical-align:central; background-color:#fa253f"><br />Parámetros</label></a>
+                    <a href="~/TipoParametro/Index"><label class="btn btn-info" style="width:130px; height:100px; text-align:center; vertical-align:central; background-color:forestgreen"><br />Tipo de Parámetro</label></a>
+                    <a href="~/CorrelativoMast/ViewAllCorrelativoMast"><label class="btn btn-info" style="width:130px; height:100px; text-align:center; vertical-align:central"><br />Correlativo <br />Comprobantes</label></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.box -->
+</section>

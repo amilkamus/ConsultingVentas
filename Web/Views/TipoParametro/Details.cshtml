@@ -1,0 +1,75 @@
+﻿@model Web.Models.TipoParametro.TipoParametro
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+<h3>Detalle Tipo de Parámetro</h3>
+
+<div>
+    <h4>Tipo Parámetro</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CodTipoParametro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CodTipoParametro)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoParametroDescripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoParametroDescripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Estado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UsuarioCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UsuarioCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UsuarioModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UsuarioModificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaModificacion)
+        </dd>
+
+    </dl>
+</div>
+<p style="padding-left:5px">
+    @Html.ActionLink("Editar", "Edit", new { id = Model.ID }, new { @class = "btn btn-sm btn-primary" }) |
+    @Html.ActionLink("Regresar a Listado", "Index", null, new { @class = "btn btn-sm btn-danger cancelar" })
+</p>

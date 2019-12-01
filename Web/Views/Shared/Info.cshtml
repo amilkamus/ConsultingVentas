@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "Info";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Main content -->
+<section class="content">
+    <!-- Default box -->
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">@ViewBag.Title</h3>
+        </div>
+        <!-- BODY -->
+        <div class="box-body">
+            <div class="form-horizontal col-md-12">
+                <br />
+                <form name="rol" ng-cloak>
+                    <h3>@ViewBag.Message</h3>
+                    <div class="form-group">
+                        <div class="col-md-offset-4 col-md-8">
+                            <a class="btn btn-sm btn-primary" ng-disabled="rol.$invalid" ng-click="guardarRol()">GUARDAR</a>
+                            @Html.ActionLink("ACEPTAR", "ViewUser", null, new { @class = "btn btn-sm btn-primary" })
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- /.box -->
+</section>
+
+

@@ -1,0 +1,93 @@
+﻿@model IEnumerable<Web.Models.OrdenServicio.OrdenServicioCotizacion>
+
+@{
+    ViewBag.Title = "Ordenes de Servicio";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+<!-- Main content -->
+<section class="content">
+    <!-- Default box -->
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">MÓDULO DE ORDENES DE SERVICIO</h3>
+        </div>
+        <!-- BODY -->
+        <div class="box-body">
+            <div ng-controller="documentoController" ng-cloak>
+                <div class="table-responsive">
+                    <div class="input-small formulario-mediano col-md-7 table-options">
+                        <p>
+                            @Html.ActionLink("Crear Nueva Orden de Servicio", "Create", null, new { @class = "btn btn-sm btn-primary" })
+                        </p>
+                    </div>
+
+                    <table dt-options="dtOptions" dt-column-defs="elementos.dtColumnDefs" class="row-border hover table table-striped table-bordered tabla-bandeja">
+                        <tr>
+                            <th>OpcionesCotización</th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.NumeroOrdenServicio)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.NumeroCotizacion)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Solicitante)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.RUC)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Contacto)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Email)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Fecha)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Telefono)
+                            </th>
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="right">
+                                    @Html.ActionLink(" ", "Edit", new { id = item.ID }, new { @class = "glyphicon glyphicon-edit btn btn-xs btn-warning" })
+                                    @Html.ActionLink(" ", "Details", new { id = item.ID }, new { @class = "glyphicon glyphicon-eye-open btn btn-sm btn-primary" })
+                                    @Html.ActionLink(" ", "Delete", new { id = item.ID }, new { @class = "glyphicon glyphicon-trash btn btn-xs btn-danger" })
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NumeroOrdenServicio)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NumeroCotizacion)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Solicitante)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.RUC)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Contacto)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Email)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Fecha)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Telefono)
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,103 @@
+﻿
+@{
+    ViewBag.Title = "ViewAllTipoPersona";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/js/angular/controller/tipoPersona/tipoPersonaController.js")></script>
+}
+
+<!-- Main content -->
+<section class="content">
+    <!-- Default box -->
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">BANDEJA TIPO DE PERSONA</h3>
+        </div>
+        <!-- BODY -->
+        <div class="box-body">
+            <div ng-controller="tipoPersonaController" ng-cloak>
+                <div class="table-responsive">
+                    <div class="input-small formulario-mediano col-md-7 table-options">
+                        @Html.ActionLink("NUEVO TIPO DE PERSONA", "AddTipoPersona", null, new { @class = "btn btn-sm btn-primary" })
+                        @*@Html.ActionLink("VER TIPO DE PERSONA", "ViewAllTipoPersona", null, new { @class = "btn btn-sm btn-success" })*@
+                    </div>
+                    <!-- TABLA -->
+                    <table id="tabla-tipoProducto" datatable="ng" dt-options="dtOptions" dt-column-defs="elementos.dtColumnDefs" class="row-border hover table table-bordered table-striped tabla-bandeja">
+                        <thead>
+                            <tr>
+                                <th>Tipo Persona</th>
+                                <th>Descripcion</th>
+                                <th>ACCI&Oacute;N</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in elementos.lista" ng-cloak class="lowercase">
+                                <td>{{item.nombre}}</td>
+                                <td>{{item.descripcion}}</td>
+                                <td class="right" style="text-align: center;">
+                                    <a title="Editar Tipo de Persona" class="btn btn-xs btn-warning" data-toggle="modal" data-target="#modal-editarTipoPersona" ng-click="editarTipoPersona(item)"><span class="glyphicon glyphicon-edit"></span></a>
+                                    <a title="Eliminar Tipo de Persona" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modal-eliminarTipoPersona" ng-click="cargarModalEliminar(item.idTipoPersona)"><span class="glyphicon glyphicon-trash"></span></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- MODAL ELIMINAR -->
+                <div id="modal-eliminarTipoPersona" class="modal fade" tabindex="-1" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <a class="close" data-dismiss="modal">&times;</a>
+                                <h4 class="modal-title"> Eliminar Tipo de Persona</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p> Esta seguro de eliminar este Tipo de Persona?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <a class="btn btn-sm btn-success" data-dismiss="modal" ng-click="eliminarTipoPersona()">Aceptar</a>
+                                <a class="btn btn-sm btn-danger" data-dismiss="modal">Cancelar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- MODAL EDITAR -->
+                <div id="modal-editarTipoPersona" class="modal fade" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <a class="close" data-dismiss="modal">&times;</a>
+                                <h4 class="modal-title"> Editar Tipo de Persona</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container" style="width:auto">
+                                    <br />
+                                    <form name="tipoPersona" class="form-horizontal" ng-cloak>
+                                        <div class="form-group col-md-12">
+                                            <label class="control-label col-md-4">Nombre</label>
+                                            <div class="col-md-6">
+                                                <input class="form-control lowercase padding-left-right-3" onkeypress="return soloLetras(event);" ng-model="model.nombre" required />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label class="control-label col-md-4">Descripcion</label>
+                                            <div class="col-md-6">
+                                                <input class="form-control lowercase padding-left-right-3" onkeypress="return soloLetras(event);" ng-model="model.descripcion" required />
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <a class="btn btn-sm btn-primary" ng-disabled="tipoPersona.$invalid" ng-click="guardarTipoPersona()">GUARDAR</a>
+                                @Html.ActionLink("CANCELAR", "ViewAllTipoPersona", null, new { @class = "btn btn-sm btn-danger cancelar" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.box -->
+</section>

@@ -1,0 +1,27 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Error";
+}
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="well well-edit">
+            <a href="@Url.Action("Login", "Account")"><img src="~/Content/dist/img/logo.png" class="img-edit" /></a>
+            <br />
+            <h1 class="text-center text-danger">Error.</h1>
+            @{
+                if (String.IsNullOrEmpty(ViewBag.errorMessage))
+                {
+                    <h2 class="text-danger">Se produjo un error al procesar su solicitud.</h2>
+                }
+                else
+                {
+                    <label class="control-label text-bold">@ViewBag.errorMessage</label>
+                    @*<h2 class="text-danger">@ViewBag.errorMessage</h2>*@
+                }
+            }
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,1908 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DBRouillonConsultinVentasModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Discriminator" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar(max)" />
+          <Property Name="LastName" Type="nvarchar(max)" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Caja">
+          <Key>
+            <PropertyRef Name="idCaja" />
+          </Key>
+          <Property Name="idCaja" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idUsuario" Type="nvarchar" MaxLength="128" />
+          <Property Name="ingresos" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="saldonIcial" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="saldoFinal" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="fechaRegistro" Type="datetime" />
+          <Property Name="fechaActualizacion" Type="datetime" />
+          <Property Name="usuarioRegistro" Type="nvarchar" MaxLength="128" />
+          <Property Name="usuarioActualizacion" Type="nvarchar" MaxLength="128" />
+          <Property Name="estado" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="CambioMoneda">
+          <Key>
+            <PropertyRef Name="idCambioMoneda" />
+          </Key>
+          <Property Name="idCambioMoneda" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idMoneda" Type="int" Nullable="false" />
+          <Property Name="compraMoneda" Type="float" />
+          <Property Name="ventaMoneda" Type="float" />
+          <Property Name="descripcion" Type="varchar" MaxLength="300" />
+          <Property Name="estado" Type="varchar" MaxLength="10" />
+          <Property Name="fechaRegistro" Type="datetime" />
+          <Property Name="fechaActualizacion" Type="datetime" />
+          <Property Name="usuarioRegistro" Type="nvarchar" MaxLength="128" />
+          <Property Name="usuarioActualizacion" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="idCliente" />
+          </Key>
+          <Property Name="idCliente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idEmpresaCliente" Type="int" />
+          <Property Name="idTitular" Type="int" />
+          <Property Name="rubro" Type="varchar" MaxLength="50" />
+          <Property Name="idContacto" Type="int" />
+        </EntityType>
+        <EntityType Name="CO_Comprobante">
+          <Key>
+            <PropertyRef Name="idComprobante" />
+          </Key>
+          <Property Name="idComprobante" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idCorrelativo" Type="int" />
+          <Property Name="serieCorrelativo" Type="varchar" MaxLength="50" />
+          <Property Name="descripcion" Type="varchar" MaxLength="300" />
+          <Property Name="estado" Type="varchar" MaxLength="10" />
+          <Property Name="subTotal" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="montoTotal" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="textoTotal" Type="varchar" MaxLength="300" />
+          <Property Name="fechaRegistro" Type="datetime" />
+          <Property Name="fechaActualizacion" Type="datetime" />
+          <Property Name="usuarioRegistro" Type="nvarchar" MaxLength="128" />
+          <Property Name="usuarioActualizacion" Type="nvarchar" MaxLength="128" />
+          <Property Name="idUsuario" Type="nvarchar" MaxLength="128" />
+          <Property Name="idMoneda" Type="int" />
+          <Property Name="idCliente" Type="int" />
+          <Property Name="idIGV" Type="int" />
+        </EntityType>
+        <EntityType Name="CO_ComprobanteDetalle">
+          <Key>
+            <PropertyRef Name="idDetalleComprobante" />
+          </Key>
+          <Property Name="idDetalleComprobante" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idProducto" Type="int" />
+          <Property Name="idComprobante" Type="int" />
+          <Property Name="cantidad" Type="int" />
+          <Property Name="precio" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="montoUnitario" Type="decimal" Precision="10" Scale="2" />
+        </EntityType>
+        <EntityType Name="CO_Egreso">
+          <Key>
+            <PropertyRef Name="idGasto" />
+          </Key>
+          <Property Name="idGasto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idUsuario" Type="nvarchar" MaxLength="128" />
+          <Property Name="egreso" Type="nvarchar" MaxLength="100" />
+          <Property Name="descripcion" Type="varchar" MaxLength="300" />
+          <Property Name="cantidad" Type="int" />
+          <Property Name="monto" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="total" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="fechaRegistro" Type="datetime" />
+          <Property Name="fechaActualizacion" Type="datetime" />
+          <Property Name="usuarioRegistro" Type="nvarchar" MaxLength="128" />
+          <Property Name="usuarioActualizacion" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="CO_Moneda">
+          <Key>
+            <PropertyRef Name="idMoneda" />
+          </Key>
+          <Property Name="idMoneda" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="CO_TipoComprobante">
+          <Key>
+            <PropertyRef Name="idTipoComprobante" />
+          </Key>
+          <Property Name="idTipoComprobante" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tipoComprobante" Type="varchar" MaxLength="50" />
+          <Property Name="descripcion" Type="varchar" MaxLength="300" />
+          <Property Name="estado" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Compania">
+          <Key>
+            <PropertyRef Name="idCompania" />
+          </Key>
+          <Property Name="idCompania" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="razonSocial" Type="varchar" MaxLength="200" />
+          <Property Name="ruc" Type="varchar" MaxLength="50" />
+          <Property Name="domicilioFiscal" Type="varchar" MaxLength="200" />
+          <Property Name="correo" Type="varchar" MaxLength="100" />
+          <Property Name="idTitular" Type="int" />
+          <Property Name="idContacto" Type="int" />
+          <Property Name="fechaRegistro" Type="datetime" />
+          <Property Name="fechaActualizacion" Type="datetime" />
+          <Property Name="usuarioRegistro" Type="nvarchar" MaxLength="128" />
+          <Property Name="usuarioActualizacion" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="CorrelativoMast">
+          <Key>
+            <PropertyRef Name="idCorrelativo" />
+          </Key>
+          <Property Name="idCorrelativo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idTipoComprobante" Type="int" />
+          <Property Name="serie" Type="varchar" MaxLength="50" />
+          <Property Name="correlativo" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="IGVMast">
+          <Key>
+            <PropertyRef Name="idIGV" />
+          </Key>
+          <Property Name="idIGV" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="porcentaje" Type="int" />
+        </EntityType>
+        <EntityType Name="PersonaMast">
+          <Key>
+            <PropertyRef Name="idPersona" />
+          </Key>
+          <Property Name="idPersona" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="200" />
+          <Property Name="apellidos" Type="varchar" MaxLength="200" />
+          <Property Name="idTipoPersona" Type="int" />
+          <Property Name="idTipoDocumento" Type="int" />
+          <Property Name="numeroDocumento" Type="varchar" MaxLength="20" />
+          <Property Name="cargo" Type="varchar" MaxLength="200" />
+          <Property Name="correo" Type="varchar" MaxLength="200" />
+          <Property Name="telefono" Type="varchar" MaxLength="20" />
+          <Property Name="domicilio" Type="varchar" MaxLength="200" />
+          <Property Name="estado" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="TipoDocumento">
+          <Key>
+            <PropertyRef Name="idTipoDocumento" />
+          </Key>
+          <Property Name="idTipoDocumento" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tipoDocumento" Type="varchar" MaxLength="50" />
+          <Property Name="estado" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="TipoPersona">
+          <Key>
+            <PropertyRef Name="idTipoPersona" />
+          </Key>
+          <Property Name="idTipoPersona" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tipoPersona" Type="varchar" MaxLength="50" />
+          <Property Name="descripcion" Type="varchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="WH_Inventario">
+          <Key>
+            <PropertyRef Name="idInventario" />
+          </Key>
+          <Property Name="idInventario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="300" />
+          <Property Name="estado" Type="varchar" MaxLength="10" />
+          <Property Name="fechaRegistro" Type="datetime" />
+        </EntityType>
+        <EntityType Name="WH_InventarioDetalle">
+          <Key>
+            <PropertyRef Name="idDetalleInventario" />
+          </Key>
+          <Property Name="idDetalleInventario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombreProducto" Type="varchar" MaxLength="200" />
+          <Property Name="stockAntes" Type="int" />
+          <Property Name="stockDespues" Type="int" />
+          <Property Name="costo" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="precio" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="idProducto" Type="int" />
+          <Property Name="idInventario" Type="int" />
+          <Property Name="idUsuario" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="WH_ProductoServicio">
+          <Key>
+            <PropertyRef Name="idProducto" />
+          </Key>
+          <Property Name="idProducto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idTipoProductoServicio" Type="int" />
+          <Property Name="codigo" Type="varchar" MaxLength="50" />
+          <Property Name="nombre" Type="varchar" MaxLength="200" />
+          <Property Name="descripcion" Type="varchar" MaxLength="300" />
+          <Property Name="stock" Type="int" />
+          <Property Name="estado" Type="varchar" MaxLength="10" />
+          <Property Name="costo" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="precio" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="fechaRegistro" Type="datetime" />
+          <Property Name="fechaActualizacion" Type="datetime" />
+          <Property Name="usuarioRegistro" Type="nvarchar" MaxLength="128" />
+          <Property Name="usuarioActualizacion" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="WH_TipoProductoServicio">
+          <Key>
+            <PropertyRef Name="idTipoProductoServicio" />
+          </Key>
+          <Property Name="idTipoProductoServicio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tipoProductoServicio" Type="varchar" MaxLength="50" />
+          <Property Name="descripcion" Type="varchar" MaxLength="300" />
+          <Property Name="estado" Type="varchar" MaxLength="10" />
+          <Property Name="fechaRegistro" Type="datetime" />
+          <Property Name="fechaActualizacion" Type="datetime" />
+          <Property Name="usuarioRegistro" Type="nvarchar" MaxLength="128" />
+          <Property Name="usuarioActualizaion" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <Association Name="FK_Caja_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="Caja" Type="Self.Caja" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Caja">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CambioMoneda_CO_Moneda">
+          <End Role="CO_Moneda" Type="Self.CO_Moneda" Multiplicity="1" />
+          <End Role="CambioMoneda" Type="Self.CambioMoneda" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CO_Moneda">
+              <PropertyRef Name="idMoneda" />
+            </Principal>
+            <Dependent Role="CambioMoneda">
+              <PropertyRef Name="idMoneda" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cliente_PersonaMast">
+          <End Role="PersonaMast" Type="Self.PersonaMast" Multiplicity="0..1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PersonaMast">
+              <PropertyRef Name="idPersona" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="idEmpresaCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cliente_PersonaMast1">
+          <End Role="PersonaMast" Type="Self.PersonaMast" Multiplicity="0..1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PersonaMast">
+              <PropertyRef Name="idPersona" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="idTitular" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cliente_PersonaMast2">
+          <End Role="PersonaMast" Type="Self.PersonaMast" Multiplicity="0..1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PersonaMast">
+              <PropertyRef Name="idPersona" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="idContacto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CO_Comprobante_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="CO_Comprobante" Type="Self.CO_Comprobante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CO_Comprobante">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CO_Comprobante_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
+          <End Role="CO_Comprobante" Type="Self.CO_Comprobante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="idCliente" />
+            </Principal>
+            <Dependent Role="CO_Comprobante">
+              <PropertyRef Name="idCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CO_Comprobante_CO_Moneda">
+          <End Role="CO_Moneda" Type="Self.CO_Moneda" Multiplicity="0..1" />
+          <End Role="CO_Comprobante" Type="Self.CO_Comprobante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CO_Moneda">
+              <PropertyRef Name="idMoneda" />
+            </Principal>
+            <Dependent Role="CO_Comprobante">
+              <PropertyRef Name="idMoneda" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CO_Comprobante_CorrelativoMast">
+          <End Role="CorrelativoMast" Type="Self.CorrelativoMast" Multiplicity="0..1" />
+          <End Role="CO_Comprobante" Type="Self.CO_Comprobante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CorrelativoMast">
+              <PropertyRef Name="idCorrelativo" />
+            </Principal>
+            <Dependent Role="CO_Comprobante">
+              <PropertyRef Name="idCorrelativo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CO_Comprobante_IGVMast">
+          <End Role="IGVMast" Type="Self.IGVMast" Multiplicity="0..1" />
+          <End Role="CO_Comprobante" Type="Self.CO_Comprobante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IGVMast">
+              <PropertyRef Name="idIGV" />
+            </Principal>
+            <Dependent Role="CO_Comprobante">
+              <PropertyRef Name="idIGV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CO_ComprobanteDetalle_CO_Comprobante">
+          <End Role="CO_Comprobante" Type="Self.CO_Comprobante" Multiplicity="0..1" />
+          <End Role="CO_ComprobanteDetalle" Type="Self.CO_ComprobanteDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CO_Comprobante">
+              <PropertyRef Name="idComprobante" />
+            </Principal>
+            <Dependent Role="CO_ComprobanteDetalle">
+              <PropertyRef Name="idComprobante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CO_Egreso_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="CO_Egreso" Type="Self.CO_Egreso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CO_Egreso">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Compania_PersonaMast">
+          <End Role="PersonaMast" Type="Self.PersonaMast" Multiplicity="0..1" />
+          <End Role="Compania" Type="Self.Compania" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PersonaMast">
+              <PropertyRef Name="idPersona" />
+            </Principal>
+            <Dependent Role="Compania">
+              <PropertyRef Name="idTitular" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Compania_PersonaMast1">
+          <End Role="PersonaMast" Type="Self.PersonaMast" Multiplicity="0..1" />
+          <End Role="Compania" Type="Self.Compania" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PersonaMast">
+              <PropertyRef Name="idPersona" />
+            </Principal>
+            <Dependent Role="Compania">
+              <PropertyRef Name="idContacto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CorrelativoMast_CO_TipoComprobante">
+          <End Role="CO_TipoComprobante" Type="Self.CO_TipoComprobante" Multiplicity="0..1" />
+          <End Role="CorrelativoMast" Type="Self.CorrelativoMast" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CO_TipoComprobante">
+              <PropertyRef Name="idTipoComprobante" />
+            </Principal>
+            <Dependent Role="CorrelativoMast">
+              <PropertyRef Name="idTipoComprobante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleInventario_Producto">
+          <End Role="WH_ProductoServicio" Type="Self.WH_ProductoServicio" Multiplicity="0..1" />
+          <End Role="WH_InventarioDetalle" Type="Self.WH_InventarioDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WH_ProductoServicio">
+              <PropertyRef Name="idProducto" />
+            </Principal>
+            <Dependent Role="WH_InventarioDetalle">
+              <PropertyRef Name="idProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleOperacion_Producto">
+          <End Role="WH_ProductoServicio" Type="Self.WH_ProductoServicio" Multiplicity="0..1" />
+          <End Role="CO_ComprobanteDetalle" Type="Self.CO_ComprobanteDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WH_ProductoServicio">
+              <PropertyRef Name="idProducto" />
+            </Principal>
+            <Dependent Role="CO_ComprobanteDetalle">
+              <PropertyRef Name="idProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonaMast_TipoDocumento">
+          <End Role="TipoDocumento" Type="Self.TipoDocumento" Multiplicity="0..1" />
+          <End Role="PersonaMast" Type="Self.PersonaMast" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoDocumento">
+              <PropertyRef Name="idTipoDocumento" />
+            </Principal>
+            <Dependent Role="PersonaMast">
+              <PropertyRef Name="idTipoDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonaMast_TipoPersona">
+          <End Role="TipoPersona" Type="Self.TipoPersona" Multiplicity="0..1" />
+          <End Role="PersonaMast" Type="Self.PersonaMast" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoPersona">
+              <PropertyRef Name="idTipoPersona" />
+            </Principal>
+            <Dependent Role="PersonaMast">
+              <PropertyRef Name="idTipoPersona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WH_DetalleInventario_WH_Inventario">
+          <End Role="WH_Inventario" Type="Self.WH_Inventario" Multiplicity="0..1" />
+          <End Role="WH_InventarioDetalle" Type="Self.WH_InventarioDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WH_Inventario">
+              <PropertyRef Name="idInventario" />
+            </Principal>
+            <Dependent Role="WH_InventarioDetalle">
+              <PropertyRef Name="idInventario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WH_InventarioDetalle_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="WH_InventarioDetalle" Type="Self.WH_InventarioDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WH_InventarioDetalle">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WH_ProductoServicio_WH_TipoProductoServicio">
+          <End Role="WH_TipoProductoServicio" Type="Self.WH_TipoProductoServicio" Multiplicity="0..1" />
+          <End Role="WH_ProductoServicio" Type="Self.WH_ProductoServicio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WH_TipoProductoServicio">
+              <PropertyRef Name="idTipoProductoServicio" />
+            </Principal>
+            <Dependent Role="WH_ProductoServicio">
+              <PropertyRef Name="idTipoProductoServicio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="sp_ReporteCambioMoneda" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idMoneda" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_ReporteComprobante" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idComprobante" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="DBRouillonConsultinVentasModelStoreContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Caja" EntityType="Self.Caja" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CambioMoneda" EntityType="Self.CambioMoneda" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CO_Comprobante" EntityType="Self.CO_Comprobante" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CO_ComprobanteDetalle" EntityType="Self.CO_ComprobanteDetalle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CO_Egreso" EntityType="Self.CO_Egreso" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CO_Moneda" EntityType="Self.CO_Moneda" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CO_TipoComprobante" EntityType="Self.CO_TipoComprobante" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Compania" EntityType="Self.Compania" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CorrelativoMast" EntityType="Self.CorrelativoMast" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IGVMast" EntityType="Self.IGVMast" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PersonaMast" EntityType="Self.PersonaMast" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoDocumento" EntityType="Self.TipoDocumento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoPersona" EntityType="Self.TipoPersona" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WH_Inventario" EntityType="Self.WH_Inventario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WH_InventarioDetalle" EntityType="Self.WH_InventarioDetalle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WH_ProductoServicio" EntityType="Self.WH_ProductoServicio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WH_TipoProductoServicio" EntityType="Self.WH_TipoProductoServicio" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Caja_AspNetUsers" Association="Self.FK_Caja_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Caja" EntitySet="Caja" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CambioMoneda_CO_Moneda" Association="Self.FK_CambioMoneda_CO_Moneda">
+            <End Role="CO_Moneda" EntitySet="CO_Moneda" />
+            <End Role="CambioMoneda" EntitySet="CambioMoneda" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cliente_PersonaMast" Association="Self.FK_Cliente_PersonaMast">
+            <End Role="PersonaMast" EntitySet="PersonaMast" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cliente_PersonaMast1" Association="Self.FK_Cliente_PersonaMast1">
+            <End Role="PersonaMast" EntitySet="PersonaMast" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cliente_PersonaMast2" Association="Self.FK_Cliente_PersonaMast2">
+            <End Role="PersonaMast" EntitySet="PersonaMast" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CO_Comprobante_AspNetUsers" Association="Self.FK_CO_Comprobante_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="CO_Comprobante" EntitySet="CO_Comprobante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CO_Comprobante_Cliente" Association="Self.FK_CO_Comprobante_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="CO_Comprobante" EntitySet="CO_Comprobante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CO_Comprobante_CO_Moneda" Association="Self.FK_CO_Comprobante_CO_Moneda">
+            <End Role="CO_Moneda" EntitySet="CO_Moneda" />
+            <End Role="CO_Comprobante" EntitySet="CO_Comprobante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CO_Comprobante_CorrelativoMast" Association="Self.FK_CO_Comprobante_CorrelativoMast">
+            <End Role="CorrelativoMast" EntitySet="CorrelativoMast" />
+            <End Role="CO_Comprobante" EntitySet="CO_Comprobante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CO_Comprobante_IGVMast" Association="Self.FK_CO_Comprobante_IGVMast">
+            <End Role="IGVMast" EntitySet="IGVMast" />
+            <End Role="CO_Comprobante" EntitySet="CO_Comprobante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CO_ComprobanteDetalle_CO_Comprobante" Association="Self.FK_CO_ComprobanteDetalle_CO_Comprobante">
+            <End Role="CO_Comprobante" EntitySet="CO_Comprobante" />
+            <End Role="CO_ComprobanteDetalle" EntitySet="CO_ComprobanteDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CO_Egreso_AspNetUsers" Association="Self.FK_CO_Egreso_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="CO_Egreso" EntitySet="CO_Egreso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Compania_PersonaMast" Association="Self.FK_Compania_PersonaMast">
+            <End Role="PersonaMast" EntitySet="PersonaMast" />
+            <End Role="Compania" EntitySet="Compania" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Compania_PersonaMast1" Association="Self.FK_Compania_PersonaMast1">
+            <End Role="PersonaMast" EntitySet="PersonaMast" />
+            <End Role="Compania" EntitySet="Compania" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CorrelativoMast_CO_TipoComprobante" Association="Self.FK_CorrelativoMast_CO_TipoComprobante">
+            <End Role="CO_TipoComprobante" EntitySet="CO_TipoComprobante" />
+            <End Role="CorrelativoMast" EntitySet="CorrelativoMast" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleInventario_Producto" Association="Self.FK_DetalleInventario_Producto">
+            <End Role="WH_ProductoServicio" EntitySet="WH_ProductoServicio" />
+            <End Role="WH_InventarioDetalle" EntitySet="WH_InventarioDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleOperacion_Producto" Association="Self.FK_DetalleOperacion_Producto">
+            <End Role="WH_ProductoServicio" EntitySet="WH_ProductoServicio" />
+            <End Role="CO_ComprobanteDetalle" EntitySet="CO_ComprobanteDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonaMast_TipoDocumento" Association="Self.FK_PersonaMast_TipoDocumento">
+            <End Role="TipoDocumento" EntitySet="TipoDocumento" />
+            <End Role="PersonaMast" EntitySet="PersonaMast" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonaMast_TipoPersona" Association="Self.FK_PersonaMast_TipoPersona">
+            <End Role="TipoPersona" EntitySet="TipoPersona" />
+            <End Role="PersonaMast" EntitySet="PersonaMast" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WH_DetalleInventario_WH_Inventario" Association="Self.FK_WH_DetalleInventario_WH_Inventario">
+            <End Role="WH_Inventario" EntitySet="WH_Inventario" />
+            <End Role="WH_InventarioDetalle" EntitySet="WH_InventarioDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WH_InventarioDetalle_AspNetUsers" Association="Self.FK_WH_InventarioDetalle_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="WH_InventarioDetalle" EntitySet="WH_InventarioDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WH_ProductoServicio_WH_TipoProductoServicio" Association="Self.FK_WH_ProductoServicio_WH_TipoProductoServicio">
+            <End Role="WH_TipoProductoServicio" EntitySet="WH_TipoProductoServicio" />
+            <End Role="WH_ProductoServicio" EntitySet="WH_ProductoServicio" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DBRouillonConsultinVentasModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Discriminator" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="Caja" Relationship="Self.FK_Caja_AspNetUsers" FromRole="AspNetUsers" ToRole="Caja" />
+          <NavigationProperty Name="CO_Comprobante" Relationship="Self.FK_CO_Comprobante_AspNetUsers" FromRole="AspNetUsers" ToRole="CO_Comprobante" />
+          <NavigationProperty Name="CO_Egreso" Relationship="Self.FK_CO_Egreso_AspNetUsers" FromRole="AspNetUsers" ToRole="CO_Egreso" />
+          <NavigationProperty Name="WH_InventarioDetalle" Relationship="Self.FK_WH_InventarioDetalle_AspNetUsers" FromRole="AspNetUsers" ToRole="WH_InventarioDetalle" />
+          <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+        </EntityType>
+        <EntityType Name="Caja">
+          <Key>
+            <PropertyRef Name="idCaja" />
+          </Key>
+          <Property Name="idCaja" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idUsuario" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ingresos" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="saldonIcial" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="saldoFinal" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="fechaRegistro" Type="DateTime" Precision="3" />
+          <Property Name="fechaActualizacion" Type="DateTime" Precision="3" />
+          <Property Name="usuarioRegistro" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="usuarioActualizacion" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="estado" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_Caja_AspNetUsers" FromRole="Caja" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="CambioMoneda">
+          <Key>
+            <PropertyRef Name="idCambioMoneda" />
+          </Key>
+          <Property Name="idCambioMoneda" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idMoneda" Type="Int32" Nullable="false" />
+          <Property Name="compraMoneda" Type="Double" />
+          <Property Name="ventaMoneda" Type="Double" />
+          <Property Name="descripcion" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="fechaRegistro" Type="DateTime" Precision="3" />
+          <Property Name="fechaActualizacion" Type="DateTime" Precision="3" />
+          <Property Name="usuarioRegistro" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="usuarioActualizacion" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CO_Moneda" Relationship="Self.FK_CambioMoneda_CO_Moneda" FromRole="CambioMoneda" ToRole="CO_Moneda" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="idCliente" />
+          </Key>
+          <Property Name="idCliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idEmpresaCliente" Type="Int32" />
+          <Property Name="idTitular" Type="Int32" />
+          <Property Name="rubro" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="idContacto" Type="Int32" />
+          <NavigationProperty Name="PersonaMast" Relationship="Self.FK_Cliente_PersonaMast" FromRole="Cliente" ToRole="PersonaMast" />
+          <NavigationProperty Name="PersonaMast1" Relationship="Self.FK_Cliente_PersonaMast1" FromRole="Cliente" ToRole="PersonaMast" />
+          <NavigationProperty Name="PersonaMast2" Relationship="Self.FK_Cliente_PersonaMast2" FromRole="Cliente" ToRole="PersonaMast" />
+          <NavigationProperty Name="CO_Comprobante" Relationship="Self.FK_CO_Comprobante_Cliente" FromRole="Cliente" ToRole="CO_Comprobante" />
+        </EntityType>
+        <EntityType Name="CO_Comprobante">
+          <Key>
+            <PropertyRef Name="idComprobante" />
+          </Key>
+          <Property Name="idComprobante" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idCorrelativo" Type="Int32" />
+          <Property Name="serieCorrelativo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="subTotal" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="montoTotal" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="textoTotal" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="fechaRegistro" Type="DateTime" Precision="3" />
+          <Property Name="fechaActualizacion" Type="DateTime" Precision="3" />
+          <Property Name="usuarioRegistro" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="usuarioActualizacion" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="idUsuario" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="idMoneda" Type="Int32" />
+          <Property Name="idCliente" Type="Int32" />
+          <Property Name="idIGV" Type="Int32" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_CO_Comprobante_AspNetUsers" FromRole="CO_Comprobante" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK_CO_Comprobante_Cliente" FromRole="CO_Comprobante" ToRole="Cliente" />
+          <NavigationProperty Name="CO_Moneda" Relationship="Self.FK_CO_Comprobante_CO_Moneda" FromRole="CO_Comprobante" ToRole="CO_Moneda" />
+          <NavigationProperty Name="CorrelativoMast" Relationship="Self.FK_CO_Comprobante_CorrelativoMast" FromRole="CO_Comprobante" ToRole="CorrelativoMast" />
+          <NavigationProperty Name="IGVMast" Relationship="Self.FK_CO_Comprobante_IGVMast" FromRole="CO_Comprobante" ToRole="IGVMast" />
+          <NavigationProperty Name="CO_ComprobanteDetalle" Relationship="Self.FK_CO_ComprobanteDetalle_CO_Comprobante" FromRole="CO_Comprobante" ToRole="CO_ComprobanteDetalle" />
+        </EntityType>
+        <EntityType Name="CO_ComprobanteDetalle">
+          <Key>
+            <PropertyRef Name="idDetalleComprobante" />
+          </Key>
+          <Property Name="idDetalleComprobante" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idProducto" Type="Int32" />
+          <Property Name="idComprobante" Type="Int32" />
+          <Property Name="cantidad" Type="Int32" />
+          <Property Name="precio" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="montoUnitario" Type="Decimal" Precision="10" Scale="2" />
+          <NavigationProperty Name="CO_Comprobante" Relationship="Self.FK_CO_ComprobanteDetalle_CO_Comprobante" FromRole="CO_ComprobanteDetalle" ToRole="CO_Comprobante" />
+          <NavigationProperty Name="WH_ProductoServicio" Relationship="Self.FK_DetalleOperacion_Producto" FromRole="CO_ComprobanteDetalle" ToRole="WH_ProductoServicio" />
+        </EntityType>
+        <EntityType Name="CO_Egreso">
+          <Key>
+            <PropertyRef Name="idGasto" />
+          </Key>
+          <Property Name="idGasto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idUsuario" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="egreso" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="descripcion" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="cantidad" Type="Int32" />
+          <Property Name="monto" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="total" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="fechaRegistro" Type="DateTime" Precision="3" />
+          <Property Name="fechaActualizacion" Type="DateTime" Precision="3" />
+          <Property Name="usuarioRegistro" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="usuarioActualizacion" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_CO_Egreso_AspNetUsers" FromRole="CO_Egreso" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="CO_Moneda">
+          <Key>
+            <PropertyRef Name="idMoneda" />
+          </Key>
+          <Property Name="idMoneda" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CambioMoneda" Relationship="Self.FK_CambioMoneda_CO_Moneda" FromRole="CO_Moneda" ToRole="CambioMoneda" />
+          <NavigationProperty Name="CO_Comprobante" Relationship="Self.FK_CO_Comprobante_CO_Moneda" FromRole="CO_Moneda" ToRole="CO_Comprobante" />
+        </EntityType>
+        <EntityType Name="CO_TipoComprobante">
+          <Key>
+            <PropertyRef Name="idTipoComprobante" />
+          </Key>
+          <Property Name="idTipoComprobante" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tipoComprobante" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CorrelativoMast" Relationship="Self.FK_CorrelativoMast_CO_TipoComprobante" FromRole="CO_TipoComprobante" ToRole="CorrelativoMast" />
+        </EntityType>
+        <EntityType Name="Compania">
+          <Key>
+            <PropertyRef Name="idCompania" />
+          </Key>
+          <Property Name="idCompania" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="razonSocial" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ruc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="domicilioFiscal" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="correo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="idTitular" Type="Int32" />
+          <Property Name="idContacto" Type="Int32" />
+          <Property Name="fechaRegistro" Type="DateTime" Precision="3" />
+          <Property Name="fechaActualizacion" Type="DateTime" Precision="3" />
+          <Property Name="usuarioRegistro" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="usuarioActualizacion" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PersonaMast" Relationship="Self.FK_Compania_PersonaMast" FromRole="Compania" ToRole="PersonaMast" />
+          <NavigationProperty Name="PersonaMast1" Relationship="Self.FK_Compania_PersonaMast1" FromRole="Compania" ToRole="PersonaMast" />
+        </EntityType>
+        <EntityType Name="CorrelativoMast">
+          <Key>
+            <PropertyRef Name="idCorrelativo" />
+          </Key>
+          <Property Name="idCorrelativo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idTipoComprobante" Type="Int32" />
+          <Property Name="serie" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="correlativo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CO_Comprobante" Relationship="Self.FK_CO_Comprobante_CorrelativoMast" FromRole="CorrelativoMast" ToRole="CO_Comprobante" />
+          <NavigationProperty Name="CO_TipoComprobante" Relationship="Self.FK_CorrelativoMast_CO_TipoComprobante" FromRole="CorrelativoMast" ToRole="CO_TipoComprobante" />
+        </EntityType>
+        <EntityType Name="IGVMast">
+          <Key>
+            <PropertyRef Name="idIGV" />
+          </Key>
+          <Property Name="idIGV" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="porcentaje" Type="Int32" />
+          <NavigationProperty Name="CO_Comprobante" Relationship="Self.FK_CO_Comprobante_IGVMast" FromRole="IGVMast" ToRole="CO_Comprobante" />
+        </EntityType>
+        <EntityType Name="PersonaMast">
+          <Key>
+            <PropertyRef Name="idPersona" />
+          </Key>
+          <Property Name="idPersona" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="apellidos" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="idTipoPersona" Type="Int32" />
+          <Property Name="idTipoDocumento" Type="Int32" />
+          <Property Name="numeroDocumento" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="cargo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="correo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="domicilio" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK_Cliente_PersonaMast" FromRole="PersonaMast" ToRole="Cliente" />
+          <NavigationProperty Name="Cliente1" Relationship="Self.FK_Cliente_PersonaMast1" FromRole="PersonaMast" ToRole="Cliente" />
+          <NavigationProperty Name="Cliente2" Relationship="Self.FK_Cliente_PersonaMast2" FromRole="PersonaMast" ToRole="Cliente" />
+          <NavigationProperty Name="Compania" Relationship="Self.FK_Compania_PersonaMast" FromRole="PersonaMast" ToRole="Compania" />
+          <NavigationProperty Name="Compania1" Relationship="Self.FK_Compania_PersonaMast1" FromRole="PersonaMast" ToRole="Compania" />
+          <NavigationProperty Name="TipoDocumento" Relationship="Self.FK_PersonaMast_TipoDocumento" FromRole="PersonaMast" ToRole="TipoDocumento" />
+          <NavigationProperty Name="TipoPersona" Relationship="Self.FK_PersonaMast_TipoPersona" FromRole="PersonaMast" ToRole="TipoPersona" />
+        </EntityType>
+        <EntityType Name="TipoDocumento">
+          <Key>
+            <PropertyRef Name="idTipoDocumento" />
+          </Key>
+          <Property Name="idTipoDocumento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tipoDocumento1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PersonaMast" Relationship="Self.FK_PersonaMast_TipoDocumento" FromRole="TipoDocumento" ToRole="PersonaMast" />
+        </EntityType>
+        <EntityType Name="TipoPersona">
+          <Key>
+            <PropertyRef Name="idTipoPersona" />
+          </Key>
+          <Property Name="idTipoPersona" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tipoPersona1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PersonaMast" Relationship="Self.FK_PersonaMast_TipoPersona" FromRole="TipoPersona" ToRole="PersonaMast" />
+        </EntityType>
+        <EntityType Name="WH_Inventario">
+          <Key>
+            <PropertyRef Name="idInventario" />
+          </Key>
+          <Property Name="idInventario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="fechaRegistro" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="WH_InventarioDetalle" Relationship="Self.FK_WH_DetalleInventario_WH_Inventario" FromRole="WH_Inventario" ToRole="WH_InventarioDetalle" />
+        </EntityType>
+        <EntityType Name="WH_InventarioDetalle">
+          <Key>
+            <PropertyRef Name="idDetalleInventario" />
+          </Key>
+          <Property Name="idDetalleInventario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombreProducto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="stockAntes" Type="Int32" />
+          <Property Name="stockDespues" Type="Int32" />
+          <Property Name="costo" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="precio" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="idProducto" Type="Int32" />
+          <Property Name="idInventario" Type="Int32" />
+          <Property Name="idUsuario" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_WH_InventarioDetalle_AspNetUsers" FromRole="WH_InventarioDetalle" ToRole="AspNetUsers" />
+          <NavigationProperty Name="WH_Inventario" Relationship="Self.FK_WH_DetalleInventario_WH_Inventario" FromRole="WH_InventarioDetalle" ToRole="WH_Inventario" />
+          <NavigationProperty Name="WH_ProductoServicio" Relationship="Self.FK_DetalleInventario_Producto" FromRole="WH_InventarioDetalle" ToRole="WH_ProductoServicio" />
+        </EntityType>
+        <EntityType Name="WH_ProductoServicio">
+          <Key>
+            <PropertyRef Name="idProducto" />
+          </Key>
+          <Property Name="idProducto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idTipoProductoServicio" Type="Int32" />
+          <Property Name="codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="stock" Type="Int32" />
+          <Property Name="estado" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="costo" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="precio" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="fechaRegistro" Type="DateTime" Precision="3" />
+          <Property Name="fechaActualizacion" Type="DateTime" Precision="3" />
+          <Property Name="usuarioRegistro" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="usuarioActualizacion" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CO_ComprobanteDetalle" Relationship="Self.FK_DetalleOperacion_Producto" FromRole="WH_ProductoServicio" ToRole="CO_ComprobanteDetalle" />
+          <NavigationProperty Name="WH_InventarioDetalle" Relationship="Self.FK_DetalleInventario_Producto" FromRole="WH_ProductoServicio" ToRole="WH_InventarioDetalle" />
+          <NavigationProperty Name="WH_TipoProductoServicio" Relationship="Self.FK_WH_ProductoServicio_WH_TipoProductoServicio" FromRole="WH_ProductoServicio" ToRole="WH_TipoProductoServicio" />
+        </EntityType>
+        <EntityType Name="WH_TipoProductoServicio">
+          <Key>
+            <PropertyRef Name="idTipoProductoServicio" />
+          </Key>
+          <Property Name="idTipoProductoServicio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tipoProductoServicio" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="fechaRegistro" Type="DateTime" Precision="3" />
+          <Property Name="fechaActualizacion" Type="DateTime" Precision="3" />
+          <Property Name="usuarioRegistro" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="usuarioActualizaion" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="WH_ProductoServicio" Relationship="Self.FK_WH_ProductoServicio_WH_TipoProductoServicio" FromRole="WH_TipoProductoServicio" ToRole="WH_ProductoServicio" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Caja_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="Caja" Type="Self.Caja" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Caja">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CO_Comprobante_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="CO_Comprobante" Type="Self.CO_Comprobante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CO_Comprobante">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CO_Egreso_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="CO_Egreso" Type="Self.CO_Egreso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CO_Egreso">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WH_InventarioDetalle_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="WH_InventarioDetalle" Type="Self.WH_InventarioDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WH_InventarioDetalle">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CambioMoneda_CO_Moneda">
+          <End Role="CO_Moneda" Type="Self.CO_Moneda" Multiplicity="1" />
+          <End Role="CambioMoneda" Type="Self.CambioMoneda" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CO_Moneda">
+              <PropertyRef Name="idMoneda" />
+            </Principal>
+            <Dependent Role="CambioMoneda">
+              <PropertyRef Name="idMoneda" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cliente_PersonaMast">
+          <End Role="PersonaMast" Type="Self.PersonaMast" Multiplicity="0..1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PersonaMast">
+              <PropertyRef Name="idPersona" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="idEmpresaCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cliente_PersonaMast1">
+          <End Role="PersonaMast" Type="Self.PersonaMast" Multiplicity="0..1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PersonaMast">
+              <PropertyRef Name="idPersona" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="idTitular" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cliente_PersonaMast2">
+          <End Role="PersonaMast" Type="Self.PersonaMast" Multiplicity="0..1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PersonaMast">
+              <PropertyRef Name="idPersona" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="idContacto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CO_Comprobante_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
+          <End Role="CO_Comprobante" Type="Self.CO_Comprobante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="idCliente" />
+            </Principal>
+            <Dependent Role="CO_Comprobante">
+              <PropertyRef Name="idCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CO_Comprobante_CO_Moneda">
+          <End Role="CO_Moneda" Type="Self.CO_Moneda" Multiplicity="0..1" />
+          <End Role="CO_Comprobante" Type="Self.CO_Comprobante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CO_Moneda">
+              <PropertyRef Name="idMoneda" />
+            </Principal>
+            <Dependent Role="CO_Comprobante">
+              <PropertyRef Name="idMoneda" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CO_Comprobante_CorrelativoMast">
+          <End Role="CorrelativoMast" Type="Self.CorrelativoMast" Multiplicity="0..1" />
+          <End Role="CO_Comprobante" Type="Self.CO_Comprobante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CorrelativoMast">
+              <PropertyRef Name="idCorrelativo" />
+            </Principal>
+            <Dependent Role="CO_Comprobante">
+              <PropertyRef Name="idCorrelativo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CO_Comprobante_IGVMast">
+          <End Role="IGVMast" Type="Self.IGVMast" Multiplicity="0..1" />
+          <End Role="CO_Comprobante" Type="Self.CO_Comprobante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IGVMast">
+              <PropertyRef Name="idIGV" />
+            </Principal>
+            <Dependent Role="CO_Comprobante">
+              <PropertyRef Name="idIGV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CO_ComprobanteDetalle_CO_Comprobante">
+          <End Role="CO_Comprobante" Type="Self.CO_Comprobante" Multiplicity="0..1" />
+          <End Role="CO_ComprobanteDetalle" Type="Self.CO_ComprobanteDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CO_Comprobante">
+              <PropertyRef Name="idComprobante" />
+            </Principal>
+            <Dependent Role="CO_ComprobanteDetalle">
+              <PropertyRef Name="idComprobante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleOperacion_Producto">
+          <End Role="WH_ProductoServicio" Type="Self.WH_ProductoServicio" Multiplicity="0..1" />
+          <End Role="CO_ComprobanteDetalle" Type="Self.CO_ComprobanteDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WH_ProductoServicio">
+              <PropertyRef Name="idProducto" />
+            </Principal>
+            <Dependent Role="CO_ComprobanteDetalle">
+              <PropertyRef Name="idProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CorrelativoMast_CO_TipoComprobante">
+          <End Role="CO_TipoComprobante" Type="Self.CO_TipoComprobante" Multiplicity="0..1" />
+          <End Role="CorrelativoMast" Type="Self.CorrelativoMast" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CO_TipoComprobante">
+              <PropertyRef Name="idTipoComprobante" />
+            </Principal>
+            <Dependent Role="CorrelativoMast">
+              <PropertyRef Name="idTipoComprobante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Compania_PersonaMast">
+          <End Role="PersonaMast" Type="Self.PersonaMast" Multiplicity="0..1" />
+          <End Role="Compania" Type="Self.Compania" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PersonaMast">
+              <PropertyRef Name="idPersona" />
+            </Principal>
+            <Dependent Role="Compania">
+              <PropertyRef Name="idTitular" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Compania_PersonaMast1">
+          <End Role="PersonaMast" Type="Self.PersonaMast" Multiplicity="0..1" />
+          <End Role="Compania" Type="Self.Compania" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PersonaMast">
+              <PropertyRef Name="idPersona" />
+            </Principal>
+            <Dependent Role="Compania">
+              <PropertyRef Name="idContacto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonaMast_TipoDocumento">
+          <End Role="TipoDocumento" Type="Self.TipoDocumento" Multiplicity="0..1" />
+          <End Role="PersonaMast" Type="Self.PersonaMast" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoDocumento">
+              <PropertyRef Name="idTipoDocumento" />
+            </Principal>
+            <Dependent Role="PersonaMast">
+              <PropertyRef Name="idTipoDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonaMast_TipoPersona">
+          <End Role="TipoPersona" Type="Self.TipoPersona" Multiplicity="0..1" />
+          <End Role="PersonaMast" Type="Self.PersonaMast" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoPersona">
+              <PropertyRef Name="idTipoPersona" />
+            </Principal>
+            <Dependent Role="PersonaMast">
+              <PropertyRef Name="idTipoPersona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WH_DetalleInventario_WH_Inventario">
+          <End Role="WH_Inventario" Type="Self.WH_Inventario" Multiplicity="0..1" />
+          <End Role="WH_InventarioDetalle" Type="Self.WH_InventarioDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WH_Inventario">
+              <PropertyRef Name="idInventario" />
+            </Principal>
+            <Dependent Role="WH_InventarioDetalle">
+              <PropertyRef Name="idInventario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleInventario_Producto">
+          <End Role="WH_ProductoServicio" Type="Self.WH_ProductoServicio" Multiplicity="0..1" />
+          <End Role="WH_InventarioDetalle" Type="Self.WH_InventarioDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WH_ProductoServicio">
+              <PropertyRef Name="idProducto" />
+            </Principal>
+            <Dependent Role="WH_InventarioDetalle">
+              <PropertyRef Name="idProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WH_ProductoServicio_WH_TipoProductoServicio">
+          <End Role="WH_TipoProductoServicio" Type="Self.WH_TipoProductoServicio" Multiplicity="0..1" />
+          <End Role="WH_ProductoServicio" Type="Self.WH_ProductoServicio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WH_TipoProductoServicio">
+              <PropertyRef Name="idTipoProductoServicio" />
+            </Principal>
+            <Dependent Role="WH_ProductoServicio">
+              <PropertyRef Name="idTipoProductoServicio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="*" />
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="DBRouillonConsultinVentasEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" />
+          <EntitySet Name="Caja" EntityType="Self.Caja" />
+          <EntitySet Name="CambioMoneda" EntityType="Self.CambioMoneda" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" />
+          <EntitySet Name="CO_Comprobante" EntityType="Self.CO_Comprobante" />
+          <EntitySet Name="CO_ComprobanteDetalle" EntityType="Self.CO_ComprobanteDetalle" />
+          <EntitySet Name="CO_Egreso" EntityType="Self.CO_Egreso" />
+          <EntitySet Name="CO_Moneda" EntityType="Self.CO_Moneda" />
+          <EntitySet Name="CO_TipoComprobante" EntityType="Self.CO_TipoComprobante" />
+          <EntitySet Name="Compania" EntityType="Self.Compania" />
+          <EntitySet Name="CorrelativoMast" EntityType="Self.CorrelativoMast" />
+          <EntitySet Name="IGVMast" EntityType="Self.IGVMast" />
+          <EntitySet Name="PersonaMast" EntityType="Self.PersonaMast" />
+          <EntitySet Name="TipoDocumento" EntityType="Self.TipoDocumento" />
+          <EntitySet Name="TipoPersona" EntityType="Self.TipoPersona" />
+          <EntitySet Name="WH_Inventario" EntityType="Self.WH_Inventario" />
+          <EntitySet Name="WH_InventarioDetalle" EntityType="Self.WH_InventarioDetalle" />
+          <EntitySet Name="WH_ProductoServicio" EntityType="Self.WH_ProductoServicio" />
+          <EntitySet Name="WH_TipoProductoServicio" EntityType="Self.WH_TipoProductoServicio" />
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Caja_AspNetUsers" Association="Self.FK_Caja_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Caja" EntitySet="Caja" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CO_Comprobante_AspNetUsers" Association="Self.FK_CO_Comprobante_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="CO_Comprobante" EntitySet="CO_Comprobante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CO_Egreso_AspNetUsers" Association="Self.FK_CO_Egreso_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="CO_Egreso" EntitySet="CO_Egreso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WH_InventarioDetalle_AspNetUsers" Association="Self.FK_WH_InventarioDetalle_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="WH_InventarioDetalle" EntitySet="WH_InventarioDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CambioMoneda_CO_Moneda" Association="Self.FK_CambioMoneda_CO_Moneda">
+            <End Role="CO_Moneda" EntitySet="CO_Moneda" />
+            <End Role="CambioMoneda" EntitySet="CambioMoneda" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cliente_PersonaMast" Association="Self.FK_Cliente_PersonaMast">
+            <End Role="PersonaMast" EntitySet="PersonaMast" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cliente_PersonaMast1" Association="Self.FK_Cliente_PersonaMast1">
+            <End Role="PersonaMast" EntitySet="PersonaMast" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cliente_PersonaMast2" Association="Self.FK_Cliente_PersonaMast2">
+            <End Role="PersonaMast" EntitySet="PersonaMast" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CO_Comprobante_Cliente" Association="Self.FK_CO_Comprobante_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="CO_Comprobante" EntitySet="CO_Comprobante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CO_Comprobante_CO_Moneda" Association="Self.FK_CO_Comprobante_CO_Moneda">
+            <End Role="CO_Moneda" EntitySet="CO_Moneda" />
+            <End Role="CO_Comprobante" EntitySet="CO_Comprobante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CO_Comprobante_CorrelativoMast" Association="Self.FK_CO_Comprobante_CorrelativoMast">
+            <End Role="CorrelativoMast" EntitySet="CorrelativoMast" />
+            <End Role="CO_Comprobante" EntitySet="CO_Comprobante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CO_Comprobante_IGVMast" Association="Self.FK_CO_Comprobante_IGVMast">
+            <End Role="IGVMast" EntitySet="IGVMast" />
+            <End Role="CO_Comprobante" EntitySet="CO_Comprobante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CO_ComprobanteDetalle_CO_Comprobante" Association="Self.FK_CO_ComprobanteDetalle_CO_Comprobante">
+            <End Role="CO_Comprobante" EntitySet="CO_Comprobante" />
+            <End Role="CO_ComprobanteDetalle" EntitySet="CO_ComprobanteDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleOperacion_Producto" Association="Self.FK_DetalleOperacion_Producto">
+            <End Role="WH_ProductoServicio" EntitySet="WH_ProductoServicio" />
+            <End Role="CO_ComprobanteDetalle" EntitySet="CO_ComprobanteDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CorrelativoMast_CO_TipoComprobante" Association="Self.FK_CorrelativoMast_CO_TipoComprobante">
+            <End Role="CO_TipoComprobante" EntitySet="CO_TipoComprobante" />
+            <End Role="CorrelativoMast" EntitySet="CorrelativoMast" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Compania_PersonaMast" Association="Self.FK_Compania_PersonaMast">
+            <End Role="PersonaMast" EntitySet="PersonaMast" />
+            <End Role="Compania" EntitySet="Compania" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Compania_PersonaMast1" Association="Self.FK_Compania_PersonaMast1">
+            <End Role="PersonaMast" EntitySet="PersonaMast" />
+            <End Role="Compania" EntitySet="Compania" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonaMast_TipoDocumento" Association="Self.FK_PersonaMast_TipoDocumento">
+            <End Role="TipoDocumento" EntitySet="TipoDocumento" />
+            <End Role="PersonaMast" EntitySet="PersonaMast" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonaMast_TipoPersona" Association="Self.FK_PersonaMast_TipoPersona">
+            <End Role="TipoPersona" EntitySet="TipoPersona" />
+            <End Role="PersonaMast" EntitySet="PersonaMast" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WH_DetalleInventario_WH_Inventario" Association="Self.FK_WH_DetalleInventario_WH_Inventario">
+            <End Role="WH_Inventario" EntitySet="WH_Inventario" />
+            <End Role="WH_InventarioDetalle" EntitySet="WH_InventarioDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleInventario_Producto" Association="Self.FK_DetalleInventario_Producto">
+            <End Role="WH_ProductoServicio" EntitySet="WH_ProductoServicio" />
+            <End Role="WH_InventarioDetalle" EntitySet="WH_InventarioDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WH_ProductoServicio_WH_TipoProductoServicio" Association="Self.FK_WH_ProductoServicio_WH_TipoProductoServicio">
+            <End Role="WH_TipoProductoServicio" EntitySet="WH_TipoProductoServicio" />
+            <End Role="WH_ProductoServicio" EntitySet="WH_ProductoServicio" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <FunctionImport Name="sp_ReporteCambioMoneda" ReturnType="Collection(Double)">
+            <Parameter Name="idMoneda" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ReporteComprobante" ReturnType="Collection(DBRouillonConsultinVentasModel.sp_ReporteComprobante_Result)">
+            <Parameter Name="idComprobante" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="sp_ReporteComprobante_Result">
+          <Property Type="Int32" Name="idDetalleComprobante" Nullable="false" />
+          <Property Type="Int32" Name="idComprobante" Nullable="false" />
+          <Property Type="String" Name="serieCorrelativo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="fechaRegistro" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="tipoComprobante" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="serie" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="correlativo" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="idCliente" Nullable="false" />
+          <Property Type="String" Name="nombre" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="apellidos" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="numeroDocumento" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="domicilio" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="idProducto" Nullable="true" />
+          <Property Type="String" Name="producto" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="tipoProductoServicio" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="precio" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="Int32" Name="cantidad" Nullable="true" />
+          <Property Type="Decimal" Name="montoUnitario" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="Int32" Name="idMoneda" Nullable="true" />
+          <Property Type="String" Name="descripcion" Nullable="true" MaxLength="30" />
+          <Property Type="Double" Name="ventaMoneda" Nullable="true" />
+          <Property Type="Decimal" Name="subTotal" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="montoTotal" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="String" Name="textoTotal" Nullable="true" MaxLength="300" />
+          <Property Type="Int32" Name="idIGV" Nullable="true" />
+          <Property Type="Int32" Name="porcentaje" Nullable="true" />
+          <Property Type="String" Name="estado" Nullable="true" MaxLength="10" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DBRouillonConsultinVentasModelStoreContainer" CdmEntityContainer="DBRouillonConsultinVentasEntities">
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="DBRouillonConsultinVentasModel.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="DBRouillonConsultinVentasModel.AspNetRoles">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Discriminator" ColumnName="Discriminator" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserClaims">
+            <EntityTypeMapping TypeName="DBRouillonConsultinVentasModel.AspNetUserClaims">
+              <MappingFragment StoreEntitySet="AspNetUserClaims">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserLogins">
+            <EntityTypeMapping TypeName="DBRouillonConsultinVentasModel.AspNetUserLogins">
+              <MappingFragment StoreEntitySet="AspNetUserLogins">
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="DBRouillonConsultinVentasModel.AspNetUsers">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Caja">
+            <EntityTypeMapping TypeName="DBRouillonConsultinVentasModel.Caja">
+              <MappingFragment StoreEntitySet="Caja">
+                <ScalarProperty Name="idCaja" ColumnName="idCaja" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="ingresos" ColumnName="ingresos" />
+                <ScalarProperty Name="saldonIcial" ColumnName="saldonIcial" />
+                <ScalarProperty Name="saldoFinal" ColumnName="saldoFinal" />
+                <ScalarProperty Name="fechaRegistro" ColumnName="fechaRegistro" />
+                <ScalarProperty Name="fechaActualizacion" ColumnName="fechaActualizacion" />
+                <ScalarProperty Name="usuarioRegistro" ColumnName="usuarioRegistro" />
+                <ScalarProperty Name="usuarioActualizacion" ColumnName="usuarioActualizacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CambioMoneda">
+            <EntityTypeMapping TypeName="DBRouillonConsultinVentasModel.CambioMoneda">
+              <MappingFragment StoreEntitySet="CambioMoneda">
+                <ScalarProperty Name="idCambioMoneda" ColumnName="idCambioMoneda" />
+                <ScalarProperty Name="idMoneda" ColumnName="idMoneda" />
+                <ScalarProperty Name="compraMoneda" ColumnName="compraMoneda" />
+                <ScalarProperty Name="ventaMoneda" ColumnName="ventaMoneda" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="fechaRegistro" ColumnName="fechaRegistro" />
+                <ScalarProperty Name="fechaActualizacion" ColumnName="fechaActualizacion" />
+                <ScalarProperty Name="usuarioRegistro" ColumnName="usuarioRegistro" />
+                <ScalarProperty Name="usuarioActualizacion" ColumnName="usuarioActualizacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cliente">
+            <EntityTypeMapping TypeName="DBRouillonConsultinVentasModel.Cliente">
+              <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="idCliente" ColumnName="idCliente" />
+                <ScalarProperty Name="idEmpresaCliente" ColumnName="idEmpresaCliente" />
+                <ScalarProperty Name="idTitular" ColumnName="idTitular" />
+                <ScalarProperty Name="rubro" ColumnName="rubro" />
+                <ScalarProperty Name="idContacto" ColumnName="idContacto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CO_Comprobante">
+            <EntityTypeMapping TypeName="DBRouillonConsultinVentasModel.CO_Comprobante">
+              <MappingFragment StoreEntitySet="CO_Comprobante">
+                <ScalarProperty Name="idComprobante" ColumnName="idComprobante" />
+                <ScalarProperty Name="idCorrelativo" ColumnName="idCorrelativo" />
+                <ScalarProperty Name="serieCorrelativo" ColumnName="serieCorrelativo" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="subTotal" ColumnName="subTotal" />
+                <ScalarProperty Name="montoTotal" ColumnName="montoTotal" />
+                <ScalarProperty Name="textoTotal" ColumnName="textoTotal" />
+                <ScalarProperty Name="fechaRegistro" ColumnName="fechaRegistro" />
+                <ScalarProperty Name="fechaActualizacion" ColumnName="fechaActualizacion" />
+                <ScalarProperty Name="usuarioRegistro" ColumnName="usuarioRegistro" />
+                <ScalarProperty Name="usuarioActualizacion" ColumnName="usuarioActualizacion" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="idMoneda" ColumnName="idMoneda" />
+                <ScalarProperty Name="idCliente" ColumnName="idCliente" />
+                <ScalarProperty Name="idIGV" ColumnName="idIGV" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CO_ComprobanteDetalle">
+            <EntityTypeMapping TypeName="DBRouillonConsultinVentasModel.CO_ComprobanteDetalle">
+              <MappingFragment StoreEntitySet="CO_ComprobanteDetalle">
+                <ScalarProperty Name="idDetalleComprobante" ColumnName="idDetalleComprobante" />
+                <ScalarProperty Name="idProducto" ColumnName="idProducto" />
+                <ScalarProperty Name="idComprobante" ColumnName="idComprobante" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+                <ScalarProperty Name="montoUnitario" ColumnName="montoUnitario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CO_Egreso">
+            <EntityTypeMapping TypeName="DBRouillonConsultinVentasModel.CO_Egreso">
+              <MappingFragment StoreEntitySet="CO_Egreso">
+                <ScalarProperty Name="idGasto" ColumnName="idGasto" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="egreso" ColumnName="egreso" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="monto" ColumnName="monto" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="fechaRegistro" ColumnName="fechaRegistro" />
+                <ScalarProperty Name="fechaActualizacion" ColumnName="fechaActualizacion" />
+                <ScalarProperty Name="usuarioRegistro" ColumnName="usuarioRegistro" />
+                <ScalarProperty Name="usuarioActualizacion" ColumnName="usuarioActualizacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CO_Moneda">
+            <EntityTypeMapping TypeName="DBRouillonConsultinVentasModel.CO_Moneda">
+              <MappingFragment StoreEntitySet="CO_Moneda">
+                <ScalarProperty Name="idMoneda" ColumnName="idMoneda" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CO_TipoComprobante">
+            <EntityTypeMapping TypeName="DBRouillonConsultinVentasModel.CO_TipoComprobante">
+              <MappingFragment StoreEntitySet="CO_TipoComprobante">
+                <ScalarProperty Name="idTipoComprobante" ColumnName="idTipoComprobante" />
+                <ScalarProperty Name="tipoComprobante" ColumnName="tipoComprobante" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Compania">
+            <EntityTypeMapping TypeName="DBRouillonConsultinVentasModel.Compania">
+              <MappingFragment StoreEntitySet="Compania">
+                <ScalarProperty Name="idCompania" ColumnName="idCompania" />
+                <ScalarProperty Name="razonSocial" ColumnName="razonSocial" />
+                <ScalarProperty Name="ruc" ColumnName="ruc" />
+                <ScalarProperty Name="domicilioFiscal" ColumnName="domicilioFiscal" />
+                <ScalarProperty Name="correo" ColumnName="correo" />
+                <ScalarProperty Name="idTitular" ColumnName="idTitular" />
+                <ScalarProperty Name="idContacto" ColumnName="idContacto" />
+                <ScalarProperty Name="fechaRegistro" ColumnName="fechaRegistro" />
+                <ScalarProperty Name="fechaActualizacion" ColumnName="fechaActualizacion" />
+                <ScalarProperty Name="usuarioRegistro" ColumnName="usuarioRegistro" />
+                <ScalarProperty Name="usuarioActualizacion" ColumnName="usuarioActualizacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CorrelativoMast">
+            <EntityTypeMapping TypeName="DBRouillonConsultinVentasModel.CorrelativoMast">
+              <MappingFragment StoreEntitySet="CorrelativoMast">
+                <ScalarProperty Name="idCorrelativo" ColumnName="idCorrelativo" />
+                <ScalarProperty Name="idTipoComprobante" ColumnName="idTipoComprobante" />
+                <ScalarProperty Name="serie" ColumnName="serie" />
+                <ScalarProperty Name="correlativo" ColumnName="correlativo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IGVMast">
+            <EntityTypeMapping TypeName="DBRouillonConsultinVentasModel.IGVMast">
+              <MappingFragment StoreEntitySet="IGVMast">
+                <ScalarProperty Name="idIGV" ColumnName="idIGV" />
+                <ScalarProperty Name="porcentaje" ColumnName="porcentaje" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PersonaMast">
+            <EntityTypeMapping TypeName="DBRouillonConsultinVentasModel.PersonaMast">
+              <MappingFragment StoreEntitySet="PersonaMast">
+                <ScalarProperty Name="idPersona" ColumnName="idPersona" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellidos" ColumnName="apellidos" />
+                <ScalarProperty Name="idTipoPersona" ColumnName="idTipoPersona" />
+                <ScalarProperty Name="idTipoDocumento" ColumnName="idTipoDocumento" />
+                <ScalarProperty Name="numeroDocumento" ColumnName="numeroDocumento" />
+                <ScalarProperty Name="cargo" ColumnName="cargo" />
+                <ScalarProperty Name="correo" ColumnName="correo" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="domicilio" ColumnName="domicilio" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoDocumento">
+            <EntityTypeMapping TypeName="DBRouillonConsultinVentasModel.TipoDocumento">
+              <MappingFragment StoreEntitySet="TipoDocumento">
+                <ScalarProperty Name="idTipoDocumento" ColumnName="idTipoDocumento" />
+                <ScalarProperty Name="tipoDocumento1" ColumnName="tipoDocumento" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoPersona">
+            <EntityTypeMapping TypeName="DBRouillonConsultinVentasModel.TipoPersona">
+              <MappingFragment StoreEntitySet="TipoPersona">
+                <ScalarProperty Name="idTipoPersona" ColumnName="idTipoPersona" />
+                <ScalarProperty Name="tipoPersona1" ColumnName="tipoPersona" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WH_Inventario">
+            <EntityTypeMapping TypeName="DBRouillonConsultinVentasModel.WH_Inventario">
+              <MappingFragment StoreEntitySet="WH_Inventario">
+                <ScalarProperty Name="idInventario" ColumnName="idInventario" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="fechaRegistro" ColumnName="fechaRegistro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WH_InventarioDetalle">
+            <EntityTypeMapping TypeName="DBRouillonConsultinVentasModel.WH_InventarioDetalle">
+              <MappingFragment StoreEntitySet="WH_InventarioDetalle">
+                <ScalarProperty Name="idDetalleInventario" ColumnName="idDetalleInventario" />
+                <ScalarProperty Name="nombreProducto" ColumnName="nombreProducto" />
+                <ScalarProperty Name="stockAntes" ColumnName="stockAntes" />
+                <ScalarProperty Name="stockDespues" ColumnName="stockDespues" />
+                <ScalarProperty Name="costo" ColumnName="costo" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+                <ScalarProperty Name="idProducto" ColumnName="idProducto" />
+                <ScalarProperty Name="idInventario" ColumnName="idInventario" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WH_ProductoServicio">
+            <EntityTypeMapping TypeName="DBRouillonConsultinVentasModel.WH_ProductoServicio">
+              <MappingFragment StoreEntitySet="WH_ProductoServicio">
+                <ScalarProperty Name="idProducto" ColumnName="idProducto" />
+                <ScalarProperty Name="idTipoProductoServicio" ColumnName="idTipoProductoServicio" />
+                <ScalarProperty Name="codigo" ColumnName="codigo" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="stock" ColumnName="stock" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="costo" ColumnName="costo" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+                <ScalarProperty Name="fechaRegistro" ColumnName="fechaRegistro" />
+                <ScalarProperty Name="fechaActualizacion" ColumnName="fechaActualizacion" />
+                <ScalarProperty Name="usuarioRegistro" ColumnName="usuarioRegistro" />
+                <ScalarProperty Name="usuarioActualizacion" ColumnName="usuarioActualizacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WH_TipoProductoServicio">
+            <EntityTypeMapping TypeName="DBRouillonConsultinVentasModel.WH_TipoProductoServicio">
+              <MappingFragment StoreEntitySet="WH_TipoProductoServicio">
+                <ScalarProperty Name="idTipoProductoServicio" ColumnName="idTipoProductoServicio" />
+                <ScalarProperty Name="tipoProductoServicio" ColumnName="tipoProductoServicio" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="fechaRegistro" ColumnName="fechaRegistro" />
+                <ScalarProperty Name="fechaActualizacion" ColumnName="fechaActualizacion" />
+                <ScalarProperty Name="usuarioRegistro" ColumnName="usuarioRegistro" />
+                <ScalarProperty Name="usuarioActualizaion" ColumnName="usuarioActualizaion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="DBRouillonConsultinVentasModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetRoles">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="sp_ReporteCambioMoneda" FunctionName="DBRouillonConsultinVentasModel.Store.sp_ReporteCambioMoneda" />
+          <FunctionImportMapping FunctionImportName="sp_ReporteComprobante" FunctionName="DBRouillonConsultinVentasModel.Store.sp_ReporteComprobante">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DBRouillonConsultinVentasModel.sp_ReporteComprobante_Result">
+                <ScalarProperty Name="idDetalleComprobante" ColumnName="idDetalleComprobante" />
+                <ScalarProperty Name="idComprobante" ColumnName="idComprobante" />
+                <ScalarProperty Name="serieCorrelativo" ColumnName="serieCorrelativo" />
+                <ScalarProperty Name="fechaRegistro" ColumnName="fechaRegistro" />
+                <ScalarProperty Name="tipoComprobante" ColumnName="tipoComprobante" />
+                <ScalarProperty Name="serie" ColumnName="serie" />
+                <ScalarProperty Name="correlativo" ColumnName="correlativo" />
+                <ScalarProperty Name="idCliente" ColumnName="idCliente" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellidos" ColumnName="apellidos" />
+                <ScalarProperty Name="numeroDocumento" ColumnName="numeroDocumento" />
+                <ScalarProperty Name="domicilio" ColumnName="domicilio" />
+                <ScalarProperty Name="idProducto" ColumnName="idProducto" />
+                <ScalarProperty Name="producto" ColumnName="producto" />
+                <ScalarProperty Name="tipoProductoServicio" ColumnName="tipoProductoServicio" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="montoUnitario" ColumnName="montoUnitario" />
+                <ScalarProperty Name="idMoneda" ColumnName="idMoneda" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="ventaMoneda" ColumnName="ventaMoneda" />
+                <ScalarProperty Name="subTotal" ColumnName="subTotal" />
+                <ScalarProperty Name="montoTotal" ColumnName="montoTotal" />
+                <ScalarProperty Name="textoTotal" ColumnName="textoTotal" />
+                <ScalarProperty Name="idIGV" ColumnName="idIGV" />
+                <ScalarProperty Name="porcentaje" ColumnName="porcentaje" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

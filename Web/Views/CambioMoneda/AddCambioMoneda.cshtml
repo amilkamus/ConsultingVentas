@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewBag.Title = "AddCambioMoneda";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/js/angular/controller/cambioMoneda/cambioMonedaController.js")></script>
+}
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">REGISTRAR CAMBIO DE MONEDA</h3>
+        </div>
+        <!--body -->
+        <div class="box-body">
+            <div ng-controller="cambioMonedaController" class="col-md-12 formulario-mediano">
+                <div class="form-horizontal col-md-12">
+                    <br />
+                    <form name="cambioMoneda" novalidate>
+                        <div class="form-group col-md-6">
+                            <label class="titulo1 texto-centrado control-label col-md-4" for="selectPersonal"> Moneda </label>
+                            <div class="col-md-8">
+                                <select id="cmbMoneda" class="select2 form-control" ng-model="model.idMoneda" ng-options="item.Id as item.Nombre for item in cmbMoneda" required></select>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label col-md-4">Compra</label>
+                            <div class="col-md-8">
+                                <input class="form-control lowercase padding-left-right-3" onkeypress="return soloDecimal(event);" placeholder="Ingrese Precio de Compra" ng-model="model.compraMoneda" required/>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label col-md-4">Venta</label>
+                            <div class="col-md-8">
+                                <input class="form-control lowercase padding-left-right-3" onkeypress="return soloDecimal(event);" placeholder="Ingrese Precio de Venta" ng-model="model.ventaMoneda" required/>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label col-md-4">Descripcion</label>
+                            <div class="col-md-8">
+                                <input class="form-control lowercase padding-left-right-3" placeholder="Ingrese Descripción" ng-model="model.descripcion" required/>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label col-md-4">Estado</label>
+                            <div class="col-md-8">
+                                <select id="cmbEstado" class="form-control lowercase padding-left-right-3" ng-model="model.estado" required>
+                                    <option value="ACTIVO">ACTIVO</option>
+                                    <option value="INACTIVO">INACTIVO</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- BOTONES -->
+                        <div class="form-group col-md-12">
+                            <div class="col-md-offset-4 col-md-8">
+                                <a class="btn btn-sm btn-primary" ng-click="validacion(cambioMoneda)">GUARDAR</a>
+                                @Html.ActionLink("CANCELAR", "ViewAllCambioMoneda", null, new { @class = "btn btn-sm btn-danger cancelar"})
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.box -->
+</section>

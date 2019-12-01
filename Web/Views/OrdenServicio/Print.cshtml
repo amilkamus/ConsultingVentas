@@ -1,0 +1,268 @@
+﻿@model Web.Models.OrdenServicio.OrdenServicioViewModel
+
+@{
+    ViewBag.Title = "Print";
+    Layout = "~/Views/Shared/_LayoutPrint.cshtml";
+}
+<style type="text/css">
+
+    table {
+        border-collapse: collapse;
+    }
+
+        table th {
+            text-align: left;
+        }
+
+    #detalle th, #detalle td {
+        padding: 5px;
+    }
+
+    .fondoCabecera {
+        background-color: rgb(252,213,180);
+    }
+</style>
+<div style="background-color:white">
+
+    <div class="row" style="margin-left:40px">
+        <div>
+            <p>
+                <table border="0" width="95%" style="font-weight:bold">
+                    <tr>
+                        <td align="right" HorizontalAlign="Right" Width="100%" colspan="3">
+                            FR 034<br />
+                            <br />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td Width="45%"><img src="~/Imagen/LogoITS.png" /></td>
+                        <td Font-Bold="true" Font-Size="20px" valign="bottom">ORDEN DE SERVICIO</td>
+                    </tr>
+                </table>
+            </p>
+            <p>
+                <table id="detalle" border="1" width="95%">
+                    <tr>
+                        <th width="20%" class="fondoCabecera">ORDEN DE SERVICIO N°</th>
+                        <td>@Html.DisplayFor(model => model.OrdenServicio.NumeroOrdenServicio)</td>
+                        <th width="20%" class="fondoCabecera">COTIZACION</th>
+                        <td>@Html.DisplayFor(model => model.OrdenServicio.NumeroCotizacion)</td>
+                    </tr>
+                    <tr>
+                        <th colspan="4" class="fondoCabecera">DATOS DEL CLIENTE</th>
+                    </tr>
+                    <tr>
+                        <th>Razón Social:</th>
+                        <td colspan="3">@Html.DisplayFor(model => model.Cotizacion.Solicitante)</td>
+                    </tr>
+                    <tr>
+                        <th>RUC:</th>
+                        <td colspan="3">@Html.DisplayFor(model => model.Cotizacion.RUC)</td>
+                    </tr>
+                    <tr>
+                        <th>Dirección:</th>
+                        <td colspan="3"></td>
+                    </tr>
+                    <tr>
+                        <th>Contacto:</th>
+                        <td colspan="3">@Html.DisplayFor(model => model.Cotizacion.Contacto)</td>
+                    </tr>
+                    <tr>
+                        <th>Email:</th>
+                        <td colspan="3">@Html.DisplayFor(model => model.Cotizacion.Email)</td>
+                    </tr>
+                    <tr>
+                        <th>Teléfono:</th>
+                        <td colspan="3">@Html.DisplayFor(model => model.Cotizacion.Telefono)</td>
+                    </tr>
+                    <tr>
+                        <th>Nombre del producto:</th>
+                        <td colspan="3">@Html.DisplayFor(model => model.Cotizacion.DescripcionProducto)</td>
+                    </tr>
+                    <tr>
+                        <th colspan="4" class="fondoCabecera">EMISIÓN DE INFORMES</th>
+                    </tr>
+                    <tr>
+                        <th>N° Copias:</th>
+                        <td colspan="3">@Html.DisplayFor(model => model.OrdenServicio.NumeroCopiasInforme)</td>
+                    </tr>
+                    <tr>
+                        <th>Otros / Observaciones:</th>
+                        <td colspan="3">@Html.DisplayFor(model => model.OrdenServicio.ObservacionesInforme)</td>
+                    </tr>
+                    <tr>
+                        <th colspan="4" class="fondoCabecera">PREPARACIÓN DE MATERIALES</th>
+                    </tr>
+                    <tr>
+                        <th>Dirección de envío:</th>
+                        <td colspan="3">@Html.DisplayFor(model => model.OrdenServicio.DireccionEnvioMateriales)</td>
+                    </tr>
+                    <tr>
+                        <th>Fecha de envío de materiales:</th>
+                        <td colspan="3">@Html.DisplayFor(model => model.OrdenServicio.FechaEnvioMateriales)</td>
+                    </tr>
+                    <tr>
+                        <th>Contacto:</th>
+                        <td colspan="3">@Html.DisplayFor(model => model.OrdenServicio.ContactoMateriales)</td>
+                    </tr>
+                    <tr>
+                        <th colspan="4" class="fondoCabecera">INSPECCIÓN / MUESTREO</th>
+                    </tr>
+                    <tr>
+                        <th>Contacto:</th>
+                        <td colspan="3">@Html.DisplayFor(model => model.OrdenServicio.ContactoInspeccion)</td>
+                    </tr>
+                    <tr>
+                        <th>Email:</th>
+                        <td colspan="3">@Html.DisplayFor(model => model.OrdenServicio.EmailInspeccion)</td>
+                    </tr>
+                    <tr>
+                        <th>Teléfono:</th>
+                        <td colspan="3">@Html.DisplayFor(model => model.OrdenServicio.TelefonoInspeccion)</td>
+                    </tr>
+                    <tr>
+                        <th>Coordinador de inspección:</th>
+                        <td colspan="3">@Html.DisplayFor(model => model.OrdenServicio.CoordinadorInspeccion)</td>
+                    </tr>
+                    <tr>
+                        <th>Lugar de Inspección / Muestreo:</th>
+                        <td colspan="3">@Html.DisplayFor(model => model.OrdenServicio.LugarInspeccion)</td>
+                    </tr>
+                    <tr>
+                        <th>Fecha de Inspección / Muestreo:</th>
+                        <td colspan="3">@Html.DisplayFor(model => model.OrdenServicio.FechaInspeccion)</td>
+                    </tr>
+                    <tr>
+                        <th>Hora de Inspección / Muestreo:</th>
+                        <td colspan="3">@Html.DisplayFor(model => model.OrdenServicio.HoraInspeccion)</td>
+                    </tr>
+                    <tr>
+                        <th>Tipo de Servicio:</th>
+                        <td colspan="3">@Html.DisplayFor(model => model.OrdenServicio.TipoServicioInspeccion)</td>
+                    </tr>
+                    <tr>
+                        <th>Nombre del producto:</th>
+                        <td>@Html.DisplayFor(model => model.OrdenServicio.NombreProductoInspeccion)</td>
+                        <th>Presentación:</th>
+                        <td>@Html.DisplayFor(model => model.OrdenServicio.PresentacionInspeccion)</td>
+                    </tr>
+                    <tr>
+                        <th>Cantidad de Lote:</th>
+                        <td colspan="3">@Html.DisplayFor(model => model.OrdenServicio.CantidadLoteInspeccion)</td>
+                    </tr>
+                    <tr>
+                        <th>Código(s) de Lote:</th>
+                        <td colspan="3">@Html.DisplayFor(model => model.OrdenServicio.CodigosLoteInspeccion)</td>
+                    </tr>
+                    <tr>
+                        <th>Otros / Observaciones:</th>
+                        <td colspan="3">@Html.DisplayFor(model => model.OrdenServicio.ObservacionesInspeccion)</td>
+                    </tr>
+                    @{
+                        var listaProductos = (from d in Model.Detalles
+                                              select d.producto).ToList().Distinct();
+                    }
+                    <tr style="border:hidden !important;padding:0">
+                        <td colspan="4" style="padding:0;">
+                            <table border="1" width="100%">
+                                <tr>
+                                    <th colspan="5" class="fondoCabecera" style="text-align:center">ANÁLISIS</th>
+                                </tr>
+                                <tr class="fondoCabecera">
+                                    <th>Parámetro</th>
+                                    <th>Metodología</th>
+                                    <th>Tipo de Parámetro</th>
+                                    <th>Límite de detección</th>
+                                    <th>Nº de muestras</th>
+                                </tr>
+                                @foreach (var item in listaProductos)
+                                {
+                                    <tbody>
+                                        <tr>
+                                            <th colspan="5" style="text-align:center">@item.nombre</th>
+                                        </tr>
+                                        @{ var elementosDetalle = (from n in Model.Detalles
+                                                                    where n.producto.idProducto == item.idProducto
+                                                                    select n).ToList();
+                                        }
+                                        @foreach (var item2 in elementosDetalle)
+                                        {
+                                            <tr>
+                                                <td>@item2.parametro.ParametroDescripcion</td>
+                                                <td>@item2.parametro.Metodologia</td>
+                                                <td>@item2.tipoParametro.TipoParametroDescripcion</td>
+                                                <td>@item2.parametro.LimiteDeteccion</td>
+                                                <td>@item2.productoCotizacion.Cantidad</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                }
+                            </table>
+                            <table border="1" width="100%" style="border-top:hidden">
+                                <tr>
+                                    <th colspan="4" class="fondoCabecera" style="text-align:center">CERTIFICADOS</th>
+                                </tr>
+                                <tr class="fondoCabecera">
+                                    <th>Documento</th>
+                                    <th>Norma de referencia</th>
+                                </tr>
+                                @{
+                                    if (Model.Certificados.Count == 0)
+                                    {
+                                        <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+                                    }
+                                }
+                                @foreach (var certificado in Model.Certificados)
+                                {
+                                    <tr>
+                                        <td>@certificado.Documento</td>
+                                        <td>@certificado.NormaReferencia</td>
+                                    </tr>
+                                }
+                            </table>
+                            <table border="1" width="100%" style="border-top:hidden">
+                                <thead>
+                                    <tr class="fondoCabecera">
+                                        <th colspan="7" style="text-align:center">INSPECCION / MUESTREO</th>
+                                    </tr>
+                                    <tr class="fondoCabecera">
+                                        <th>Actividad de Inspección / Muestreo</th>
+                                        <th>Procedimiento de inspección / Muestreo</th>
+                                        <th>Referencia Normativa</th>
+                                        <th>Referencia de muestreo</th>
+                                        <th>Plan de muestreo / Nivel / NCA</th>
+                                        <th>Lugar de muestreo</th>
+                                        <th>Cantidad</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.Inspeccion)
+                                    {
+                                        <tr>
+                                            <td>@item.Actividad</td>
+                                            <td>@item.Procedimiento</td>
+                                            <td>@item.ReferenciaNormativa</td>
+                                            <td>@item.ReferenciaMuestreo</td>
+                                            <td>@item.PlanMuestreo</td>
+                                            <td>@item.LugarMuestreo</td>
+                                            <td>@item.Cantidad</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th colspan="3" style="text-align:right">Registrado por:</th>
+                        <td>@Model.NombreUsuario</td>
+                    </tr>
+                    <tr>
+                        <th colspan="3" style="text-align:right">Fecha:</th>
+                        <td>@Model.OrdenServicio.FechaRegistro.ToString("dd/MM/yyyy")</td>
+                    </tr>
+                </table>
+            </p>
+        </div>
+    </div>
+    <br />
+</div>
