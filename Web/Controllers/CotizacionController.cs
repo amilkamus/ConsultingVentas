@@ -500,13 +500,13 @@ namespace Web.Controllers
                         Nombre = string.Format("{0} {1}", cliente.contactoNombre, cliente.contactoApellidos),
                         Telefono = cliente.contactoTelefono
                     },
-                    Departamento = "LIMA",
+                    //Departamento = "LIMA",
                     Direccion = cliente.empresaDomicilio,
-                    Distrito = "SAN JUAN DE LURIGANCHO",
+                    //Distrito = "SAN JUAN DE LURIGANCHO",
                     NombreComercial = cliente.empresaNombre,
                     NumeroDocumentoIdentidad = cliente.empresaNumeroDocumento,
                     PaginaWeb = "",
-                    Provincia = "LIMA",
+                    //Provincia = "LIMA",
                     RazonSocial = cliente.empresaNombre,
                     TipoDocumentoIdentidad = "6",
                     Urbanizacion = ""
@@ -548,7 +548,7 @@ namespace Web.Controllers
                 {
                     Gravado = new En_Gravado
                     {
-                        Total = cotizacion.IGV,
+                        Total = cotizacion.SubTotal,
                         GravadoIGV = new En_GrabadoIGV
                         {
                             MontoBase = cotizacion.SubTotal,
