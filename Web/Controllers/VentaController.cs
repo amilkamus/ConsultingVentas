@@ -44,6 +44,7 @@ namespace Web.Controllers
         IGVMastNEG igvMastNEG = new IGVMastNEG();
         Conversiones conversion = new Conversiones();
         Attachment adjunto;
+        
         public int temporal = 1;
 
         // GET: Venta
