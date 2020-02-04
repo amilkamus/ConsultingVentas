@@ -44,7 +44,7 @@ namespace Web.Controllers
         IGVMastNEG igvMastNEG = new IGVMastNEG();
         Conversiones conversion = new Conversiones();
         Attachment adjunto;
-        
+
         public int temporal = 1;
 
         // GET: Venta
@@ -57,7 +57,7 @@ namespace Web.Controllers
         public JsonResult guardarComprobante(VentaViewModels ventaViewModels, List<VentaDetalleViewModels> ventaDetalleViewModels, List<ProductoServicioViewModels> productoViewModels)
         {
             long IdComprobante = 0;
-            string pdfAbrir = "";
+            //string pdfAbrir = "";
             try
             {
                 OperationResult resultado = null;
@@ -88,14 +88,14 @@ namespace Web.Controllers
                         }
                     }
                 }
-                imprimirVentas(Convert.ToString(IdComprobante));
+                //imprimirVentas(Convert.ToString(IdComprobante));
                 temporal = 1;
                 Util.verificarError(resultado);
                 int tmpIdCorrelativo = comprobanteNEG.returnIdCorrelativo(Convert.ToInt32(IdComprobante));
                 var tmpComprobante = comprobanteNEG.tmpComprobante(Convert.ToInt32(IdComprobante));
                 var tmpCorrelativo = comprobanteNEG.tmpCorrelativo(tmpIdCorrelativo);
                 var tmpTipoComprobante = comprobanteNEG.tmpTipoComprobante(Convert.ToInt32(tmpCorrelativo.idTipoComprobante));
-                pdfAbrir = Server.MapPath("~/Reportes/" + tmpTipoComprobante.tipoComprobante + "/" + ventaViewModels.serieCorrelativo + ".pdf");
+                //pdfAbrir = Server.MapPath("~/Reportes/" + tmpTipoComprobante.tipoComprobante + "/" + ventaViewModels.serieCorrelativo + ".pdf");
 
                 if (resultado.code_result == OperationResultEnum.Success)
                 {
@@ -103,7 +103,7 @@ namespace Web.Controllers
                     try
                     {
                         ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-                        ServicePointManager.ServerCertificateValidationCallback = (snder, cert, chain, error) => true;                        
+                        ServicePointManager.ServerCertificateValidationCallback = (snder, cert, chain, error) => true;
                         List<Cliente> clientes = new ClienteNEG().listarCliente();
                         List<MostrarClienteViewModel> lista = MostrarClienteViewModel.convert(clientes);
                         MostrarClienteViewModel cliente = (from c in lista
@@ -150,8 +150,8 @@ namespace Web.Controllers
                             decimal valorVentaUnitario = item.cantidad * item.precio;
                             decimal impuestoTotalItem = valorVentaUnitario * 0.18M;
                             ProductoServicioViewModels producto = (from p in productoViewModels
-                                            where p.idProducto == item.idProducto
-                                            select p).FirstOrDefault();
+                                                                   where p.idProducto == item.idProducto
+                                                                   select p).FirstOrDefault();
                             impuestoTotal += impuestoTotalItem;
                             En_ComprobanteDetalleImpuestos comprobanteDetalleImpuestos = new En_ComprobanteDetalleImpuestos
                             {
@@ -240,7 +240,7 @@ namespace Web.Controllers
                     {
                         throw e;
                     }
-                }                
+                }
                 return Json(new { code_result = resultado.code_result, data = resultado.data, result_description = resultado.title }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
@@ -250,12 +250,12 @@ namespace Web.Controllers
 
                 System.IO.StreamWriter sw = new System.IO.StreamWriter(ruta, true);
                 string texto;
-                texto = " MESSAGE: " + e.Message.ToString() + " SOURCE: " + e.Source + " STACKTRACE: " + e.StackTrace + "totGC:" + e.ToString() + " pdfAbrir:" + pdfAbrir;
+                texto = " MESSAGE: " + e.Message.ToString() + " SOURCE: " + e.Source + " STACKTRACE: " + e.StackTrace + "totGC:" + e.ToString();// + " pdfAbrir:" + pdfAbrir;
                 sw.WriteLine(texto);
                 sw.Close();
 
                 HttpContext.Response.StatusCode = 500;
-                return Json(Util.errorJson(e));
+                return Json(Util.errorJson(e), JsonRequestBehavior.AllowGet);
             }
         }
         #endregion
@@ -385,9 +385,14 @@ namespace Web.Controllers
         public ActionResult imprimirVentas(string idComprobante)
         {
             Microsoft.Reporting.WebForms.ReportViewer reportViewer = new Microsoft.Reporting.WebForms.ReportViewer();
-
             try
             {
+                /*
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+                ServicePointManager.ServerCertificateValidationCallback = (snder, cert, chain, error) => true;
+
+                Service1Client client = new Service1Client();
+                */
                 string Reporttype = "PDF";
                 string fileExtension;
                 string mimeType;
@@ -401,19 +406,22 @@ namespace Web.Controllers
                     var tmpTipoComprobante = comprobanteNEG.tmpTipoComprobante(Convert.ToInt32(tmpCorrelativo.idTipoComprobante));
                     string correoCliente = comprobanteNEG.tmpClienteCorreo(Convert.ToInt32(tmpComprobante.idCliente));
 
+                    var serieCorrelativo = tmpComprobante.serieCorrelativo;
+                    string serie = "", numero = "";
+                    if(serieCorrelativo.Length > 0)
+                    {
+                        serie = serieCorrelativo.Split('-')[0];
+                        numero = serieCorrelativo.Split('-')[1];
+                    }
+                    var tipoComprobante = (tmpTipoComprobante.idTipoComprobante == 2) ? "01" : "03";
+
                     //Directorio de almacenamiento
                     var path01 = Path.Combine(Server.MapPath("~/Reportes"), tmpTipoComprobante.tipoComprobante);
                     if (!Directory.Exists(path01))
                         Directory.CreateDirectory(path01);
-                    //Fin
 
                     reportViewer.ProcessingMode = ProcessingMode.Local;
-
-                    //LocalReport localReport = new LocalReport();
                     reportViewer.LocalReport.ReportPath = Server.MapPath("~/Reportes/Report1.rdlc");   //Report1_Large.rdlc
-                    //var reportStream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream(Server.MapPath("~/Reportes/Report1.rdlc"));
-                    //localReport.LoadReportDefinition(reportStream);
-
                     reportViewer.LocalReport.Refresh();
                     reportViewer.LocalReport.EnableExternalImages = true;
 
@@ -423,24 +431,12 @@ namespace Web.Controllers
                     reportViewer.LocalReport.DataSources.Add(reportDataSource);
                     reportViewer.LocalReport.Refresh();
 
-                    //if (Reporttype == "Excel")
-                    //{
-                    //    fileName = "xlsx";
-                    //}
-                    //if (Reporttype == "PDF")
-                    //{
-                    //    fileExtension = "application/pdf";// "pdf";
-                    //}
                     fileExtension = "pdf";
 
                     string[] streams;
                     Warning[] warnings;
                     byte[] renderByte;
-                    var fileName = tmpComprobante.serieCorrelativo;
-
-                    //string deviceInfo = "<DeviceInfo>" + "  <OutputFormat>EMF</OutputFormat>" + "  <PageWidth>8.5in</PageWidth>" + "  <PageHeight>11in</PageHeight>" + "  <MarginTop>1in</MarginTop>" + "  <MarginLeft>1.00in</MarginLeft>" + "  <MarginRight>1.00in</MarginRight>" + "  <MarginBottom>0.75in</MarginBottom>" + "</DeviceInfo>";
-                    //renderByte = reportViewer.LocalReport.Render(Reporttype, deviceInfo, out mimeType, out encodig, out fileExtension, out streams, out warnings);
-                    //Response.AddHeader("content-disposition", "attachment;filename =" + fileName + "." + fileExtension);
+                    var fileName = tmpComprobante.serieCorrelativo;                    
 
                     renderByte = reportViewer.LocalReport.Render("PDF");
                     Response.Buffer = true;
@@ -474,7 +470,6 @@ namespace Web.Controllers
                 HttpContext.Response.StatusCode = 500;
                 return Json(Util.errorJson(e));
             }
-
         }
         #endregion
 
