@@ -19,14 +19,15 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="https://www.quypay.com/FactElect/Service1.svc?wsdl" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost:57980/Service1.svc?wsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="Service14.xsd" MetadataType="Schema" ID="7ad7b2ec-43b4-43fa-91a9-a016ca211100" SourceId="1" SourceUrl="https://www.quypay.com/FactElect/Service1.svc?xsd=xsd0" />
-    <MetadataFile FileName="Service11.wsdl" MetadataType="Wsdl" ID="6cf131d0-f2ca-45ac-8da7-f05ddb715243" SourceId="1" SourceUrl="https://www.quypay.com/FactElect/Service1.svc?wsdl" />
-    <MetadataFile FileName="Service141.xsd" MetadataType="Schema" ID="e5f18312-9df3-464c-bcb1-93221f3cb80e" SourceId="1" SourceUrl="https://www.quypay.com/FactElect/Service1.svc?xsd=xsd1" />
-    <MetadataFile FileName="Service142.xsd" MetadataType="Schema" ID="c2947298-ce6b-4aea-86cc-f1eaebb6c5ae" SourceId="1" SourceUrl="https://www.quypay.com/FactElect/Service1.svc?xsd=xsd2" />
-    <MetadataFile FileName="Service143.xsd" MetadataType="Schema" ID="68652314-0512-486d-bb04-ff2a1ee46ac8" SourceId="1" SourceUrl="https://www.quypay.com/FactElect/Service1.svc?xsd=xsd3" />
+    <MetadataFile FileName="Service1.xsd" MetadataType="Schema" ID="7c3b322f-dfa3-44c1-9897-e8c0b5682210" SourceId="1" SourceUrl="http://localhost:57980/Service1.svc?xsd=xsd1" />
+    <MetadataFile FileName="Service11.xsd" MetadataType="Schema" ID="38f61820-9c03-4cc8-8813-96ff86fbeb62" SourceId="1" SourceUrl="http://localhost:57980/Service1.svc?xsd=xsd3" />
+    <MetadataFile FileName="Service12.xsd" MetadataType="Schema" ID="260b1df0-502a-4230-b05c-f0258818ff7a" SourceId="1" SourceUrl="http://localhost:57980/Service1.svc?xsd=xsd4" />
+    <MetadataFile FileName="Service13.xsd" MetadataType="Schema" ID="fdfca210-d910-4fa2-add6-ee8d13f45f8b" SourceId="1" SourceUrl="http://localhost:57980/Service1.svc?xsd=xsd2" />
+    <MetadataFile FileName="Service1.wsdl" MetadataType="Wsdl" ID="727b31f9-6cc8-47dc-b5b0-f718f41acfad" SourceId="1" SourceUrl="http://localhost:57980/Service1.svc?wsdl" />
+    <MetadataFile FileName="Service14.xsd" MetadataType="Schema" ID="f505ea6f-f3b6-4f4b-ab73-95a48bf07756" SourceId="1" SourceUrl="http://localhost:57980/Service1.svc?xsd=xsd0" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

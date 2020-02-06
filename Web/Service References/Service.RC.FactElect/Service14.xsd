@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="https://www.quypay.com/FactElect/Service1.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/FactElec.CapaEntidad.RegistroComprobante" />
+  <xs:import schemaLocation="http://localhost:57980/Service1.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/FactElec.CapaEntidad.RegistroComprobante" />
+  <xs:import schemaLocation="http://localhost:57980/Service1.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/FactElec.CapaEntidad.ObtenerRepresentacionImpresa" />
   <xs:element name="RegistroComprobante">
     <xs:complexType>
       <xs:sequence>
@@ -12,6 +13,20 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/FactElec.CapaEntidad.RegistroComprobante" minOccurs="0" name="RegistroComprobanteResult" nillable="true" type="q2:En_Respuesta" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerRepresentacionImpresa">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/FactElec.CapaEntidad.ObtenerRepresentacionImpresa" minOccurs="0" name="entrada" nillable="true" type="q3:En_EntradaObtenerRI" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerRepresentacionImpresaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/FactElec.CapaEntidad.ObtenerRepresentacionImpresa" minOccurs="0" name="ObtenerRepresentacionImpresaResult" nillable="true" type="q4:En_SalidaObtenerRI" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

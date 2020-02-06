@@ -22,6 +22,7 @@ using System.Data.Entity.Migrations;
 using Microsoft.Reporting.WebForms;
 using System.IO;
 using System.Data.SqlClient;
+using Web.Models.OrdenServicio;
 
 namespace Web.Controllers
 {
@@ -114,14 +115,14 @@ namespace Web.Controllers
                 {
                     RptPath = Server.MapPath("~/Content/Reportes/CotizacionAlimentos.rdlc");
                 }
-                
+
                 lr = new LocalReport
                 {
                     ReportPath = RptPath,
                     EnableExternalImages = true,
                     EnableHyperlinks = true
                 };
-                               
+
                 CO_ComprobanteNEG comprobanteNEG = new CO_ComprobanteNEG();
                 DataSet ds = comprobanteNEG.ObtenerCotizacionImpresion(cotizacion.ID);
                 ClienteNEG clienteNEG = new ClienteNEG();
@@ -167,7 +168,7 @@ namespace Web.Controllers
                 lr.DataSources.Add(new ReportDataSource("Productos", ds.Tables[1]));
                 lr.DataSources.Add(new ReportDataSource("Certificados", ds.Tables[2]));
                 lr.DataSources.Add(new ReportDataSource("PlanInspeccion", ds.Tables[3]));
-                lr.DataSources.Add(new ReportDataSource("Resumen", ds.Tables[4]));                
+                lr.DataSources.Add(new ReportDataSource("Resumen", ds.Tables[4]));
             }
             catch (Exception e)
             {
@@ -398,6 +399,22 @@ namespace Web.Controllers
                 db.Cotizacions.Add(cotizacionViewModel.Cotizacion);
                 db.SaveChanges();
 
+                if (!string.IsNullOrEmpty(numeroCotizacionBD))
+                {
+                    OrdenServicio ordenServicio = (from o in db.OrdenServicio.ToList()
+                                                   where o.NumeroCotizacion == cotizacionMod.NumeroCotizacion
+                                                   select o).FirstOrDefault();
+
+                    if (ordenServicio != null)
+                    {
+                        ordenServicio.IdUsuarioModificacion = idUsuario;
+                        ordenServicio.FechaModificacion = DateTime.Now;
+                        ordenServicio.NumeroCotizacion = numeroCotizacion;
+                        db.Set<OrdenServicio>().AddOrUpdate(ordenServicio);
+                        db.SaveChanges();
+                    }
+                }
+
                 long idCotizacion = cotizacionViewModel.Cotizacion.ID;
 
                 if (cotizacionViewModel.Certificados != null)
@@ -500,13 +517,13 @@ namespace Web.Controllers
                         Nombre = string.Format("{0} {1}", cliente.contactoNombre, cliente.contactoApellidos),
                         Telefono = cliente.contactoTelefono
                     },
-                    Departamento = "LIMA",
+                    //Departamento = "LIMA",
                     Direccion = cliente.empresaDomicilio,
-                    Distrito = "SAN JUAN DE LURIGANCHO",
+                    //Distrito = "SAN JUAN DE LURIGANCHO",
                     NombreComercial = cliente.empresaNombre,
                     NumeroDocumentoIdentidad = cliente.empresaNumeroDocumento,
                     PaginaWeb = "",
-                    Provincia = "LIMA",
+                    //Provincia = "LIMA",
                     RazonSocial = cliente.empresaNombre,
                     TipoDocumentoIdentidad = "6",
                     Urbanizacion = ""
@@ -548,7 +565,7 @@ namespace Web.Controllers
                 {
                     Gravado = new En_Gravado
                     {
-                        Total = cotizacion.IGV,
+                        Total = cotizacion.SubTotal,
                         GravadoIGV = new En_GrabadoIGV
                         {
                             MontoBase = cotizacion.SubTotal,
