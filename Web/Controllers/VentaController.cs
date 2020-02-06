@@ -285,7 +285,7 @@ namespace Web.Controllers
         }
         #endregion
 
-        [Authorize(Roles = "ADMINISTRADOR")]
+        [Authorize(Roles = "ADMINISTRADOR, OPERADOR")]
         #region Listar Cliente
         public JsonResult listarCliente()
         {
@@ -304,7 +304,7 @@ namespace Web.Controllers
         }
         #endregion
 
-        [Authorize(Roles = "ADMINISTRADOR")]
+        [Authorize(Roles = "ADMINISTRADOR, OPERADOR")]
         #region Listar Producto
         public JsonResult listarProducto()
         {
@@ -361,7 +361,7 @@ namespace Web.Controllers
         }
         #endregion
 
-        [Authorize(Roles = "ADMINISTRADOR")]
+        [Authorize(Roles = "ADMINISTRADOR, OPERADOR")]
         #region Listar Detalle de Comprobante
         public JsonResult listarComprobanteDetalle(int idComprobante)
         {

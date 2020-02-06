@@ -34,7 +34,7 @@ namespace Web.Controllers
         WH_ProductoServicioNEG productoServicioNEG = new WH_ProductoServicioNEG();
 
         // GET: Cotizacion
-        [Authorize]
+        [Authorize(Roles = "ADMINISTRADOR, OPERADOR, PARAMETRIZADOR, FACTURACION")]
         public ActionResult Index()
         {
             return View(db.Cotizacions.OrderByDescending(x => (x.FechaModificacion == null) ? x.FechaRegistro : x.FechaModificacion)); //.ThenBy(x => x.NumeroCotizacion).ThenBy(x => x.Correlativo).ThenByDescending(x => x.CorrelativoInicial));
@@ -197,7 +197,7 @@ namespace Web.Controllers
             return File(filePath, "application/pdf");
         }
 
-        [Authorize]
+        [Authorize(Roles = "ADMINISTRADOR, OPERADOR")]
         // GET: Cotizacion/Create
         public ActionResult Create()
         {
@@ -222,6 +222,7 @@ namespace Web.Controllers
         }
 
         // GET: Cotizacion/Edit/5
+        [Authorize(Roles = "ADMINISTRADOR, OPERADOR")]
         public ActionResult Edit(long id)
         {
             if (id == null)
@@ -249,6 +250,7 @@ namespace Web.Controllers
         }
 
         // GET: Cotizacion/Delete/5
+        [Authorize(Roles = "ADMINISTRADOR, OPERADOR")]
         public ActionResult Delete(long id)
         {
             if (id == null)
@@ -341,6 +343,7 @@ namespace Web.Controllers
             }
         }
 
+        [Authorize(Roles = "ADMINISTRADOR, OPERADOR")]
         public JsonResult RegistrarCotizacion(CotizacionViewModel cotizacionViewModel)
         {
             try

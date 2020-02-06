@@ -17,7 +17,7 @@ namespace Web.Controllers
         WH_TipoProductoServicioNEG tipoProductoNEG = new WH_TipoProductoServicioNEG();
 
         // GET: Ventas/Producto
-        [Authorize(Roles = "ADMINISTRADOR")]
+        [Authorize(Roles = "ADMINISTRADOR, OPERADOR")]
         #region Agregar Producto
         public ActionResult AddProducto()
         {
@@ -48,8 +48,8 @@ namespace Web.Controllers
             }
         }
         #endregion
-        
-        [Authorize(Roles = "ADMINISTRADOR")]
+
+        [Authorize(Roles = "ADMINISTRADOR, OPERADOR")]
         #region Listar Producto
         public ActionResult ViewAllProducto()
         {
@@ -73,6 +73,7 @@ namespace Web.Controllers
         }
         #endregion
 
+        [Authorize(Roles = "ADMINISTRADOR, OPERADOR")]
         #region Eliminar Producto
         public JsonResult eliminarProducto(int id)
         {

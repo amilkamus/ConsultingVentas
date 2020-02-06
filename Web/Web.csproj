@@ -1666,25 +1666,19 @@
     <Content Include="Views\OrdenServicio\Edit.cshtml" />
     <Content Include="Views\OrdenServicio\Index.cshtml" />
     <Content Include="Views\OrdenServicio\Print.cshtml" />
-    <None Include="Service References\Service.RC.FactElect\Service1.wsdl" />
-    <None Include="Service References\Service.RC.FactElect\Service1.xsd">
+    <None Include="Service References\Service.RC.FactElect\Service11.wsdl" />
+    <None Include="Service References\Service.RC.FactElect\Service15.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\Service.RC.FactElect\Service11.xsd">
+    <None Include="Service References\Service.RC.FactElect\Service151.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\Service.RC.FactElect\Service12.xsd">
+    <None Include="Service References\Service.RC.FactElect\Service152.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\Service.RC.FactElect\Service13.xsd">
+    <None Include="Service References\Service.RC.FactElect\Service153.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\Service.RC.FactElect\Service14.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="Service References\Service.RC.FactElect\Web.Service.RC.FactElect.En_SalidaObtenerRI.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

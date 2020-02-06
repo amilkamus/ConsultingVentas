@@ -19,15 +19,14 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:57980/Service1.svc?wsdl" Protocol="http" SourceId="1" />
+    <MetadataSource Address="https://www.quypay.com/FactElect/Service1.svc?wsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="Service1.xsd" MetadataType="Schema" ID="7c3b322f-dfa3-44c1-9897-e8c0b5682210" SourceId="1" SourceUrl="http://localhost:57980/Service1.svc?xsd=xsd1" />
-    <MetadataFile FileName="Service11.xsd" MetadataType="Schema" ID="38f61820-9c03-4cc8-8813-96ff86fbeb62" SourceId="1" SourceUrl="http://localhost:57980/Service1.svc?xsd=xsd3" />
-    <MetadataFile FileName="Service12.xsd" MetadataType="Schema" ID="260b1df0-502a-4230-b05c-f0258818ff7a" SourceId="1" SourceUrl="http://localhost:57980/Service1.svc?xsd=xsd4" />
-    <MetadataFile FileName="Service13.xsd" MetadataType="Schema" ID="fdfca210-d910-4fa2-add6-ee8d13f45f8b" SourceId="1" SourceUrl="http://localhost:57980/Service1.svc?xsd=xsd2" />
-    <MetadataFile FileName="Service1.wsdl" MetadataType="Wsdl" ID="727b31f9-6cc8-47dc-b5b0-f718f41acfad" SourceId="1" SourceUrl="http://localhost:57980/Service1.svc?wsdl" />
-    <MetadataFile FileName="Service14.xsd" MetadataType="Schema" ID="f505ea6f-f3b6-4f4b-ab73-95a48bf07756" SourceId="1" SourceUrl="http://localhost:57980/Service1.svc?xsd=xsd0" />
+    <MetadataFile FileName="Service15.xsd" MetadataType="Schema" ID="b65ada5a-eba3-41c1-aecb-ddc7098cb68c" SourceId="1" SourceUrl="https://www.quypay.com/FactElect/Service1.svc?xsd=xsd0" />
+    <MetadataFile FileName="Service11.wsdl" MetadataType="Wsdl" ID="33360b56-84dc-41ba-99a8-42b15150e6e8" SourceId="1" SourceUrl="https://www.quypay.com/FactElect/Service1.svc?wsdl" />
+    <MetadataFile FileName="Service151.xsd" MetadataType="Schema" ID="f9ad3d5e-f0af-41ed-9d23-a1a2b34a4731" SourceId="1" SourceUrl="https://www.quypay.com/FactElect/Service1.svc?xsd=xsd1" />
+    <MetadataFile FileName="Service152.xsd" MetadataType="Schema" ID="ab3e8bfd-6e13-4148-83e5-b2240d96e3ca" SourceId="1" SourceUrl="https://www.quypay.com/FactElect/Service1.svc?xsd=xsd2" />
+    <MetadataFile FileName="Service153.xsd" MetadataType="Schema" ID="d8bad50b-bade-4646-8065-5ed576bb896f" SourceId="1" SourceUrl="https://www.quypay.com/FactElect/Service1.svc?xsd=xsd3" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

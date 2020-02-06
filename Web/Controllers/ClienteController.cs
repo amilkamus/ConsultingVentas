@@ -77,13 +77,14 @@ namespace Web.Controllers
         }
         #endregion
 
-        [Authorize(Roles = "ADMINISTRADOR")]
+        [Authorize(Roles = "ADMINISTRADOR, CONSULTOR, OPERADOR")]
         #region Listar Cliente
         public ActionResult ViewAllCliente()
         {
             return View();
         }
 
+        [Authorize(Roles = "ADMINISTRADOR, CONSULTOR, OPERADOR")]
         public JsonResult listarCliente()
         {
             try

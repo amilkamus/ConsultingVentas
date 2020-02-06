@@ -17,7 +17,7 @@ namespace Web.Controllers
         CO_TipoComprobanteNEG tipoComprobanteNEG = new CO_TipoComprobanteNEG();
 
         // GET: CorrelativoMast
-        [Authorize(Roles = "ADMINISTRADOR")]
+        [Authorize(Roles = "ADMINISTRADOR, FACTURACION")]
         #region Agregar Correlativo
         public ActionResult AddCorrelativo()
         {
@@ -49,7 +49,7 @@ namespace Web.Controllers
         }
         #endregion
         
-        [Authorize(Roles = "ADMINISTRADOR")]
+        [Authorize(Roles = "ADMINISTRADOR, FACTURACION")]
         #region Listar Correlativos
         public ActionResult ViewAllCorrelativoMast()
         {
