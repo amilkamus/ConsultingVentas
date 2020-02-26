@@ -1,13 +1,62 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Datos
 {
-    public class WH_ProductoServicioDAT:ConexionBD
+    public class WH_ProductoServicioDAT : ConexionBD
     {
+        public DataTable ListarParametrosProducto(long idProducto)
+        {
+            SqlConnection cn = new SqlConnection(_db.Database.Connection.ConnectionString);
+            try
+            {
+                SqlCommand cmd = new SqlCommand("usp_ListarParametrosProducto", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@idProducto", SqlDbType.BigInt).Value = idProducto;
+
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable tbl = new DataTable();
+                da.Fill(tbl);
+
+                return tbl;
+            }
+            catch (Exception e)
+            {
+                if (cn.State == System.Data.ConnectionState.Open)
+                {
+                    cn.Close();
+                }
+                throw e;
+            }
+        }
+        public void InsertarParametrosProducto(long idProducto, DataTable parametros)
+        {
+            SqlConnection cn = new SqlConnection(_db.Database.Connection.ConnectionString);
+            try
+            {
+                SqlCommand cmd = new SqlCommand("usp_InsertarParametrosProducto", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@idProducto", SqlDbType.BigInt).Value = idProducto;
+                cmd.Parameters.Add("@parametroProducto", SqlDbType.Structured).Value = parametros;
+                cn.Open();
+                cmd.ExecuteNonQuery();
+                cn.Close();
+            }
+            catch (Exception e)
+            {
+                if (cn.State == System.Data.ConnectionState.Open)
+                {
+                    cn.Close();
+                }
+                throw e;
+            }
+        }
+
         public OperationResult crear(WH_ProductoServicio productoServicio)
         {
             try
@@ -54,7 +103,7 @@ namespace Datos
                 throw e;
             }
         }
-        
+
         public IEnumerable<WH_ProductoServicio> listar()
         {
             try

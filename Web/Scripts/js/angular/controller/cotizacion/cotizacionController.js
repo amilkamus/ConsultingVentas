@@ -10,10 +10,8 @@
     $scope.elementosCertificado = { lista: [] };
     $scope.elementosInspeccion = { lista: [] };
     $scope.elementosResumen = { lista: [] };
-
     $scope.elementosMoneda = [];
     $scope.elementosTipoCotizacion = [];
-
     $scope.cliente = {};
     $scope.producto = {};
     $scope.productosDetalle = [];
@@ -22,6 +20,7 @@
     $scope.certificado = {};
     $scope.inspeccion = {};
     $scope.resumen = {};
+    $scope.model.FlagControles = false;
 
     $scope.init = function () {
 
@@ -319,71 +318,141 @@
         var itemDetalle = null;
         var index = -1;
 
-        if ($.isEmptyObject($scope.producto) || $.isEmptyObject($scope.parametro) || $.isEmptyObject($scope.tipoParametro)) {
-            $scope.mensajeAlerta('Debe ingresar todos los datos del detalle a analizar.');
-            return;
-        }
-
-        if ($scope.parametro.Precio == undefined || $scope.parametro.Precio == "") {
-            $scope.mensajeAlerta('Debe ingresar el precio del detalle a analizar');
-            return
-        }
-
-        if (parseFloat($scope.parametro.Precio) <= 0) {
-            $scope.mensajeAlerta('Debe ingresar un valor mayor a cero para el precio del detalle.');
-            return;
-        }
-
-        if ($scope.producto.cantidad == undefined || parseFloat($scope.producto.cantidad) == 0) {
-            $scope.mensajeAlerta('Debe ingresar el número de muestras del detalle.');
-            return;
-        }
-
-        for (var i = 0; i < lista.length; i++) {
-            var item = lista[i];
-            if (item.producto.idProducto == $scope.producto.idProducto && item.parametro.ID == $scope.parametro.ID) {
-                itemDetalle = item;
-                existe = true;
-                index = i;
-                break;
+        if (!$scope.model.FlagControles) {
+            if ($.isEmptyObject($scope.producto) || $.isEmptyObject($scope.parametro) || $.isEmptyObject($scope.tipoParametro)) {
+                $scope.mensajeAlerta('Debe ingresar todos los datos del detalle a analizar.');
+                return;
             }
-        }
-
-        var existeProducto = false;
-        for (var i = 0; i < lista.length; i++) {
-            var item = lista[i];
-            if (item.producto.idProducto == $scope.producto.idProducto) {
-                existeProducto = true;
-                break;
+            if ($scope.parametro.Precio == undefined || $scope.parametro.Precio == "") {
+                $scope.mensajeAlerta('Debe ingresar el precio del detalle a analizar');
+                return
             }
-        }
-        if (!existeProducto) {
-            $scope.productosDetalle.push($scope.producto);
-        }
 
-        var objetoDetalle = {
-            producto: $scope.producto,
-            parametro: $scope.parametro,
-            tipoParametro: $scope.tipoParametro
-        }
+            if (parseFloat($scope.parametro.Precio) <= 0) {
+                $scope.mensajeAlerta('Debe ingresar un valor mayor a cero para el precio del detalle.');
+                return;
+            }
 
-        if (!existe) {
-            objetoDetalle.Precio = $scope.parametro.Precio;
-            objetoDetalle.IdCotizacion = $scope.model.IdCotizacion;
-            $scope.elementosDetalle.lista.push(objetoDetalle);
+            if ($scope.producto.cantidad == undefined || parseFloat($scope.producto.cantidad) == 0) {
+                $scope.mensajeAlerta('Debe ingresar el número de muestras del detalle.');
+                return;
+            }
+
+            for (var i = 0; i < lista.length; i++) {
+                var item = lista[i];
+                if (item.producto.idProducto == $scope.producto.idProducto && item.parametro.ID == $scope.parametro.ID) {
+                    itemDetalle = item;
+                    existe = true;
+                    index = i;
+                    break;
+                }
+            }
+
+            var existeProducto = false;
+            for (var i = 0; i < lista.length; i++) {
+                var item = lista[i];
+                if (item.producto.idProducto == $scope.producto.idProducto) {
+                    existeProducto = true;
+                    break;
+                }
+            }
+            if (!existeProducto) {
+                $scope.productosDetalle.push($scope.producto);
+            }
+
+            var objetoDetalle = {
+                producto: $scope.producto,
+                parametro: $scope.parametro,
+                tipoParametro: $scope.tipoParametro
+            }
+
+            if (!existe) {
+                objetoDetalle.Precio = $scope.parametro.Precio;
+                objetoDetalle.IdCotizacion = $scope.model.IdCotizacion;
+                $scope.elementosDetalle.lista.push(objetoDetalle);
+            } else {
+                var cantidad = parseInt(itemDetalle.producto.cantidad) + parseInt($scope.producto.cantidad);
+                itemDetalle = objetoDetalle;
+                itemDetalle.Precio = $scope.parametro.Precio;
+                itemDetalle.producto.cantidad = cantidad;
+                itemDetalle.IdCotizacion = $scope.model.IdCotizacion;
+                $scope.elementosDetalle.lista.splice(index, 1, itemDetalle);
+            }
+
+            $scope.recalcularSubtotal();
+            $scope.producto = {};
+            $scope.parametro = {};
+            $scope.tipoParametro = {};
+
         } else {
-            var cantidad = parseInt(itemDetalle.producto.cantidad) + parseInt($scope.producto.cantidad);
-            itemDetalle = objetoDetalle;
-            itemDetalle.Precio = $scope.parametro.Precio;
-            itemDetalle.producto.cantidad = cantidad;
-            itemDetalle.IdCotizacion = $scope.model.IdCotizacion;
-            $scope.elementosDetalle.lista.splice(index, 1, itemDetalle);
-        }
+            if ($.isEmptyObject($scope.producto)) {
+                $scope.mensajeAlerta('Debe ingresar todos los datos del detalle a analizar.');
+                return;
+            }
+            
+            // obtener lista de parámetros y tipo de parámetros
+            // recorrer la lista de parámetros e ir agregándolos
+            cotizacionService.listarParametrosProducto({ id: $scope.producto.idProducto }).then(function (data) {
+                if (data.data && data.data.Detalles.length > 0) {
 
-        $scope.recalcularSubtotal();
-        $scope.producto = {};
-        $scope.parametro = {};
-        $scope.tipoParametro = {};
+                    var existeProducto = false;
+                    for (var i = 0; i < lista.length; i++) {
+                        var item = lista[i];
+                        if (item.producto.idProducto == $scope.producto.idProducto) {
+                            existeProducto = true;
+                            break;
+                        }
+                    }
+                    if (!existeProducto) {
+                        $scope.productosDetalle.push($scope.producto);
+                    }
+
+                    for (var i = 0; i < data.data.Detalles.length; i++) {
+                        lista = $scope.elementosDetalle.lista;
+
+                        var detalle = data.data.Detalles[i];
+                        detalle.producto.cantidad = 1;
+
+                        var objetoDetalle = {
+                            producto: detalle.producto,
+                            parametro: detalle.parametro,
+                            tipoParametro: detalle.tipoParametro
+                        }
+
+                        for (var x = 0; x < lista.length; x++) {
+                            var item = lista[x];
+                            if (item.producto.idProducto == detalle.producto.idProducto && item.parametro.ID == detalle.parametro.ID) {
+                                itemDetalle = item;
+                                existe = true;
+                                index = x;
+                                break;
+                            }
+                        }
+
+                        if (!existe) {
+                            objetoDetalle.Precio = detalle.parametro.Precio;
+                            objetoDetalle.IdCotizacion = $scope.model.IdCotizacion;
+                            $scope.elementosDetalle.lista.push(objetoDetalle);
+                        } else {
+                            var cantidad = parseInt(itemDetalle.producto.cantidad) + parseInt(detalle.producto.cantidad);
+                            itemDetalle = objetoDetalle;
+                            itemDetalle.Precio = detalle.parametro.Precio;
+                            itemDetalle.producto.cantidad = cantidad;
+                            itemDetalle.IdCotizacion = $scope.model.IdCotizacion;
+                            $scope.elementosDetalle.lista.splice(index, 1, itemDetalle);
+                        }
+                    }
+
+                    $scope.recalcularSubtotal();
+                    $scope.calculcarDescuento($scope.model.PorcentajeDescuento);
+                    $scope.producto = {};
+                    $scope.parametro = {};
+                    $scope.tipoParametro = {};
+                } else {
+                    $scope.mensajeAlerta("El producto seleccionado no tiene parámetros asociados.");
+                }
+            });
+        }
     }
 
     $scope.agregarCertificado = function () {
@@ -480,6 +549,7 @@
         }
 
         $scope.recalcularSubtotal();
+        $scope.calculcarDescuento($scope.model.PorcentajeDescuento);
     }
 
     $scope.quitarCertificado = function (index) {

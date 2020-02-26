@@ -281,6 +281,7 @@
     <Compile Include="Models\OrdenServicio\OrdenServicioViewModel.cs" />
     <Compile Include="Models\ParametroContext.cs" />
     <Compile Include="Models\Parametro\Parametro.cs" />
+    <Compile Include="Models\Parametro\ParametroViewModel.cs" />
     <Compile Include="Models\PersonaMaster\PersonaMastViewModel.cs" />
     <Compile Include="Models\Producto\MostrarProductoServicioViewModels.cs" />
     <Compile Include="Models\Producto\ProductoServicioViewModels.cs" />

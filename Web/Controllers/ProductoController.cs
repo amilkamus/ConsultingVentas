@@ -8,6 +8,8 @@ using Web.Utilitario;
 using Negocio;
 using Datos;
 using Web.Models;
+using System.Data;
+using Web.Models.Parametro;
 
 namespace Web.Controllers
 {
@@ -15,6 +17,7 @@ namespace Web.Controllers
     {
         WH_ProductoServicioNEG productoServicioNEG = new WH_ProductoServicioNEG();
         WH_TipoProductoServicioNEG tipoProductoNEG = new WH_TipoProductoServicioNEG();
+        ParametroContext db = new ParametroContext();
 
         // GET: Ventas/Producto
         [Authorize(Roles = "ADMINISTRADOR, OPERADOR")]
@@ -24,21 +27,62 @@ namespace Web.Controllers
             return View();
         }
 
-        public JsonResult guardarProducto(ProductoServicioViewModels productoViewModels)
+        public JsonResult listarParametroProducto(long id)
+        {
+            try
+            {
+                if (id == 0)
+                {
+                    List<Parametro> lista = db.Parametroes.ToList();
+                    return Json(lista.OrderBy(x => x.CodParametro));
+                }
+                else
+                {
+                    DataTable tblParametros = productoServicioNEG.ListarParametrosProducto(id);
+                    List<ParametroViewModel> parametros = new List<ParametroViewModel>();
+                    if (tblParametros != null)
+                    {
+                        foreach (DataRow fila in tblParametros.Rows)
+                        {
+                            ParametroViewModel parametro = new ParametroViewModel();
+
+                            parametro.ID = long.Parse(fila["idParametro"].ToString());
+                            parametro.CodParametro = long.Parse(fila["CodParametro"].ToString());
+                            parametro.ParametroDescripcion = fila["ParametroDescripcion"].ToString();
+                            parametro.Metodologia = fila["Metodologia"].ToString();
+                            parametro.Precio = decimal.Parse(fila["Precio"].ToString());
+                            string cadena = fila["Activo"].ToString();
+                            parametro.Activo = (cadena == "0") ? false : true;
+
+                            parametros.Add(parametro);
+                        }
+                    }
+                    return Json(parametros.OrderBy(x => x.CodParametro));
+                }
+            }
+            catch (Exception e)
+            {
+                HttpContext.Response.StatusCode = 500;
+                return Json(Util.errorJson(e));
+            }
+        }
+
+        public JsonResult guardarProducto(ProductoServicioViewModels productoViewModels, List<ParametroViewModel> Parametros)
         {
             try
             {
                 OperationResult resultado = null;
                 if (productoViewModels.idProducto != 0)
                 {
-                    resultado = productoServicioNEG.actualizarProducto(productoViewModels.idProducto, productoViewModels.idTipoProductoServicio, productoViewModels.codigo, productoViewModels.nombre, productoViewModels.descripcion, productoViewModels.stock, productoViewModels.estado, productoViewModels.costo, productoViewModels.precio,productoViewModels.fechaRegistro, productoViewModels.usuarioRegistro, IdUsuario());
+                    resultado = productoServicioNEG.actualizarProducto(productoViewModels.idProducto, productoViewModels.idTipoProductoServicio, productoViewModels.codigo, productoViewModels.nombre, productoViewModels.descripcion, productoViewModels.stock, productoViewModels.estado, productoViewModels.costo, productoViewModels.precio, productoViewModels.fechaRegistro, productoViewModels.usuarioRegistro, IdUsuario());
                 }
                 else
                 {
                     resultado = productoServicioNEG.guardarProducto(productoViewModels.idTipoProductoServicio, productoViewModels.codigo, productoViewModels.nombre, productoViewModels.descripcion, productoViewModels.stock, productoViewModels.estado, productoViewModels.costo, productoViewModels.precio, IdUsuario());
                 }
-
                 Util.verificarError(resultado);
+                DataTable parametros = Util.ToDataTable(Parametros);
+                productoServicioNEG.InsertarParametrosProducto(resultado.data, parametros);
                 return Json(new { code_result = resultado.code_result, data = resultado.data, result_description = resultado.title });
             }
             catch (Exception e)

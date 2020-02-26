@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Web;
@@ -11,7 +12,7 @@ namespace Web.Models.Producto
     [DataContract]
     public class ProductoServicioViewModels
     {
-        [DataMember]
+        [DataMember]       
         public int idProducto { get; set; }
         public int idTipoProductoServicio { get; set; }
         public string codigo { get; set; }
@@ -25,7 +26,7 @@ namespace Web.Models.Producto
         public DateTime fechaActualizacion { get; set; }
         public string usuarioRegistro { get; set; }
         public string usuarioActualizacion { get; set; }
-        
+
         public ProductoServicioViewModels()
         {
         }

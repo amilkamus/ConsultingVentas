@@ -207,6 +207,9 @@ app.factory('productoService', function ($http) {
         },
         comboTipoProducto: function (params) {
             return $http.post(URL + "/Producto/comboTipoProducto", params);
+        },
+        listarParametro: function (params) {
+            return $http.post(URL + "/Producto/listarParametroProducto", params);
         }
     };
 });
@@ -270,6 +273,9 @@ app.factory('cotizacionService', function ($http) {
         },
         generarComprobante: function (params) {
             return $http.post(URL + "/Cotizacion/GenerarComprobante", params);
+        },
+        listarParametrosProducto: function (params) {
+            return $http.post(URL + "/Cotizacion/ObtenerParametrosProducto", params);
         }
     };
 });

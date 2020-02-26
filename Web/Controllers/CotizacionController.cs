@@ -23,6 +23,7 @@ using Microsoft.Reporting.WebForms;
 using System.IO;
 using System.Data.SqlClient;
 using Web.Models.OrdenServicio;
+using Web.Models.Parametro;
 
 namespace Web.Controllers
 {
@@ -320,7 +321,53 @@ namespace Web.Controllers
                 if (cotizacion == null)
                     throw new Exception("No se encontró la cotización.");
 
-                var modelo = ObtenerCotizacionViewModel(cotizacion, id);
+                CotizacionViewModel modelo = ObtenerCotizacionViewModel(cotizacion, id);
+                return Json(modelo);
+            }
+            catch (Exception e)
+            {
+                HttpContext.Response.StatusCode = 500;
+                return Json(Util.errorJson(e));
+            }
+        }
+
+        public JsonResult ObtenerParametrosProducto(long id)
+        {
+            try
+            {                
+                CotizacionViewModel modelo = new CotizacionViewModel();
+                List<WH_ProductoServicio> resultado = productoServicioNEG.listarProducto();
+                List<MostrarProductoServicioViewModels> productos = MostrarProductoServicioViewModels.convert(resultado);
+
+                DataTable tblParametros = productoServicioNEG.ListarParametrosProducto(id);
+                List<ParametroViewModel> parametros = new List<ParametroViewModel>();
+                if (tblParametros != null)
+                {
+                    foreach (DataRow fila in tblParametros.Rows)
+                    {
+                        ParametroViewModel parametro = new ParametroViewModel();
+
+                        parametro.ID = long.Parse(fila["idParametro"].ToString());
+                        parametro.CodParametro = long.Parse(fila["CodParametro"].ToString());
+                        parametro.ParametroDescripcion = fila["ParametroDescripcion"].ToString();
+                        parametro.Metodologia = fila["Metodologia"].ToString();
+                        parametro.Precio = decimal.Parse(fila["Precio"].ToString());
+                        string cadena = fila["Activo"].ToString();
+                        parametro.Activo = (cadena == "0") ? false : true;
+                        parametro.IdTipoParametro = long.Parse(fila["idTipoParametro"].ToString());
+                        parametro.IdProducto = long.Parse(fila["idProducto"].ToString());
+
+                        parametros.Add(parametro);
+                    }
+                }
+
+                modelo.Detalles = (from cp in parametros
+                                   join prd in productos on cp.IdProducto equals prd.idProducto
+                                   join p in dbParam.Parametroes on cp.ID equals p.ID
+                                   join t in dbTipo.TipoParametroes on cp.IdTipoParametro equals t.ID
+                                   where cp.Activo == true
+                                   select new DetalleCotizacionViewModel { producto = prd, parametro = p, tipoParametro = t }).ToList();
+
                 return Json(modelo);
             }
             catch (Exception e)

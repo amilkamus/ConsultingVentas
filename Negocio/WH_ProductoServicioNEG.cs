@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,19 @@ namespace Negocio
             productoServicioDAT = new WH_ProductoServicioDAT();
         }
 
-        public OperationResult guardarProducto(int idTipoProducto,string codigo, string nombre, string descripcion, int stock, string estado,decimal costo, decimal precio, string usuarioRegistro)
+        public DataTable ListarParametrosProducto(long idProducto)
+        {
+            WH_ProductoServicioDAT wH_ProductoServicioDAT = new WH_ProductoServicioDAT();
+            return wH_ProductoServicioDAT.ListarParametrosProducto(idProducto);
+        }
+
+        public void InsertarParametrosProducto(long idProducto, DataTable parametros)
+        {
+            WH_ProductoServicioDAT wH_ProductoServicioDAT = new WH_ProductoServicioDAT();
+            wH_ProductoServicioDAT.InsertarParametrosProducto(idProducto, parametros);
+        }
+
+        public OperationResult guardarProducto(int idTipoProducto, string codigo, string nombre, string descripcion, int stock, string estado, decimal costo, decimal precio, string usuarioRegistro)
         {
             try
             {
@@ -45,7 +58,7 @@ namespace Negocio
             }
         }
 
-        public OperationResult actualizarProducto(int id, int idTipoProducto, string codigo, string nombre, string descripcion, int stock, string estado, decimal costo, decimal precio,DateTime fechaRegistro, string usuarioRegistro, string usuarioActualizacion)
+        public OperationResult actualizarProducto(int id, int idTipoProducto, string codigo, string nombre, string descripcion, int stock, string estado, decimal costo, decimal precio, DateTime fechaRegistro, string usuarioRegistro, string usuarioActualizacion)
         {
             try
             {
@@ -87,7 +100,7 @@ namespace Negocio
                 throw e;
             }
         }
-        
+
         public List<WH_ProductoServicio> listarProducto()
         {
             try
