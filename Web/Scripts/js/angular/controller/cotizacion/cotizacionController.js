@@ -442,7 +442,6 @@
                             $scope.elementosDetalle.lista.splice(index, 1, itemDetalle);
                         }
                     }
-
                     $scope.recalcularSubtotal();
                     $scope.calculcarDescuento($scope.model.PorcentajeDescuento);
                     $scope.producto = {};
