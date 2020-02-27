@@ -1,7 +1,7 @@
 ﻿app.controller('productoController', ['$rootScope', '$scope', 'productoService', function ($rootScope, $scope, productoService) {
 
-    $scope.model = {};    
-    $scope.cmbTipoProducto = [];    
+    $scope.model = {};
+    $scope.cmbTipoProducto = [];
     $scope.elementos = { lista: [] };
     $scope.model.estado = "ACTIVO";
     $scope.elementosParametro = { lista: [] };
@@ -23,9 +23,17 @@
     // Guardar
     $scope.guardarProducto = function () {
 
+        var listaID = [];
+
+        for (i = 0; i < $scope.elementosParametro.lista.length; i++) {
+            if ($scope.elementosParametro.lista[i].Activo) {
+                listaID.push($scope.elementosParametro.lista[i].ID);
+            }
+        }
+
         var params = {
             productoViewModels: $scope.model,
-            Parametros: $scope.elementosParametro.lista
+            Parametros: listaID //$scope.elementosParametro.lista
         };
         productoService.guardarProducto(params).then(function (data) {
             if (data.data.result_description) {
@@ -78,7 +86,7 @@
         });
     }
 
-    $scope.editarProducto = function (producto) {        
+    $scope.editarProducto = function (producto) {
         $scope.listarParametro(producto.idProducto);
         $scope.model = producto;
     }

@@ -67,7 +67,7 @@ namespace Web.Controllers
             }
         }
 
-        public JsonResult guardarProducto(ProductoServicioViewModels productoViewModels, List<ParametroViewModel> Parametros)
+        public JsonResult guardarProducto(ProductoServicioViewModels productoViewModels, List<long> Parametros)
         {
             try
             {
@@ -81,8 +81,20 @@ namespace Web.Controllers
                     resultado = productoServicioNEG.guardarProducto(productoViewModels.idTipoProductoServicio, productoViewModels.codigo, productoViewModels.nombre, productoViewModels.descripcion, productoViewModels.stock, productoViewModels.estado, productoViewModels.costo, productoViewModels.precio, IdUsuario());
                 }
                 Util.verificarError(resultado);
-                DataTable parametros = Util.ToDataTable(Parametros);
-                productoServicioNEG.InsertarParametrosProducto(resultado.data, parametros);
+
+                DataTable tblParametros = new DataTable();
+                tblParametros.Columns.Add("ID");
+
+                foreach (long parametro in Parametros)
+                {
+                    DataRow fila = tblParametros.NewRow();
+                    fila["ID"] = parametro;
+                    tblParametros.Rows.Add(fila);
+                }
+
+                tblParametros.AcceptChanges();
+                productoServicioNEG.InsertarParametrosProducto(resultado.data, tblParametros);
+
                 return Json(new { code_result = resultado.code_result, data = resultado.data, result_description = resultado.title });
             }
             catch (Exception e)

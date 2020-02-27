@@ -17,13 +17,8 @@ GO
 IF EXISTS(SELECT 1 FROM SYS.TYPES WHERE [name] = 'typeParametroProducto')
 	DROP TYPE typeParametroProducto
 GO
-CREATE TYPE [dbo].[typeParametroProducto] AS TABLE(
-	[Activo] [bit] NULL,
-	[ID] [bigint] NULL,
-	[CodParametro] [bigint] NULL,
-	[ParametroDescripcion] [varchar](500) NULL,
-	[Metodologia] [varchar](500) NULL,
-	[Precio] [decimal](18, 0) NOT NULL
+CREATE TYPE [dbo].[typeParametroProducto] AS TABLE(	
+	[ID] [bigint] NULL
 )
 GO
 
@@ -35,7 +30,7 @@ begin
 	delete ParametroProducto where idProducto = @idProducto
 	
 	insert into ParametroProducto(idProducto, idParametro)
-	select @idProducto, ID from @parametroProducto where Activo = 1
+	select @idProducto, ID from @parametroProducto
 end
 GO
 
@@ -43,13 +38,13 @@ CREATE procedure [dbo].[usp_ListarParametrosProducto]
 	@idProducto bigint
 as
 begin
-	select 1 Activo, p.ID idParametro, CodParametro, ParametroDescripcion, Metodologia, Precio, tp.ID idTipoParametro, @idProducto idProducto
+	select 1 Activo, p.ID idParametro, CodParametro, ParametroDescripcion, Metodologia, isnull(Precio, 0) Precio, tp.ID idTipoParametro, @idProducto idProducto
 	from ParametroProducto pp 
 	inner join Parametroes p on pp.idParametro = p.ID
 	inner join TipoParametroes tp on tp.TipoParametroDescripcion = p.Estado
 	where idProducto = @idProducto
 	union all
-	select 0 Activo, p.ID, CodParametro, ParametroDescripcion, Metodologia, Precio, tp.ID idTipoParametro, @idProducto idProducto
+	select 0 Activo, p.ID, CodParametro, ParametroDescripcion, Metodologia, isnull(Precio, 0) Precio, tp.ID idTipoParametro, @idProducto idProducto
 	from Parametroes P
 	inner join TipoParametroes tp on tp.TipoParametroDescripcion = p.Estado
 	where p.ID not in (select idParametro from ParametroProducto where idProducto = @idProducto)
@@ -57,3 +52,5 @@ begin
 end
 GO
 
+exec [dbo].[usp_ListarParametrosProducto] 5
+go
