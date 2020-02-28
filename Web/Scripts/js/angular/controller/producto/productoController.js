@@ -24,7 +24,7 @@
     $scope.guardarProducto = function () {
 
         var listaID = [];
-
+        listaID.push(0);
         for (i = 0; i < $scope.elementosParametro.lista.length; i++) {
             if ($scope.elementosParametro.lista[i].Activo) {
                 listaID.push($scope.elementosParametro.lista[i].ID);
