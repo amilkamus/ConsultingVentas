@@ -596,7 +596,7 @@ namespace Web.Controllers
                     Codigo = "0000",
                     CodigoSunat = "",
                     CodigoTipoPrecio = "01",
-                    Descripcion = cotizacion.DescripcionProducto,
+                    Descripcion = cotizacion.TipoDocumentoSolicitado + " - " + cotizacion.DescripcionProducto + " - " + "COT." + cotizacion.NumeroCotizacion, //Descripcion = cotizacion.DescripcionProducto, 
                     ImpuestoTotal = cotizacion.IGV,
                     Item = 1,
                     Total = cotizacion.SubTotal,

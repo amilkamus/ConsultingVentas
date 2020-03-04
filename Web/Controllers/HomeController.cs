@@ -101,9 +101,9 @@ namespace Web.Controllers
             menu.Add(new NavBar { Id = 700, Nombre = "Nuevo Producto", Controlador = "Producto", Accion = "AddProducto", Icono = "fa  fa-plus", Estado = true, EsPadre = false, IdPadre = 600 });
             menu.Add(new NavBar { Id = 800, Nombre = "Listar Productos", Controlador = "Producto", Accion = "ViewAllProducto", Icono = "fa fa-list", Estado = true, EsPadre = false, IdPadre = 600 });
 
-            //menu.Add(new NavBar { Id = 900, Nombre = "Clientes", Icono = "fa fa-users", Estado = true, EsPadre = true, IdPadre = 0, Rol = 2 });
-            //menu.Add(new NavBar { Id = 100, Nombre = "Nuevo Cliente", Controlador = "Cliente", Accion = "AddCliente", Icono = "fa fa-plus", Estado = true, EsPadre = false, IdPadre = 900 });
-            //menu.Add(new NavBar { Id = 110, Nombre = "Listar Cliente", Controlador = "Cliente", Accion = "ViewAllCliente", Icono = "fa fa-list", Estado = true, EsPadre = false, IdPadre = 900 });
+            menu.Add(new NavBar { Id = 900, Nombre = "Clientes", Icono = "fa fa-users", Estado = true, EsPadre = true, IdPadre = 0, Rol = 2 });
+            menu.Add(new NavBar { Id = 100, Nombre = "Nuevo Cliente", Controlador = "Cliente", Accion = "AddCliente", Icono = "fa fa-plus", Estado = true, EsPadre = false, IdPadre = 900 });
+            menu.Add(new NavBar { Id = 110, Nombre = "Listar Cliente", Controlador = "Cliente", Accion = "ViewAllCliente", Icono = "fa fa-list", Estado = true, EsPadre = false, IdPadre = 900 });
 
             menu.Add(new NavBar { Id = 312, Nombre = "Cotizacion", Icono = "fa fa-shopping-cart", Estado = true, EsPadre = true, IdPadre = 0, Rol = 2 });
             menu.Add(new NavBar { Id = 313, Nombre = "Nueva Cotizacion", Controlador = "Cotizacion", Accion = "Create", Icono = "fa fa-cart-plus", Estado = true, EsPadre = false, IdPadre = 312 });
