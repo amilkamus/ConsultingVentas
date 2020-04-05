@@ -4630,9 +4630,7 @@ Telf. (01) 7504454</Value>
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>FR 033
-ver 01
-Fecha de revisión: 30.12.2017</Value>
+                <Value>FR 033</Value>
                 <Style>
                   <FontStyle>Normal</FontStyle>
                   <FontSize>7.5pt</FontSize>
@@ -4885,7 +4883,7 @@ Fecha de revisión: 30.12.2017</Value>
   <Width>6.68754in</Width>
   <Page>
     <PageFooter>
-      <Height>0.8825cm</Height>
+      <Height>2.51397cm</Height>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
         <Textbox Name="Textbox58">
@@ -4954,6 +4952,48 @@ Fecha de revisión: 30.12.2017</Value>
           <Height>0.44125cm</Height>
           <Width>16.9863cm</Width>
           <ZIndex>1</ZIndex>
+          <Visibility>
+            <Hidden>=IIF(Globals!PageNumber=Globals!TotalPages, false, true)</Hidden>
+          </Visibility>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="Textbox64">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>Revisión: 02
+Fecha de revisión: 03/01/2020</Value>
+                  <Style>
+                    <FontStyle>Normal</FontStyle>
+                    <FontSize>7.5pt</FontSize>
+                    <FontWeight>Normal</FontWeight>
+                    <TextDecoration>None</TextDecoration>
+                    <Color>#000000</Color>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox60</rd:DefaultName>
+          <Top>1.49064cm</Top>
+          <Left>0.00003cm</Left>
+          <Height>1.02333cm</Height>
+          <Width>4.93961cm</Width>
+          <ZIndex>2</ZIndex>
           <Visibility>
             <Hidden>=IIF(Globals!PageNumber=Globals!TotalPages, false, true)</Hidden>
           </Visibility>
