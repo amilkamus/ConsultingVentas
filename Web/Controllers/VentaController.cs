@@ -226,7 +226,7 @@ namespace Web.Controllers
                         comprobante.Leyenda.SetValue(leyenda, 0);
 
                         En_Respuesta respuesta = client.RegistroComprobante(comprobante);
-                        //cotizacion.SerieNumero = comprobante.SerieNumero;
+                        
                         if (respuesta.Codigo == "0")
                         {
                             return Json(new { code_result = resultado.code_result, data = resultado.data, result_description = resultado.title }, JsonRequestBehavior.AllowGet);
@@ -380,8 +380,8 @@ namespace Web.Controllers
         }
         #endregion
 
-        #region Descargar PDF del Comprobante
-        [HttpGet]
+        #region Descargar PDF del Comprobante        
+        [HttpGet]        
         public ActionResult imprimirVentas(string idComprobante)
         {
             Microsoft.Reporting.WebForms.ReportViewer reportViewer = new Microsoft.Reporting.WebForms.ReportViewer();
@@ -449,10 +449,10 @@ namespace Web.Controllers
                     fs.Write(renderByte, 0, renderByte.Length);
                     fs.Close();
 
-                    if (temporal == 1)
+                    /*if (temporal == 1)
                     {
                         Email(rutaArchivo, correoCliente, tmpTipoComprobante.tipoComprobante);
-                    }
+                    }*/
 
                     return File(renderByte, "pdf"); // fileExtension);                    
                 }

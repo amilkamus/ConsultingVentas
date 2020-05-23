@@ -18,7 +18,7 @@ namespace Web.Models.Ventas
         public int idComprobante { get; set; }
 
         public int idCorrelativo { get; set; }
-        //public string correlativo { get; set; }    //serie+correlativo = FAC-000001
+        public string correlativo { get; set; }    //serie+correlativo = FAC-000001
         public string serieCorrelativo { get; set; }
 
         public int idTipoComprobante { get; set; }
@@ -75,16 +75,16 @@ namespace Web.Models.Ventas
             this.usuarioActualizacion = venta.usuarioActualizacion;
             this.idUsuario = venta.idUsuario;
 
-            this.idCliente = Convert.ToInt32(venta.idCliente);
-            this.idPersonaMaster = Convert.ToInt32(venta.Cliente.idEmpresaCliente);
-            this.cliente = venta.Cliente.PersonaMast.nombre + " " + venta.Cliente.PersonaMast.apellidos;
+            this.idCliente = Convert.ToInt32((venta.idCliente == null) ? 0 : venta.idCliente);
+            this.idPersonaMaster = Convert.ToInt32((venta.Cliente == null) ? 0 : (venta.Cliente.idEmpresaCliente == null ? 0 : venta.Cliente.idEmpresaCliente));
+            this.cliente = "amilcar"; // venta.Cliente.PersonaMast.nombre + " " + venta.Cliente.PersonaMast.apellidos;
 
             this.idMoneda = Convert.ToInt32(venta.idMoneda);
             this.moneda = venta.CO_Moneda.descripcion;
 
             this.idIGV = Convert.ToInt32(venta.idIGV);
             this.porcentaje = Convert.ToInt32(venta.IGVMast.porcentaje);
-            
+
         }
 
         public static List<MostrarVentaViewModels> convert(List<CO_Comprobante> venta)
