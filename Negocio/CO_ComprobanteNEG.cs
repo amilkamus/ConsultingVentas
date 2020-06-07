@@ -26,6 +26,11 @@ namespace Negocio
             comprobanteDAT.ActualizarSerieCorrelativo(serie);
         }
 
+        public DataSet CargarVenta(long idComprobante)
+        {
+            return comprobanteDAT.CargarVenta(idComprobante);
+        }
+
         public void ListarSerieCorrelativo(ref string serie, ref long numero)
         {
             comprobanteDAT.ListarSerieCorrelativo(ref serie, ref numero);

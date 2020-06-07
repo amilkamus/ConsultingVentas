@@ -125,6 +125,9 @@ app.factory('comprobanteService', function ($http) {
         },
         listarparametro: function (params) {
             return $http.post(URL + "/Parametro/Index", params);
+        },
+        guardarComprobanteElectronico: function (params) {
+            return $http.post(URL + "/Venta/GenerarComprobanteElectronico", params);
         }
     };
 });

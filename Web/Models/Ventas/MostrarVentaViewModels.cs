@@ -77,7 +77,7 @@ namespace Web.Models.Ventas
 
             this.idCliente = Convert.ToInt32((venta.idCliente == null) ? 0 : venta.idCliente);
             this.idPersonaMaster = Convert.ToInt32((venta.Cliente == null) ? 0 : (venta.Cliente.idEmpresaCliente == null ? 0 : venta.Cliente.idEmpresaCliente));
-            this.cliente = "amilcar"; // venta.Cliente.PersonaMast.nombre + " " + venta.Cliente.PersonaMast.apellidos;
+            this.cliente = venta.Cliente.PersonaMast.nombre + " " + venta.Cliente.PersonaMast.apellidos;
 
             this.idMoneda = Convert.ToInt32(venta.idMoneda);
             this.moneda = venta.CO_Moneda.descripcion;
