@@ -25,7 +25,7 @@ namespace Web.Controllers
     {
         private CotizacionContext db = new CotizacionContext();
         // GET: OrdenServicio
-        [Authorize]
+        [Authorize(Roles = "ADMINISTRADOR, OPERADOR, PARAMETRIZADOR, FACTURACION")]
         public ActionResult Index()
         {
             List<OrdenServicioCotizacion> lista = (from o in db.OrdenServicio
@@ -47,7 +47,7 @@ namespace Web.Controllers
             return View(lista.OrderBy(x => x.NumeroOrdenServicio).ThenBy(x => x.NumeroCotizacion).ThenBy(x => x.Correlativo));
         }
 
-        [Authorize]
+        [Authorize(Roles = "ADMINISTRADOR, OPERADOR")]
         public ActionResult Edit(long id)
         {
             OrdenServicio ordenServicio = db.OrdenServicio.Find(id);
@@ -61,7 +61,7 @@ namespace Web.Controllers
             return View();
         }
 
-        [Authorize]
+        [Authorize(Roles = "ADMINISTRADOR, OPERADOR")]
         public ActionResult Delete(long id)
         {
             OrdenServicio ordenServicio = db.OrdenServicio.Find(id);
@@ -183,10 +183,10 @@ namespace Web.Controllers
                 lr.SetParameters(new ReportParameter("PresentacionInspeccion", ordenServicio.PresentacionInspeccion));
                 lr.SetParameters(new ReportParameter("CantidadLoteInspeccion", ordenServicio.CantidadLoteInspeccion));
                 lr.SetParameters(new ReportParameter("CodigosLoteInspeccion", ordenServicio.CodigosLoteInspeccion));
-                lr.SetParameters(new ReportParameter("OtrosInspeccion", cotizacion.Observaciones));
+                lr.SetParameters(new ReportParameter("OtrosInspeccion", ordenServicio.ObservacionesInspeccion));
 
-                lr.SetParameters(new ReportParameter("Usuario", NombreUsuario(cotizacion.IdUsuarioRegistro)));
-                lr.SetParameters(new ReportParameter("FechaRegistro", cotizacion.FechaRegistro.ToString("dd/MM/yyyy")));
+                lr.SetParameters(new ReportParameter("Usuario", NombreUsuario(ordenServicio.IdUsuarioRegistro)));
+                lr.SetParameters(new ReportParameter("FechaRegistro", ordenServicio.FechaRegistro.ToString("dd/MM/yyyy")));
 
                 lr.DataSources.Add(new ReportDataSource("CotizacionCabecera", ds.Tables[0]));
                 lr.DataSources.Add(new ReportDataSource("Productos", ds.Tables[1]));
@@ -261,7 +261,7 @@ namespace Web.Controllers
             return RedirectToAction("Index");
         }
 
-        [Authorize]
+        [Authorize(Roles = "ADMINISTRADOR, OPERADOR")]
         public ActionResult Create()
         {
             return View();
@@ -285,7 +285,7 @@ namespace Web.Controllers
             }
         }
 
-        [Authorize]
+        [Authorize(Roles = "ADMINISTRADOR, OPERADOR, PARAMETRIZADOR, FACTURACION")]
         public JsonResult listarCotizaciones()
         {
             try
@@ -300,7 +300,7 @@ namespace Web.Controllers
             }
         }
 
-        [Authorize]
+        [Authorize(Roles = "ADMINISTRADOR, OPERADOR")]
         public JsonResult RegistrarOrdenServicio(OrdenServicio ordenServicio)
         {
             try

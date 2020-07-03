@@ -18,13 +18,13 @@
         <!--body -->
         <div class="box-body">
             <div ng-controller="productoController" class="col-md-12 formulario-mediano">
-                <div class="form-horizontal col-md-12">                    
+                <div class="form-horizontal col-md-12">
                     <br />
                     <form name="producto" novalidate>
                         <div class="form-group col-md-6">
                             <label class="control-label col-md-4">Codigo</label>
                             <div class="col-md-8">
-                                <input class="form-control lowercase padding-left-right-3" placeholder="Ingrese Codigo" ng-model="model.codigo" required/>
+                                <input class="form-control lowercase padding-left-right-3" placeholder="Ingrese Codigo" ng-model="model.codigo" required />
                             </div>
                         </div>
                         <div class="form-group col-md-6">
@@ -42,13 +42,13 @@
                         <div class="form-group col-md-6">
                             <label class="control-label col-md-4">Stock</label>
                             <div class="col-md-8">
-                                <input class="form-control lowercase padding-left-right-3" onkeypress="return soloNumeros(event);" placeholder="Ingrese Stok" ng-model="model.stock" required/>
+                                <input class="form-control lowercase padding-left-right-3" onkeypress="return soloNumeros(event);" placeholder="Ingrese Stok" ng-model="model.stock" required />
                             </div>
                         </div>
                         <div class="form-group col-md-6">
                             <label class="control-label col-md-4">Costo</label>
                             <div class="col-md-8">
-                                <input class="form-control lowercase padding-left-right-3" placeholder="Ingrese Costo" onkeypress="return soloDecimal(event);" ng-model="model.costo" required/>
+                                <input class="form-control lowercase padding-left-right-3" placeholder="Ingrese Costo" onkeypress="return soloDecimal(event);" ng-model="model.costo" required />
                             </div>
                         </div>
                         <div class="form-group col-md-6">
@@ -56,7 +56,7 @@
                             <div class="col-md-8">
                                 <input class="form-control lowercase padding-left-right-3" placeholder="Ingrese Precio" onkeypress="return soloDecimal(event);" ng-model="model.precio" required />
                             </div>
-                        </div>                        
+                        </div>
                         <div class="form-group col-md-6">
                             <label class="control-label col-md-4" for="selectPersonal">Estado</label>
                             <div class="col-md-8">
@@ -69,7 +69,40 @@
                         <div class="form-group col-md-6">
                             <label class="control-label col-md-4">Descripcion</label>
                             <div class="col-md-8">
-                                <input class="form-control lowercase padding-left-right-3" placeholder="Ingrese Descripción" ng-model="model.descripcion" required/>
+                                <input class="form-control lowercase padding-left-right-3" placeholder="Ingrese Descripción" ng-model="model.descripcion" required />
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <h4>Seleccione uno o más parámetros</h4>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <div class="table-responsive" style="height:600px">
+                                <!-- TABLA -->
+                                <!--table datatable="ng" dt-options="dtOptions" dt-column-defs="elementos.dtColumnDefs" class="row-border hover table table-striped table-bordered tabla-bandeja"-->
+                                <table datatable="ng" data-paging="false" dt-options="dtOptions" class="row-border hover table table-striped table-bordered tabla-bandeja">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:10px">&nbsp;</th>
+                                            <th>Parámetro</th>
+                                            <th>Metodología</th>
+                                            <th>Precio</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="itemParametro in elementosParametro.lista">
+                                            <td>
+                                                <input type="checkbox" ng-model="itemParametro.Activo" />
+                                                <input type="hidden" value="{{itemParametro.ID}}" />
+                                                <input type="hidden" value="{{itemParametro.CodParametro}}" />
+                                            </td>
+                                            <td>{{itemParametro.ParametroDescripcion}}</td>
+                                            <td>{{itemParametro.Metodologia}}</td>
+                                            <td>{{itemParametro.Precio}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
 

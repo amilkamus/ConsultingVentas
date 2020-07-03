@@ -46,7 +46,8 @@
                                 <td class="right" style="text-align: center;">
                                     <a title="Detalle de Venta" class="btn btn-xs btn-success" data-toggle="modal" data-target="#modal-verDetalle" ng-click="verVentaDetalle(item)"><span class="glyphicon glyphicon-eye-open"></span></a>
                                     <a title="Imprimir" class="btn btn-xs btn-primary" href="../Venta/imprimirVentas/?idComprobante={{item.idComprobante.toString()}}"><span class="glyphicon glyphicon-save-file"></span></a>
-                                    @*<a title="Imprimir" class="btn btn-xs btn-primary" href="../Venta/imprimirVentas/?comprobante={{item.idComprobante}}"><span class="glyphicon glyphicon-save-file"></span></a>*@
+                                    <!-- generar comprobante electrónico  -->
+                                    <a title="Generar comprobante electrónico" class="btn btn-xs btn-warning" ng-click="guardarComprobanteElectronico(item.idComprobante)"><span class="glyphicon glyphicon-barcode"></span></a>
                                 </td>
                             </tr>
                         </tbody>

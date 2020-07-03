@@ -3,8 +3,8 @@
     $scope.model = {};
     $scope.cmbTipoProducto = [];
     $scope.elementos = { lista: [] };
-
     $scope.model.estado = "ACTIVO";
+    $scope.elementosParametro = { lista: [] };
 
     //Validacion para el guardar
     $scope.validacion = function (form) {
@@ -22,8 +22,19 @@
 
     // Guardar
     $scope.guardarProducto = function () {
+
+        var listaID = [];
+        listaID.push(0);
+
+        for (i = 0; i < $scope.elementosParametro.lista.length; i++) {
+            if ($scope.elementosParametro.lista[i].Activo) {
+                listaID.push($scope.elementosParametro.lista[i].ID);
+            }
+        }
+
         var params = {
-            productoViewModels: $scope.model
+            productoViewModels: $scope.model,
+            Parametros: listaID //$scope.elementosParametro.lista
         };
         productoService.guardarProducto(params).then(function (data) {
             if (data.data.result_description) {
@@ -32,6 +43,7 @@
                 $scope.model.estado = "ACTIVO";
                 $scope.listarProductos();
                 $scope.listarComboTipoProducto();
+                $scope.listarParametro(0);
             } else {
                 $scope.messageError(data.data.error);
             }
@@ -76,10 +88,23 @@
     }
 
     $scope.editarProducto = function (producto) {
+        $scope.listarParametro(producto.idProducto);
         $scope.model = producto;
     }
+
+    $scope.listarParametro = function (valor) {
+        productoService.listarParametro({ id: valor }).then(function (data) {
+            if (data.data) {
+                $scope.elementosParametro.lista = data.data;
+            } else {
+                $scope.elementosParametro.lista = data.data;
+            }
+        });
+    }
+
     //Fin
 
     $scope.listarComboTipoProducto();
     $scope.listarProductos();
+    $scope.listarParametro(0);
 }]);

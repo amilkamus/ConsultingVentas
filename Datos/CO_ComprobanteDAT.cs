@@ -55,6 +55,33 @@ namespace Datos
             }
         }
 
+        public DataSet CargarVenta(long idComprobante)
+        {
+            SqlConnection cn = new SqlConnection(_db.Database.Connection.ConnectionString);
+            try
+            {
+                DataSet ds = new DataSet();
+                SqlCommand cmd = new SqlCommand("usp_CargarVenta", cn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@idComprobante", SqlDbType.BigInt).Value = idComprobante;
+                cn.Open();
+
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(ds);
+
+                cn.Close();
+                return ds;
+            }
+            catch (Exception e)
+            {
+                if (cn.State == System.Data.ConnectionState.Open)
+                {
+                    cn.Close();
+                }
+                throw e;
+            }
+        }
+
         public void ListarSerieCorrelativo(ref string serie, ref long numero)
         {
             SqlConnection cn = new SqlConnection(_db.Database.Connection.ConnectionString);

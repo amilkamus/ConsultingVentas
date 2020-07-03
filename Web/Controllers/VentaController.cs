@@ -28,6 +28,7 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 
 using Web.Service.RC.FactElect;
+using System.Data;
 
 namespace Web.Controllers
 {
@@ -52,6 +53,154 @@ namespace Web.Controllers
         public ActionResult AddVenta()
         {
             return View();
+        }
+
+        public JsonResult GenerarComprobanteElectronico(long id)
+        {
+            long IdComprobante = id;
+
+            // Generar factura electrónica
+            try
+            {
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+                ServicePointManager.ServerCertificateValidationCallback = (snder, cert, chain, error) => true;
+                Service1Client client = new Service1Client();
+
+                DataSet ds = new CO_ComprobanteNEG().CargarVenta(IdComprobante);
+
+                En_Emisor emisor = new En_Emisor
+                {
+                    NumeroDocumentoIdentidad = "20602034675"
+                };
+
+                En_Receptor receptor = new En_Receptor
+                {
+                    CodigoDomicilioFiscal = "0002",
+                    CodigoPais = "PE",
+                    CodigoUbigeo = "150101",
+                    Contacto = new En_Contacto
+                    {
+                        Correo = ds.Tables[0].Rows[0]["Correo"].ToString(),
+                        Nombre = ds.Tables[0].Rows[0]["Nombre"].ToString(),
+                        Telefono = ds.Tables[0].Rows[0]["Telefono"].ToString()
+                    },
+                    //Departamento = "LIMA",
+                    Direccion = ds.Tables[0].Rows[0]["Direccion"].ToString(),
+                    //Distrito = "SAN JUAN DE LURIGANCHO",
+                    NombreComercial = ds.Tables[0].Rows[0]["NombreComercial"].ToString(),
+                    NumeroDocumentoIdentidad = ds.Tables[0].Rows[0]["NumeroDocumentoIdentidad"].ToString(),
+                    PaginaWeb = "",
+                    //Provincia = "LIMA",
+                    RazonSocial = ds.Tables[0].Columns["RazonSocial"].ToString(),
+                    TipoDocumentoIdentidad = "6",
+                    Urbanizacion = ""
+                };
+
+                En_ComprobanteElectronico comprobante = new En_ComprobanteElectronico();
+
+                // Inicio de los detalles
+                comprobante.ComprobanteDetalle = new En_ComprobanteDetalle[ds.Tables[1].Rows.Count];
+                int indice = 0;
+                decimal impuestoTotal = 0;
+                foreach (DataRow item in ds.Tables[1].Rows)
+                {
+                    int cantidad = int.Parse(item["Cantidad"].ToString());
+                    decimal precio = decimal.Parse(item["Precio"].ToString());
+                    string nombreProducto = item["Descripcion"].ToString();
+                    decimal valorVentaUnitario = cantidad * precio;
+                    decimal impuestoTotalItem = valorVentaUnitario * 0.18M;
+                    impuestoTotal += impuestoTotalItem;
+
+                    En_ComprobanteDetalleImpuestos comprobanteDetalleImpuestos = new En_ComprobanteDetalleImpuestos
+                    {
+                        AfectacionIGV = "10",
+                        CodigoInternacionalTributo = "1000",
+                        CodigoTributo = "VAT",
+                        MontoBase = valorVentaUnitario,
+                        MontoTotalImpuesto = impuestoTotalItem,
+                        NombreTributo = "IGV",
+                        Porcentaje = 18.00M
+                    };
+
+                    En_ComprobanteDetalle detalle = new En_ComprobanteDetalle
+                    {
+                        Cantidad = cantidad,
+                        Codigo = "0000",
+                        CodigoSunat = "",
+                        CodigoTipoPrecio = "01",
+                        Descripcion = nombreProducto,
+                        ImpuestoTotal = impuestoTotalItem,
+                        Item = (indice + 1),
+                        Total = valorVentaUnitario,
+                        UnidadMedida = "NIU",
+                        ValorVentaUnitario = valorVentaUnitario,
+                        ValorVentaUnitarioIncIgv = valorVentaUnitario + impuestoTotalItem
+                    };
+                    detalle.MultiDescripcion = new string[1];
+                    detalle.MultiDescripcion.SetValue("-", 0);
+
+                    detalle.ComprobanteDetalleImpuestos = new En_ComprobanteDetalleImpuestos[1];
+                    detalle.ComprobanteDetalleImpuestos.SetValue(comprobanteDetalleImpuestos, 0);
+
+                    comprobante.ComprobanteDetalle.SetValue(detalle, indice);
+                    indice++;
+                }
+                // Fin de los detalles                
+                string serieCorrelativo = ds.Tables[0].Rows[0]["SerieCorrelativo"].ToString();
+                decimal total = decimal.Parse(ds.Tables[0].Rows[0]["Total"].ToString());
+                decimal subTotal = decimal.Parse(ds.Tables[0].Rows[0]["SubTotal"].ToString());
+
+                En_Leyenda leyenda = new En_Leyenda
+                {
+                    Codigo = "1000",
+                    Valor = Util.Enletras(total)
+                };
+
+                En_MontosTotales montos = new En_MontosTotales
+                {
+                    Gravado = new En_Gravado
+                    {
+                        Total = subTotal,
+                        GravadoIGV = new En_GrabadoIGV
+                        {
+                            MontoBase = subTotal,
+                            MontoTotalImpuesto = impuestoTotal,
+                            Porcentaje = 18
+                        }
+                    }
+                };
+
+                comprobante.FechaEmision = DateTime.Now.ToString("yyyy-MM-dd");
+                comprobante.HoraEmision = DateTime.Now.ToString("HH:mm:ss");
+                comprobante.Moneda = "PEN";
+                comprobante.ImporteTotal = total;
+                comprobante.Emisor = emisor;
+                comprobante.Receptor = receptor;
+                comprobante.MontoTotales = montos;
+                comprobante.SerieNumero = serieCorrelativo;
+                comprobante.TipoComprobante = "01";
+                comprobante.TipoOperacion = "0101";
+                comprobante.TotalImpuesto = impuestoTotal;
+                comprobante.TotalPrecioVenta = total;
+                comprobante.TotalValorVenta = subTotal;
+                comprobante.Leyenda = new En_Leyenda[1];
+                comprobante.Leyenda.SetValue(leyenda, 0);
+
+                En_Respuesta respuesta = client.RegistroComprobante(comprobante);
+
+                if (respuesta != null && respuesta.Codigo == "0")
+                {
+                    return Json(new { code_result = respuesta.Codigo, data = respuesta.Descripcion, result_description = respuesta.Descripcion }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    throw new Exception((respuesta != null) ? respuesta.Descripcion : "La entidad respuesta está vacía.");
+                }
+            }
+            catch (Exception e)
+            {
+                return Json(new { code_result = 99, data = "", result_description = e.Message.ToString() }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         public JsonResult guardarComprobante(VentaViewModels ventaViewModels, List<VentaDetalleViewModels> ventaDetalleViewModels, List<ProductoServicioViewModels> productoViewModels)
@@ -91,156 +240,7 @@ namespace Web.Controllers
                 //imprimirVentas(Convert.ToString(IdComprobante));
                 temporal = 1;
                 Util.verificarError(resultado);
-                int tmpIdCorrelativo = comprobanteNEG.returnIdCorrelativo(Convert.ToInt32(IdComprobante));
-                var tmpComprobante = comprobanteNEG.tmpComprobante(Convert.ToInt32(IdComprobante));
-                var tmpCorrelativo = comprobanteNEG.tmpCorrelativo(tmpIdCorrelativo);
-                var tmpTipoComprobante = comprobanteNEG.tmpTipoComprobante(Convert.ToInt32(tmpCorrelativo.idTipoComprobante));
-                //pdfAbrir = Server.MapPath("~/Reportes/" + tmpTipoComprobante.tipoComprobante + "/" + ventaViewModels.serieCorrelativo + ".pdf");
 
-                if (resultado.code_result == OperationResultEnum.Success)
-                {
-                    // Generar factura electrónica
-                    try
-                    {
-                        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-                        ServicePointManager.ServerCertificateValidationCallback = (snder, cert, chain, error) => true;
-                        List<Cliente> clientes = new ClienteNEG().listarCliente();
-                        List<MostrarClienteViewModel> lista = MostrarClienteViewModel.convert(clientes);
-                        MostrarClienteViewModel cliente = (from c in lista
-                                                           where c.idCliente == ventaViewModels.idCliente
-                                                           select c).FirstOrDefault();
-                        Service1Client client = new Service1Client();
-
-                        En_Emisor emisor = new En_Emisor
-                        {
-                            NumeroDocumentoIdentidad = "20602034675"
-                        };
-
-                        En_Receptor receptor = new En_Receptor
-                        {
-                            CodigoDomicilioFiscal = "0002",
-                            CodigoPais = "PE",
-                            CodigoUbigeo = "150101",
-                            Contacto = new En_Contacto
-                            {
-                                Correo = cliente.contactoCorreo,
-                                Nombre = string.Format("{0} {1}", cliente.contactoNombre, cliente.contactoApellidos),
-                                Telefono = cliente.contactoTelefono
-                            },
-                            //Departamento = "LIMA",
-                            Direccion = cliente.empresaDomicilio,
-                            //Distrito = "SAN JUAN DE LURIGANCHO",
-                            NombreComercial = cliente.empresaNombre,
-                            NumeroDocumentoIdentidad = cliente.empresaNumeroDocumento,
-                            PaginaWeb = "",
-                            //Provincia = "LIMA",
-                            RazonSocial = cliente.empresaNombre,
-                            TipoDocumentoIdentidad = "6",
-                            Urbanizacion = ""
-                        };
-
-                        En_ComprobanteElectronico comprobante = new En_ComprobanteElectronico();
-
-                        // Inicio de los detalles
-                        comprobante.ComprobanteDetalle = new En_ComprobanteDetalle[ventaDetalleViewModels.Count];
-                        int indice = 0;
-                        decimal impuestoTotal = 0;
-                        foreach (VentaDetalleViewModels item in ventaDetalleViewModels)
-                        {
-                            decimal valorVentaUnitario = item.cantidad * item.precio;
-                            decimal impuestoTotalItem = valorVentaUnitario * 0.18M;
-                            ProductoServicioViewModels producto = (from p in productoViewModels
-                                                                   where p.idProducto == item.idProducto
-                                                                   select p).FirstOrDefault();
-                            impuestoTotal += impuestoTotalItem;
-                            En_ComprobanteDetalleImpuestos comprobanteDetalleImpuestos = new En_ComprobanteDetalleImpuestos
-                            {
-                                AfectacionIGV = "10",
-                                CodigoInternacionalTributo = "1000",
-                                CodigoTributo = "VAT",
-                                MontoBase = valorVentaUnitario,
-                                MontoTotalImpuesto = impuestoTotalItem,
-                                NombreTributo = "IGV",
-                                Porcentaje = 18.00M
-                            };
-
-                            En_ComprobanteDetalle detalle = new En_ComprobanteDetalle
-                            {
-                                Cantidad = item.cantidad,
-                                Codigo = "0000",
-                                CodigoSunat = "",
-                                CodigoTipoPrecio = "01",
-                                Descripcion = producto.nombre,
-                                ImpuestoTotal = impuestoTotalItem,
-                                Item = (indice + 1),
-                                Total = valorVentaUnitario,
-                                UnidadMedida = "NIU",
-                                ValorVentaUnitario = valorVentaUnitario,
-                                ValorVentaUnitarioIncIgv = valorVentaUnitario + impuestoTotalItem
-                            };
-                            detalle.MultiDescripcion = new string[1];
-                            detalle.MultiDescripcion.SetValue("-", 0);
-
-                            detalle.ComprobanteDetalleImpuestos = new En_ComprobanteDetalleImpuestos[1];
-                            detalle.ComprobanteDetalleImpuestos.SetValue(comprobanteDetalleImpuestos, 0);
-
-                            comprobante.ComprobanteDetalle.SetValue(detalle, indice);
-                            indice++;
-                        }
-                        // Fin de los detalles
-
-                        En_Leyenda leyenda = new En_Leyenda
-                        {
-                            Codigo = "1000",
-                            Valor = Util.Enletras(ventaViewModels.total)
-                        };
-
-                        En_MontosTotales montos = new En_MontosTotales
-                        {
-                            Gravado = new En_Gravado
-                            {
-                                Total = ventaViewModels.subtotal,
-                                GravadoIGV = new En_GrabadoIGV
-                                {
-                                    MontoBase = ventaViewModels.subtotal,
-                                    MontoTotalImpuesto = impuestoTotal,
-                                    Porcentaje = 18
-                                }
-                            }
-                        };
-
-                        comprobante.FechaEmision = DateTime.Now.ToString("yyyy-MM-dd");
-                        comprobante.HoraEmision = DateTime.Now.ToString("HH:mm:ss");
-                        comprobante.Moneda = "PEN";
-                        comprobante.ImporteTotal = ventaViewModels.total;
-                        comprobante.Emisor = emisor;
-                        comprobante.Receptor = receptor;
-                        comprobante.MontoTotales = montos;
-                        comprobante.SerieNumero = ventaViewModels.serieCorrelativo;
-                        comprobante.TipoComprobante = "01";
-                        comprobante.TipoOperacion = "0101";
-                        comprobante.TotalImpuesto = impuestoTotal;
-                        comprobante.TotalPrecioVenta = ventaViewModels.total;
-                        comprobante.TotalValorVenta = ventaViewModels.subtotal;
-                        comprobante.Leyenda = new En_Leyenda[1];
-                        comprobante.Leyenda.SetValue(leyenda, 0);
-
-                        En_Respuesta respuesta = client.RegistroComprobante(comprobante);
-                        //cotizacion.SerieNumero = comprobante.SerieNumero;
-                        if (respuesta.Codigo == "0")
-                        {
-                            return Json(new { code_result = resultado.code_result, data = resultado.data, result_description = resultado.title }, JsonRequestBehavior.AllowGet);
-                        }
-                        else
-                        {
-                            throw new Exception(respuesta.Descripcion);
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        throw e;
-                    }
-                }
                 return Json(new { code_result = resultado.code_result, data = resultado.data, result_description = resultado.title }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
@@ -285,7 +285,7 @@ namespace Web.Controllers
         }
         #endregion
 
-        [Authorize(Roles = "ADMINISTRADOR")]
+        [Authorize(Roles = "ADMINISTRADOR, OPERADOR")]
         #region Listar Cliente
         public JsonResult listarCliente()
         {
@@ -304,7 +304,7 @@ namespace Web.Controllers
         }
         #endregion
 
-        [Authorize(Roles = "ADMINISTRADOR")]
+        [Authorize(Roles = "ADMINISTRADOR, OPERADOR")]
         #region Listar Producto
         public JsonResult listarProducto()
         {
@@ -361,7 +361,7 @@ namespace Web.Controllers
         }
         #endregion
 
-        [Authorize(Roles = "ADMINISTRADOR")]
+        [Authorize(Roles = "ADMINISTRADOR, OPERADOR")]
         #region Listar Detalle de Comprobante
         public JsonResult listarComprobanteDetalle(int idComprobante)
         {
@@ -380,7 +380,7 @@ namespace Web.Controllers
         }
         #endregion
 
-        #region Descargar PDF del Comprobante
+        #region Descargar PDF del Comprobante        
         [HttpGet]
         public ActionResult imprimirVentas(string idComprobante)
         {
@@ -408,7 +408,7 @@ namespace Web.Controllers
 
                     var serieCorrelativo = tmpComprobante.serieCorrelativo;
                     string serie = "", numero = "";
-                    if(serieCorrelativo.Length > 0)
+                    if (serieCorrelativo.Length > 0)
                     {
                         serie = serieCorrelativo.Split('-')[0];
                         numero = serieCorrelativo.Split('-')[1];
@@ -436,7 +436,7 @@ namespace Web.Controllers
                     string[] streams;
                     Warning[] warnings;
                     byte[] renderByte;
-                    var fileName = tmpComprobante.serieCorrelativo;                    
+                    var fileName = tmpComprobante.serieCorrelativo;
 
                     renderByte = reportViewer.LocalReport.Render("PDF");
                     Response.Buffer = true;
@@ -449,10 +449,10 @@ namespace Web.Controllers
                     fs.Write(renderByte, 0, renderByte.Length);
                     fs.Close();
 
-                    if (temporal == 1)
+                    /*if (temporal == 1)
                     {
                         Email(rutaArchivo, correoCliente, tmpTipoComprobante.tipoComprobante);
-                    }
+                    }*/
 
                     return File(renderByte, "pdf"); // fileExtension);                    
                 }

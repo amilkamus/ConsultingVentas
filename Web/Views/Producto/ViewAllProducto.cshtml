@@ -9,7 +9,7 @@
 }
 
 <!-- Main content -->
-<section class="content">    
+<section class="content">
     <!-- Default box -->
     <div class="box">
         <div class="box-header">
@@ -135,6 +135,37 @@
                                             <label class="control-label col-md-4">Descripcion</label>
                                             <div class="col-md-8">
                                                 <input class="form-control lowercase padding-left-right-3" onkeypress="return soloLetras(event);" ng-model="model.descripcion" required />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <h4>Seleccione uno o más parámetros</h4>
+                                        </div>
+
+                                        <div class="form-group col-md-12">
+                                            <div class="table-responsive" style="height:300px">
+                                                <!-- TABLA -->
+                                                <table datatable="ng" data-paging="false" dt-options="dtOptions" class="row-border hover table table-striped table-bordered tabla-bandeja">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width:10px">&nbsp;</th>
+                                                            <th>Parámetro</th>
+                                                            <th>Metodología</th>
+                                                            <th>Precio</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="itemParametro in elementosParametro.lista">
+                                                            <td>
+                                                                <input type="checkbox" ng-model="itemParametro.Activo" />
+                                                                <input type="hidden" value="{{itemParametro.ID}}" />
+                                                                <input type="hidden" value="{{itemParametro.CodParametro}}" />
+                                                            </td>
+                                                            <td>{{itemParametro.ParametroDescripcion}}</td>
+                                                            <td>{{itemParametro.Metodologia}}</td>
+                                                            <td>{{itemParametro.Precio}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </form>

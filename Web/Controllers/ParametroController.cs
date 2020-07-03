@@ -18,6 +18,7 @@ namespace Web.Controllers
         private ParametroContext db = new ParametroContext();
 
         // GET: Parametro
+        [Authorize(Roles = "ADMINISTRADOR, PARAMETRIZADOR")]
         public ActionResult Index()
         {
             return View(db.Parametroes.ToList());
@@ -53,6 +54,7 @@ namespace Web.Controllers
         }
 
         // GET: Parametro/Create
+        [Authorize(Roles = "ADMINISTRADOR, PARAMETRIZADOR")]
         public ActionResult Create()
         {
             return View();
@@ -76,6 +78,7 @@ namespace Web.Controllers
         }
 
         // GET: Parametro/Edit/5
+        [Authorize(Roles = "ADMINISTRADOR, PARAMETRIZADOR")]
         public ActionResult Edit(long? id)
         {
             if (id == null)

@@ -23,6 +23,7 @@ using Microsoft.Reporting.WebForms;
 using System.IO;
 using System.Data.SqlClient;
 using Web.Models.OrdenServicio;
+using Web.Models.Parametro;
 
 namespace Web.Controllers
 {
@@ -34,7 +35,7 @@ namespace Web.Controllers
         WH_ProductoServicioNEG productoServicioNEG = new WH_ProductoServicioNEG();
 
         // GET: Cotizacion
-        [Authorize]
+        [Authorize(Roles = "ADMINISTRADOR, OPERADOR, PARAMETRIZADOR, FACTURACION")]
         public ActionResult Index()
         {
             return View(db.Cotizacions.OrderByDescending(x => (x.FechaModificacion == null) ? x.FechaRegistro : x.FechaModificacion)); //.ThenBy(x => x.NumeroCotizacion).ThenBy(x => x.Correlativo).ThenByDescending(x => x.CorrelativoInicial));
@@ -197,7 +198,7 @@ namespace Web.Controllers
             return File(filePath, "application/pdf");
         }
 
-        [Authorize]
+        [Authorize(Roles = "ADMINISTRADOR, OPERADOR")]
         // GET: Cotizacion/Create
         public ActionResult Create()
         {
@@ -222,6 +223,7 @@ namespace Web.Controllers
         }
 
         // GET: Cotizacion/Edit/5
+        [Authorize(Roles = "ADMINISTRADOR, OPERADOR")]
         public ActionResult Edit(long id)
         {
             if (id == null)
@@ -249,6 +251,7 @@ namespace Web.Controllers
         }
 
         // GET: Cotizacion/Delete/5
+        [Authorize(Roles = "ADMINISTRADOR, OPERADOR")]
         public ActionResult Delete(long id)
         {
             if (id == null)
@@ -318,7 +321,53 @@ namespace Web.Controllers
                 if (cotizacion == null)
                     throw new Exception("No se encontró la cotización.");
 
-                var modelo = ObtenerCotizacionViewModel(cotizacion, id);
+                CotizacionViewModel modelo = ObtenerCotizacionViewModel(cotizacion, id);
+                return Json(modelo);
+            }
+            catch (Exception e)
+            {
+                HttpContext.Response.StatusCode = 500;
+                return Json(Util.errorJson(e));
+            }
+        }
+
+        public JsonResult ObtenerParametrosProducto(long id)
+        {
+            try
+            {                
+                CotizacionViewModel modelo = new CotizacionViewModel();
+                List<WH_ProductoServicio> resultado = productoServicioNEG.listarProducto();
+                List<MostrarProductoServicioViewModels> productos = MostrarProductoServicioViewModels.convert(resultado);
+
+                DataTable tblParametros = productoServicioNEG.ListarParametrosProducto(id);
+                List<ParametroViewModel> parametros = new List<ParametroViewModel>();
+                if (tblParametros != null)
+                {
+                    foreach (DataRow fila in tblParametros.Rows)
+                    {
+                        ParametroViewModel parametro = new ParametroViewModel();
+
+                        parametro.ID = long.Parse(fila["idParametro"].ToString());
+                        parametro.CodParametro = long.Parse(fila["CodParametro"].ToString());
+                        parametro.ParametroDescripcion = fila["ParametroDescripcion"].ToString();
+                        parametro.Metodologia = fila["Metodologia"].ToString();
+                        parametro.Precio = decimal.Parse(fila["Precio"].ToString());
+                        string cadena = fila["Activo"].ToString();
+                        parametro.Activo = (cadena == "0") ? false : true;
+                        parametro.IdTipoParametro = long.Parse(fila["idTipoParametro"].ToString());
+                        parametro.IdProducto = long.Parse(fila["idProducto"].ToString());
+
+                        parametros.Add(parametro);
+                    }
+                }
+
+                modelo.Detalles = (from cp in parametros
+                                   join prd in productos on cp.IdProducto equals prd.idProducto
+                                   join p in dbParam.Parametroes on cp.ID equals p.ID
+                                   join t in dbTipo.TipoParametroes on cp.IdTipoParametro equals t.ID
+                                   where cp.Activo == true
+                                   select new DetalleCotizacionViewModel { producto = prd, parametro = p, tipoParametro = t }).ToList();
+
                 return Json(modelo);
             }
             catch (Exception e)
@@ -341,6 +390,7 @@ namespace Web.Controllers
             }
         }
 
+        [Authorize(Roles = "ADMINISTRADOR, OPERADOR")]
         public JsonResult RegistrarCotizacion(CotizacionViewModel cotizacionViewModel)
         {
             try
@@ -534,7 +584,7 @@ namespace Web.Controllers
                     AfectacionIGV = "10",
                     CodigoInternacionalTributo = "1000",
                     CodigoTributo = "VAT",
-                    MontoBase = cotizacion.SubTotal,
+                    MontoBase = cotizacion.SubTotalFinal,
                     MontoTotalImpuesto = cotizacion.IGV,
                     NombreTributo = "IGV",
                     Porcentaje = 18.00M
@@ -546,12 +596,12 @@ namespace Web.Controllers
                     Codigo = "0000",
                     CodigoSunat = "",
                     CodigoTipoPrecio = "01",
-                    Descripcion = cotizacion.DescripcionProducto,
+                    Descripcion = cotizacion.TipoDocumentoSolicitado + " - " + cotizacion.DescripcionProducto + " - " + "COT." + cotizacion.NumeroCotizacion, //Descripcion = cotizacion.DescripcionProducto, 
                     ImpuestoTotal = cotizacion.IGV,
                     Item = 1,
-                    Total = cotizacion.SubTotal,
+                    Total = cotizacion.SubTotalFinal,
                     UnidadMedida = "NIU",
-                    ValorVentaUnitario = cotizacion.SubTotal,
+                    ValorVentaUnitario = cotizacion.SubTotalFinal,
                     ValorVentaUnitarioIncIgv = cotizacion.Total
                 };
 
@@ -565,10 +615,10 @@ namespace Web.Controllers
                 {
                     Gravado = new En_Gravado
                     {
-                        Total = cotizacion.SubTotal,
+                        Total = cotizacion.SubTotalFinal,
                         GravadoIGV = new En_GrabadoIGV
                         {
-                            MontoBase = cotizacion.SubTotal,
+                            MontoBase = cotizacion.SubTotalFinal,
                             MontoTotalImpuesto = cotizacion.IGV,
                             Porcentaje = 18
                         }
@@ -595,7 +645,7 @@ namespace Web.Controllers
                     TipoOperacion = "0101",
                     TotalImpuesto = cotizacion.IGV,
                     TotalPrecioVenta = cotizacion.Total,
-                    TotalValorVenta = cotizacion.SubTotal
+                    TotalValorVenta = cotizacion.SubTotalFinal
                 };
 
                 comprobante.Leyenda = new En_Leyenda[1];

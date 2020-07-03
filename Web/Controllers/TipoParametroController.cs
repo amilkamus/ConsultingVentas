@@ -17,6 +17,7 @@ namespace Web.Controllers
         private TipoParametroContext db = new TipoParametroContext();
 
         // GET: TipoParametro
+        [Authorize(Roles = "ADMINISTRADOR, PARAMETRIZADOR")]
         public ActionResult Index()
         {
             return View(db.TipoParametroes.ToList());
@@ -52,6 +53,7 @@ namespace Web.Controllers
         }
 
         // GET: TipoParametro/Create
+        [Authorize(Roles = "ADMINISTRADOR, PARAMETRIZADOR")]
         public ActionResult Create()
         {
             return View();

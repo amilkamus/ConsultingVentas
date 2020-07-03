@@ -20,7 +20,7 @@ namespace Web.Controllers
         PersonaMastNEG personaMastNEG = new PersonaMastNEG();
 
         // GET: Cliente
-        [Authorize(Roles = "ADMINISTRADOR")]
+        [Authorize(Roles = "ADMINISTRADOR, OPERADOR")]
         #region Agregar Cliente
         public ActionResult AddCliente()
         {
@@ -77,13 +77,14 @@ namespace Web.Controllers
         }
         #endregion
 
-        [Authorize(Roles = "ADMINISTRADOR")]
+        [Authorize(Roles = "ADMINISTRADOR, CONSULTOR, OPERADOR")]
         #region Listar Cliente
         public ActionResult ViewAllCliente()
         {
             return View();
         }
 
+        [Authorize(Roles = "ADMINISTRADOR, CONSULTOR, OPERADOR")]
         public JsonResult listarCliente()
         {
             try

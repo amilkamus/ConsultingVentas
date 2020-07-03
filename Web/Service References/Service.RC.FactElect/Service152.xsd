@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/FactElec.CapaEntidad.RegistroComprobante" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/FactElec.CapaEntidad.RegistroComprobante" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="https://www.quypay.com/FactElect/Service1.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:complexType name="En_ComprobanteElectronico">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ComprobanteDetalle" nillable="true" type="tns:ArrayOfEn_ComprobanteDetalle" />
+      <xs:element minOccurs="0" name="DescuentoCargo" nillable="true" type="tns:ArrayOfEn_DescuentoCargo" />
+      <xs:element minOccurs="0" name="DocumentoReferenciaDespacho" nillable="true" type="tns:ArrayOfEn_DocumentoReferencia" />
+      <xs:element minOccurs="0" name="DocumentoReferenciaNota" nillable="true" type="tns:ArrayOfEn_DocumentoReferenciaNota" />
+      <xs:element minOccurs="0" name="DocumentoSustentoNota" nillable="true" type="tns:En_DocumentoSustentoNota" />
+      <xs:element minOccurs="0" name="Emisor" nillable="true" type="tns:En_Emisor" />
+      <xs:element minOccurs="0" name="FechaEmision" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FechaVencimiento" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HoraEmision" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ImporteTotal" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Leyenda" nillable="true" type="tns:ArrayOfEn_Leyenda" />
+      <xs:element minOccurs="0" name="Moneda" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MontoTotales" nillable="true" type="tns:En_MontosTotales" />
+      <xs:element minOccurs="0" name="Receptor" nillable="true" type="tns:En_Receptor" />
+      <xs:element minOccurs="0" name="SerieNumero" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TextoDetraccion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TipoComprobante" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TipoOperacion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TotalCargo" type="xs:decimal" />
+      <xs:element minOccurs="0" name="TotalDescuento" type="xs:decimal" />
+      <xs:element minOccurs="0" name="TotalImpuesto" type="xs:decimal" />
+      <xs:element minOccurs="0" name="TotalPrecioVenta" type="xs:decimal" />
+      <xs:element minOccurs="0" name="TotalValorVenta" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="En_ComprobanteElectronico" nillable="true" type="tns:En_ComprobanteElectronico" />
+  <xs:complexType name="ArrayOfEn_ComprobanteDetalle">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="En_ComprobanteDetalle" nillable="true" type="tns:En_ComprobanteDetalle" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfEn_ComprobanteDetalle" nillable="true" type="tns:ArrayOfEn_ComprobanteDetalle" />
+  <xs:complexType name="En_ComprobanteDetalle">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Cantidad" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Codigo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CodigoSunat" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CodigoTipoPrecio" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ComprobanteDetalleImpuestos" nillable="true" type="tns:ArrayOfEn_ComprobanteDetalleImpuestos" />
+      <xs:element minOccurs="0" name="Descripcion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ImpuestoTotal" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Item" type="xs:decimal" />
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="MultiDescripcion" nillable="true" type="q1:ArrayOfstring" />
+      <xs:element minOccurs="0" name="Total" type="xs:decimal" />
+      <xs:element minOccurs="0" name="UnidadMedida" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ValorVentaUnitario" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ValorVentaUnitarioIncIgv" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="En_ComprobanteDetalle" nillable="true" type="tns:En_ComprobanteDetalle" />
+  <xs:complexType name="ArrayOfEn_ComprobanteDetalleImpuestos">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="En_ComprobanteDetalleImpuestos" nillable="true" type="tns:En_ComprobanteDetalleImpuestos" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfEn_ComprobanteDetalleImpuestos" nillable="true" type="tns:ArrayOfEn_ComprobanteDetalleImpuestos" />
+  <xs:complexType name="En_ComprobanteDetalleImpuestos">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AfectacionIGV" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CodigoInternacionalTributo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CodigoTributo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MontoBase" type="xs:decimal" />
+      <xs:element minOccurs="0" name="MontoTotalImpuesto" type="xs:decimal" />
+      <xs:element minOccurs="0" name="NombreTributo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Porcentaje" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="En_ComprobanteDetalleImpuestos" nillable="true" type="tns:En_ComprobanteDetalleImpuestos" />
+  <xs:complexType name="ArrayOfEn_DescuentoCargo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="En_DescuentoCargo" nillable="true" type="tns:En_DescuentoCargo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfEn_DescuentoCargo" nillable="true" type="tns:ArrayOfEn_DescuentoCargo" />
+  <xs:complexType name="En_DescuentoCargo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CodigoMotivo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Factor" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Indicador" type="xs:boolean" />
+      <xs:element minOccurs="0" name="MontoBase" type="xs:decimal" />
+      <xs:element minOccurs="0" name="MontoTotal" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Motivo" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="En_DescuentoCargo" nillable="true" type="tns:En_DescuentoCargo" />
+  <xs:complexType name="ArrayOfEn_DocumentoReferencia">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="En_DocumentoReferencia" nillable="true" type="tns:En_DocumentoReferencia" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfEn_DocumentoReferencia" nillable="true" type="tns:ArrayOfEn_DocumentoReferencia" />
+  <xs:complexType name="En_DocumentoReferencia">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Fecha" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SerieNumero" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TipoDocumento" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="En_DocumentoReferencia" nillable="true" type="tns:En_DocumentoReferencia" />
+  <xs:complexType name="ArrayOfEn_DocumentoReferenciaNota">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="En_DocumentoReferenciaNota" nillable="true" type="tns:En_DocumentoReferenciaNota" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfEn_DocumentoReferenciaNota" nillable="true" type="tns:ArrayOfEn_DocumentoReferenciaNota" />
+  <xs:complexType name="En_DocumentoReferenciaNota">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Fecha" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SerieNumero" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TipoDocumento" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="En_DocumentoReferenciaNota" nillable="true" type="tns:En_DocumentoReferenciaNota" />
+  <xs:complexType name="En_DocumentoSustentoNota">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CodigoMotivoAnulacion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MotivoAnulacion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SerieNumero" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="En_DocumentoSustentoNota" nillable="true" type="tns:En_DocumentoSustentoNota" />
+  <xs:complexType name="En_Emisor">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CodigoDomicilioFiscal" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CodigoPais" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CodigoUbigeo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Contacto" nillable="true" type="tns:En_Contacto" />
+      <xs:element minOccurs="0" name="Departamento" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Direccion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Distrito" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NombreComercial" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NumeroDocumentoIdentidad" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PaginaWeb" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Provincia" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RazonSocial" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TipoDocumentoIdentidad" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Urbanizacion" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="En_Emisor" nillable="true" type="tns:En_Emisor" />
+  <xs:complexType name="En_Contacto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Correo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Telefono" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="En_Contacto" nillable="true" type="tns:En_Contacto" />
+  <xs:complexType name="ArrayOfEn_Leyenda">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="En_Leyenda" nillable="true" type="tns:En_Leyenda" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfEn_Leyenda" nillable="true" type="tns:ArrayOfEn_Leyenda" />
+  <xs:complexType name="En_Leyenda">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Codigo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Valor" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="En_Leyenda" nillable="true" type="tns:En_Leyenda" />
+  <xs:complexType name="En_MontosTotales">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Gravado" nillable="true" type="tns:En_Gravado" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="En_MontosTotales" nillable="true" type="tns:En_MontosTotales" />
+  <xs:complexType name="En_Gravado">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="GravadoIGV" nillable="true" type="tns:En_GrabadoIGV" />
+      <xs:element minOccurs="0" name="Total" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="En_Gravado" nillable="true" type="tns:En_Gravado" />
+  <xs:complexType name="En_GrabadoIGV">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="MontoBase" type="xs:decimal" />
+      <xs:element minOccurs="0" name="MontoTotalImpuesto" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Porcentaje" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="En_GrabadoIGV" nillable="true" type="tns:En_GrabadoIGV" />
+  <xs:complexType name="En_Receptor">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CodigoDomicilioFiscal" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CodigoPais" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CodigoUbigeo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Contacto" nillable="true" type="tns:En_Contacto" />
+      <xs:element minOccurs="0" name="Departamento" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Direccion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Distrito" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NombreComercial" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NumeroDocumentoIdentidad" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PaginaWeb" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Provincia" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RazonSocial" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TipoDocumentoIdentidad" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Urbanizacion" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="En_Receptor" nillable="true" type="tns:En_Receptor" />
+  <xs:complexType name="En_Respuesta">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Codigo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Descripcion" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="En_Respuesta" nillable="true" type="tns:En_Respuesta" />
+</xs:schema>

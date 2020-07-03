@@ -11,7 +11,8 @@ namespace Datos
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class WH_ProductoServicio
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,7 +21,7 @@ namespace Datos
             this.CO_ComprobanteDetalle = new HashSet<CO_ComprobanteDetalle>();
             this.WH_InventarioDetalle = new HashSet<WH_InventarioDetalle>();
         }
-    
+        
         public int idProducto { get; set; }
         public Nullable<int> idTipoProductoServicio { get; set; }
         public string codigo { get; set; }

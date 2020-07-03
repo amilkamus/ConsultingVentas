@@ -55,6 +55,14 @@
                         {
                             <p> CONSULTOR </p>
                         }
+                        else if (User.IsInRole("PARAMETRIZADOR"))
+                        {
+                            <p> PARAMETRIZADOR </p>
+                        }
+                        else if (User.IsInRole("FACTURACION"))
+                        {
+                            <p> FACTURACION </p>
+                        }
                     </li>
                     <!-- Menu Footer-->
                     <li class="user-footer">
