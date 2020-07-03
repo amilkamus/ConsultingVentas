@@ -584,7 +584,7 @@ namespace Web.Controllers
                     AfectacionIGV = "10",
                     CodigoInternacionalTributo = "1000",
                     CodigoTributo = "VAT",
-                    MontoBase = cotizacion.SubTotal,
+                    MontoBase = cotizacion.SubTotalFinal,
                     MontoTotalImpuesto = cotizacion.IGV,
                     NombreTributo = "IGV",
                     Porcentaje = 18.00M
@@ -599,9 +599,9 @@ namespace Web.Controllers
                     Descripcion = cotizacion.TipoDocumentoSolicitado + " - " + cotizacion.DescripcionProducto + " - " + "COT." + cotizacion.NumeroCotizacion, //Descripcion = cotizacion.DescripcionProducto, 
                     ImpuestoTotal = cotizacion.IGV,
                     Item = 1,
-                    Total = cotizacion.SubTotal,
+                    Total = cotizacion.SubTotalFinal,
                     UnidadMedida = "NIU",
-                    ValorVentaUnitario = cotizacion.SubTotal,
+                    ValorVentaUnitario = cotizacion.SubTotalFinal,
                     ValorVentaUnitarioIncIgv = cotizacion.Total
                 };
 
@@ -615,10 +615,10 @@ namespace Web.Controllers
                 {
                     Gravado = new En_Gravado
                     {
-                        Total = cotizacion.SubTotal,
+                        Total = cotizacion.SubTotalFinal,
                         GravadoIGV = new En_GrabadoIGV
                         {
-                            MontoBase = cotizacion.SubTotal,
+                            MontoBase = cotizacion.SubTotalFinal,
                             MontoTotalImpuesto = cotizacion.IGV,
                             Porcentaje = 18
                         }
@@ -645,7 +645,7 @@ namespace Web.Controllers
                     TipoOperacion = "0101",
                     TotalImpuesto = cotizacion.IGV,
                     TotalPrecioVenta = cotizacion.Total,
-                    TotalValorVenta = cotizacion.SubTotal
+                    TotalValorVenta = cotizacion.SubTotalFinal
                 };
 
                 comprobante.Leyenda = new En_Leyenda[1];
