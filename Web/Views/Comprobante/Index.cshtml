@@ -1,0 +1,244 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/js/angular/controller/comprobanteElectronico/comprobanteElectronicoController.js")></script>
+}
+
+<style type="text/css">
+    
+    .modalDetalle {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0,0,0);
+        background-color: rgba(0,0,0,0.4);
+    }
+
+    .modalDetalle-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 30%;
+    }
+    
+</style>
+
+<section class="content">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">COMPROBANTES ELECTRÓNICOS</h3>
+        </div>
+        <div class="box-body">
+            <div ng-controller="comprobanteElectronicoController" ng-cloak>
+                <div class="table-responsive">
+                    <div class="input-small formulario-mediano col-md-12 table-options form-horizontal">
+                        <div class="form-group">
+                            <label for="date_from" class="control-label col-md-2">RUC / DNI Receptor:</label>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control" id="rucDniReceptor" ng-model="model.NumeroDocumentoIdentidadReceptor" />
+                            </div>
+                            <div class="col-md-1">
+                                <a title="Buscar Cliente" class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-buscarCliente"><span class="glyphicon glyphicon-search"></span></a>
+                            </div>
+                            <label for="cboEstado" class="control-label col-md-2">Estado:</label>
+                            <div class="col-md-2">
+                                <select id="cboEstado" class="select2 form-control" ng-model="model.Estado">
+                                    <option value="-1">Todos</option>
+                                    <option value="0">Aceptado</option>
+                                    <option value="3">Aceptado con observación</option>
+                                    <option value="2">Excepción</option>
+                                    <option value="1">Rechazado</option>
+                                    <option value="4">Sin respuesta</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="date_from" class="control-label col-md-2">Fecha de inicio:</label>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control txtFecha" id="date_from" ng-model="model.FechaInicial" readonly />
+                            </div>
+                            <div class="col-md-1"></div>
+                            <label for="date_to" class="control-label col-md-2">Fecha de fin:</label>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control txtFecha" id="date_to" ng-model="model.FechaFinal" readonly />
+                            </div>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="date_from" class="control-label col-md-2">Tipo comprobante:</label>
+                            <div class="col-md-2">
+                                <select id="cboTipoComprobante" class="select2 form-control" ng-model="model.TipoComprobante">
+                                    <option value="0">Todos</option>
+                                    <option value="01">Factura</option>
+                                    <option value="03">Boleta</option>
+                                    <option value="07">Nota de crédito</option>
+                                </select>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <label for="date_to" class="control-label col-md-2">Serie y número:</label>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control" id="txtSerieNumero" ng-model="model.SerieNumero" />
+                            </div>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1">
+                                <a id="btnBuscarComprobantes" class="btn btn-sm btn-primary" ng-click="listarComprobante()">BUSCAR</a>
+                            </div>
+                        </div>
+                    </div>
+                    <table id="tabla-comprobante" datatable="ng" dt-options="dtOptions" dt-column-defs="elementos.dtColumnDefs" class="row-border hover table table-bordered table-striped tabla-bandeja">
+                        <thead>
+                            <tr>
+                                <th>N° documento receptor</th>
+                                <th>Razón social receptor</th>
+                                <th>Tipo de comprobante</th>
+                                <th>Serie y número</th>
+                                <th>Fecha de emisión</th>
+                                <th>Moneda</th>
+                                <th>Comprobante referenciado</th>
+                                <th>Total</th>
+                                <th>Estado</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in elementosComprobante.lista">
+                                <td>{{item.NumeroDocumentoIdentidad}}</td>
+                                <td>{{item.RazonSocial}}</td>
+                                <td>{{item.TipoComprobante}}</td>
+                                <td>{{item.SerieNumero}}</td>
+                                <td>{{item.FechaEmision}}</td>
+                                <td>{{item.Moneda}}</td>
+                                <td>{{item.ComprobanteReferenciado}}</td>
+                                <td>{{item.TotalPrecioVenta}}</td>
+                                <td>{{item.Estado}}</td>
+                                <td class="right" style="text-align: left;">
+                                    <a title="Obtener XML" class="btn btn-xs btn-success" ng-click="ObtenerDocumentoComprobante(item.IdComprobante)" style="border-color:#9b59b6!important; background-color:#9b59b6!important"><span class="glyphicon glyphicon-file"></span></a>
+                                    <a title="Obtener PDF" class="btn btn-xs btn-success" ng-if="item.IdEstado!=-2" ng-click="ObtenerRepresentacionImpresa(item.IdComprobante)"><span class="glyphicon glyphicon-barcode"></span></a>
+                                    <a title="Obtener CDR" class="btn btn-xs btn-warning" ng-if="item.IdEstado!=-2" ng-click="ObtenerRespuestaComprobante(item)"><span class="glyphicon glyphicon-compressed"></span></a>
+                                    <a title="Generar nota de crédito" ng-if="item.IdEstado!=-2 && item.TipoComprobante != 'Nota de crédito' && (item.Estado != 'Excepcion' && item.Estado != 'Rechazado')" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modal-crearNotaCredito" ng-click="PantallaGeneracionNotas(item)"><span class="glyphicon glyphicon-download"></span></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="modal-crearNotaCredito" class="modal fade" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <a class="close" data-dismiss="modal">&times;</a>
+                                <h4 class="modal-title"> Generación de nota de crédito / débito</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container" style="width:auto">
+                                    <form name="cliente" class="form-horizontal" ng-cloak>
+                                        <div id="comprobante" class="col-md-12">
+                                            <h4 class="titulo1 texto-centrado col-md-12">Datos del comprobante afectado</h4>
+                                            <div class="form-group">
+                                                <br />
+                                                <label class="control-label col-md-2">Tipo:</label>
+                                                <div class="col-md-2">
+                                                    <input class="form-control lowercase" ng-model="model.Comprobante.TipoComprobante" disabled />
+                                                </div>
+                                                <label class="control-label col-md-2">Serie y número:</label>
+                                                <div class="col-md-2">
+                                                    <input class="form-control lowercase" ng-model="model.Comprobante.SerieNumero" disabled />
+                                                </div>
+                                                <label class="control-label col-md-2">F. de emisión:</label>
+                                                <div class="col-md-2">
+                                                    <input class="form-control lowercase" ng-model="model.Comprobante.FechaEmision" disabled />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-2">Respuesta:</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control lowercase" ng-model="model.Comprobante.DescripcionEstado" disabled />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div id="nota" class="col-md-12">
+                                            <h4 class="titulo1 texto-centrado col-md-12">Datos de la nota de crédito / débito</h4>
+                                            <div class="form-group">
+                                                <br />
+                                                <label class="control-label col-md-2">Tipo:</label>
+                                                <div class="col-md-6">
+                                                    <select id="cboEstado" class="select2 form-control" ng-model="model.TipoEmision">
+                                                        <option value="0">Seleccione</option>
+                                                        <option value="01">Anulación de la operación</option>
+                                                        <option value="02">Anulación por error en el RUC</option>
+                                                        <option value="03">Corrección por error en la descripción</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-2">Motivo:</label>
+                                                <div class="col-md-10">
+                                                    <textarea class="form-control lowercase" rows="5" style="resize:none" ng-model="model.MotivoEmision"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <a class="btn btn-sm btn-primary" ng-click="registrarNota()">GUARDAR</a>
+                                <a class="btn btn-sm btn-danger cancelar" data-dismiss="modal">CANCELAR</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="modal-buscarCliente" class="modal fade" tabindex="-1" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <a class="close" data-dismiss="modal">&times;</a>
+                                <h4 class="modal-title"> Búsqueda de Cliente</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="table-responsive">
+                                    <table datatable="ng" dt-options="dtOptions" dt-column-defs="elementos.dtColumnDefs" class="row-border hover table table-bordered table-striped tabla-bandeja">
+                                        <thead>
+                                            <tr>
+                                                <th>Tipo Documento</th>
+                                                <th>Cliente</th>
+                                                <th>N° Documento</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="itemCliente in elementosCliente.lista" ng-click="seleccionCliente(itemCliente)" data-dismiss="modal">
+                                                <td>{{itemCliente.tipoDocumento}}</td>
+                                                <td>{{itemCliente.cliente}}</td>                                                
+                                                <td>{{itemCliente.numeroDocumento}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="myModal" class="modalDetalle">
+        <div class="modalDetalle-content">
+            <p>Se está registrando el comprobante, esta acción tomará unos segundos...</p>
+        </div>
+    </div>
+
+</section>

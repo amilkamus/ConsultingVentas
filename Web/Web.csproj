@@ -224,6 +224,7 @@
     <Compile Include="Controllers\CambioMonedaController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\CompaniaController.cs" />
+    <Compile Include="Controllers\ComprobanteController.cs" />
     <Compile Include="Controllers\CorrelativoMastController.cs" />
     <Compile Include="Controllers\CotizacionController.cs" />
     <Compile Include="Controllers\DocumentoController.cs" />
@@ -258,6 +259,7 @@
     <Compile Include="Models\ComboGenericoViewModel.cs" />
     <Compile Include="Models\Compania\MostrarCompaniaViewModel.cs" />
     <Compile Include="Models\Compania\RegistroCompaniaViewModel.cs" />
+    <Compile Include="Models\ComprobanteViewModel.cs" />
     <Compile Include="Models\CorrelativoMaster\CorrelativoMastViewModels.cs" />
     <Compile Include="Models\CotizacionContext.cs" />
     <Compile Include="Models\Cotizacion\Cotizacion.cs" />
@@ -1534,6 +1536,7 @@
     <Content Include="Scripts\js\angular\controller\cambioMoneda\cambioMonedaController.js" />
     <Content Include="Scripts\js\angular\controller\cliente\clienteController.js" />
     <Content Include="Scripts\js\angular\controller\compania\companiaController.js" />
+    <Content Include="Scripts\js\angular\controller\comprobanteElectronico\comprobanteElectronicoController.js" />
     <Content Include="Scripts\js\angular\controller\comprobante\comprobanteController.js" />
     <Content Include="Scripts\js\angular\controller\correlativo\correlativoController.js" />
     <Content Include="Scripts\js\angular\controller\cotizacion\cotizacionController.js" />
@@ -1570,6 +1573,7 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Service References\Service.RC.FactElect\Service1.disco" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -1668,18 +1672,31 @@
     <Content Include="Views\OrdenServicio\Index.cshtml" />
     <Content Include="Views\OrdenServicio\Print.cshtml" />
     <None Include="Service References\Service.RC.FactElect\Service11.wsdl" />
+    <None Include="Service References\Service.RC.FactElect\Service110.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\Service.RC.FactElect\Service15.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\Service.RC.FactElect\Service151.xsd">
+    <None Include="Service References\Service.RC.FactElect\Service16.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\Service.RC.FactElect\Service152.xsd">
+    <None Include="Service References\Service.RC.FactElect\Service17.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\Service.RC.FactElect\Service153.xsd">
+    <None Include="Service References\Service.RC.FactElect\Service18.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\Service.RC.FactElect\Service19.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Service References\Service.RC.FactElect\Web.Service.RC.FactElect.En_SalidaArchivo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\Service.RC.FactElect\Web.Service.RC.FactElect.En_SalidaListarComprobante.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Views\Comprobante\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

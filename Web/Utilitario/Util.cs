@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Web;
+using System.Xml;
+using System.Xml.XPath;
 using Datos;
 
 namespace Web.Utilitario
@@ -178,5 +180,34 @@ namespace Web.Utilitario
             }
             return num2Text;
         }
+
+        public static XmlNamespaceManager ObtenerXmlNamespaces(XPathNavigator nav)
+        {
+            XmlNamespaceManager ns = new XmlNamespaceManager(nav.NameTable);
+            XPathNodeIterator nodes = nav.Select("/*/namespace::cac");
+            bool prefijoCabecera = false;
+
+            while (nodes.MoveNext())
+            {
+                IDictionary<string, string> nsis = nodes.Current.GetNamespacesInScope(XmlNamespaceScope.Local);
+                foreach (KeyValuePair<string, string> nsi in nsis)
+                {
+                    string prf = (nsi.Key == string.Empty) ? "global" : nsi.Key;
+                    ns.AddNamespace(prf, nsi.Value);
+                    prefijoCabecera = true;
+                }
+            }
+
+            return ns;
+        }
+
+        public static string NodeValue(XPathItem node, string defaultValue)
+        {
+            if (node != null)
+                return node.Value ?? defaultValue;
+
+            return defaultValue;
+        }
+
     }
 }

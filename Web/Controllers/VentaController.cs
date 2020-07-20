@@ -93,10 +93,14 @@ namespace Web.Controllers
                     //Provincia = "LIMA",
                     RazonSocial = ds.Tables[0].Columns["RazonSocial"].ToString(),
                     TipoDocumentoIdentidad = "6",
-                    Urbanizacion = ""
+                    //Urbanizacion = ""
                 };
 
                 En_ComprobanteElectronico comprobante = new En_ComprobanteElectronico();
+
+                string serieCorrelativo = ds.Tables[0].Rows[0]["SerieCorrelativo"].ToString();
+                decimal total = decimal.Parse(ds.Tables[0].Rows[0]["Total"].ToString());
+                decimal subTotal = decimal.Parse(ds.Tables[0].Rows[0]["SubTotal"].ToString());
 
                 // Inicio de los detalles
                 comprobante.ComprobanteDetalle = new En_ComprobanteDetalle[ds.Tables[1].Rows.Count];
@@ -117,7 +121,7 @@ namespace Web.Controllers
                         CodigoInternacionalTributo = "1000",
                         CodigoTributo = "VAT",
                         MontoBase = valorVentaUnitario,
-                        MontoTotalImpuesto = impuestoTotalItem,
+                        MontoTotalImpuesto = Math.Round(impuestoTotalItem, 2),
                         NombreTributo = "IGV",
                         Porcentaje = 18.00M
                     };
@@ -129,12 +133,12 @@ namespace Web.Controllers
                         CodigoSunat = "",
                         CodigoTipoPrecio = "01",
                         Descripcion = nombreProducto,
-                        ImpuestoTotal = impuestoTotalItem,
+                        ImpuestoTotal = Math.Round(impuestoTotalItem, 2),
                         Item = (indice + 1),
                         Total = valorVentaUnitario,
                         UnidadMedida = "NIU",
-                        ValorVentaUnitario = valorVentaUnitario,
-                        ValorVentaUnitarioIncIgv = valorVentaUnitario + impuestoTotalItem
+                        ValorVentaUnitario = valorVentaUnitario / cantidad,
+                        ValorVentaUnitarioIncIgv = (valorVentaUnitario + impuestoTotalItem) / cantidad
                     };
                     detalle.MultiDescripcion = new string[1];
                     detalle.MultiDescripcion.SetValue("-", 0);
@@ -145,10 +149,7 @@ namespace Web.Controllers
                     comprobante.ComprobanteDetalle.SetValue(detalle, indice);
                     indice++;
                 }
-                // Fin de los detalles                
-                string serieCorrelativo = ds.Tables[0].Rows[0]["SerieCorrelativo"].ToString();
-                decimal total = decimal.Parse(ds.Tables[0].Rows[0]["Total"].ToString());
-                decimal subTotal = decimal.Parse(ds.Tables[0].Rows[0]["SubTotal"].ToString());
+                // Fin de los detalles
 
                 En_Leyenda leyenda = new En_Leyenda
                 {
@@ -160,12 +161,12 @@ namespace Web.Controllers
                 {
                     Gravado = new En_Gravado
                     {
-                        Total = subTotal,
+                        Total = Math.Round(subTotal, 2),
                         GravadoIGV = new En_GrabadoIGV
                         {
                             MontoBase = subTotal,
-                            MontoTotalImpuesto = impuestoTotal,
-                            Porcentaje = 18
+                            MontoTotalImpuesto = Math.Round(impuestoTotal, 2),
+                            Porcentaje = 18.00M
                         }
                     }
                 };
@@ -180,9 +181,9 @@ namespace Web.Controllers
                 comprobante.SerieNumero = serieCorrelativo;
                 comprobante.TipoComprobante = "01";
                 comprobante.TipoOperacion = "0101";
-                comprobante.TotalImpuesto = impuestoTotal;
+                comprobante.TotalImpuesto = Math.Round(impuestoTotal, 2);
                 comprobante.TotalPrecioVenta = total;
-                comprobante.TotalValorVenta = subTotal;
+                comprobante.TotalValorVenta = Math.Round(subTotal, 2);
                 comprobante.Leyenda = new En_Leyenda[1];
                 comprobante.Leyenda.SetValue(leyenda, 0);
 
@@ -206,20 +207,24 @@ namespace Web.Controllers
         public JsonResult guardarComprobante(VentaViewModels ventaViewModels, List<VentaDetalleViewModels> ventaDetalleViewModels, List<ProductoServicioViewModels> productoViewModels)
         {
             long IdComprobante = 0;
-            //string pdfAbrir = "";
+            var tipoComprobante = comprobanteNEG.DevolverTipoComprobante(ventaViewModels.idCorrelativo);
+            string serie = "";
+            long numero = 0;
+            comprobanteNEG.ListarSerieCorrelativo(tipoComprobante, ref serie, ref numero);
+
             try
             {
                 OperationResult resultado = null;
                 if (ventaViewModels.idComprobante != 0)
                 {
                     ventaViewModels.textoTotal = conversion.enletras(Convert.ToString(ventaViewModels.total));
-                    ventaViewModels.serieCorrelativo = (comprobanteNEG.CodigoComprobante(Convert.ToInt32(ventaViewModels.idCorrelativo))).ToString();
+                    ventaViewModels.serieCorrelativo = string.Format("{0}-{1}", serie, numero); //(comprobanteNEG.CodigoComprobante(Convert.ToInt32(ventaViewModels.idCorrelativo))).ToString();
                     resultado = comprobanteNEG.actualizarComprobante(ventaViewModels.idComprobante, ventaViewModels.idCorrelativo, ventaViewModels.serieCorrelativo, ventaViewModels.descripcion, ventaViewModels.estado, ventaViewModels.subtotal, ventaViewModels.total, ventaViewModels.textoTotal, ventaViewModels.fechaRegistro, ventaViewModels.usuarioRegistro, IdUsuario(), ventaViewModels.idUsuario, ventaViewModels.idCliente, ventaViewModels.idMoneda, 1);
                 }
                 else
                 {
                     ventaViewModels.textoTotal = conversion.enletras(Convert.ToString(ventaViewModels.total));
-                    ventaViewModels.serieCorrelativo = comprobanteNEG.DevolverSerieComprobante(Convert.ToInt32(ventaViewModels.idCorrelativo)) + "-" + (comprobanteNEG.CodigoComprobante(Convert.ToInt32(ventaViewModels.idCorrelativo))).ToString();
+                    ventaViewModels.serieCorrelativo = string.Format("{0}-{1}", serie, numero); // comprobanteNEG.DevolverSerieComprobante(Convert.ToInt32(ventaViewModels.idCorrelativo)) + "-" + (comprobanteNEG.CodigoComprobante(Convert.ToInt32(ventaViewModels.idCorrelativo))).ToString();
                     resultado = comprobanteNEG.guardarComprobante(ventaViewModels.idCorrelativo, ventaViewModels.serieCorrelativo, ventaViewModels.descripcion, "ACTIVO", ventaViewModels.subtotal, ventaViewModels.total, ventaViewModels.textoTotal, IdUsuario(), IdUsuario(), ventaViewModels.idCliente, ventaViewModels.idMoneda, 1);
                     IdComprobante = resultado.data;
 
@@ -240,7 +245,7 @@ namespace Web.Controllers
                 //imprimirVentas(Convert.ToString(IdComprobante));
                 temporal = 1;
                 Util.verificarError(resultado);
-
+                comprobanteNEG.ActualizarSerieCorrelativo(serie, tipoComprobante);
                 return Json(new { code_result = resultado.code_result, data = resultado.data, result_description = resultado.title }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)

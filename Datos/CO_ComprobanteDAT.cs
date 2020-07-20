@@ -33,7 +33,7 @@ namespace Datos
             }
         }
 
-        public void ActualizarSerieCorrelativo(string serie)
+        public void ActualizarSerieCorrelativo(string serie, string tipoComprobante)
         {
             SqlConnection cn = new SqlConnection(_db.Database.Connection.ConnectionString);
             try
@@ -41,6 +41,7 @@ namespace Datos
                 SqlCommand cmd = new SqlCommand("ActualizarSerieCorrelativo", cn);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.Parameters.Add("@serie", System.Data.SqlDbType.VarChar, 20).Value = serie;
+                cmd.Parameters.Add("@tipoComprobante", SqlDbType.VarChar, 50).Value = tipoComprobante;
                 cn.Open();
                 cmd.ExecuteNonQuery();
                 cn.Close();
@@ -82,13 +83,14 @@ namespace Datos
             }
         }
 
-        public void ListarSerieCorrelativo(ref string serie, ref long numero)
+        public void ListarSerieCorrelativo(string tipoComprobante, ref string serie, ref long numero)
         {
             SqlConnection cn = new SqlConnection(_db.Database.Connection.ConnectionString);
             try
             {
                 SqlCommand cmd = new SqlCommand("ListarSerieCorrelativo", cn);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@TipoComprobante", SqlDbType.VarChar, 50).Value = tipoComprobante;
                 cn.Open();
 
                 SqlDataReader dr = cmd.ExecuteReader();
@@ -268,6 +270,16 @@ namespace Datos
                 miSerieComprobante = Convert.ToString(configuracion.serie);
             }
             return miSerieComprobante;
+        }
+
+        public string DevolverTipoComprobante(int idCorrelativo)
+        {
+            int? idTipoComprobante = (from miFactura in _db.CorrelativoMast
+                                      where miFactura.idCorrelativo == idCorrelativo
+                                      select miFactura.idTipoComprobante).FirstOrDefault();
+
+            CO_TipoComprobante tipoComprobante = _db.CO_TipoComprobante.Where(z => z.idTipoComprobante == idTipoComprobante.Value).First();
+            return tipoComprobante.tipoComprobante;
         }
 
     }

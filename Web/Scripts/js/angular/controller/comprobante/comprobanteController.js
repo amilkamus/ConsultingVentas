@@ -217,8 +217,6 @@
     }
     //Fin
 
-
-
     //Obtener cliente para la venta
     $scope.selccionCliente = function (itemCliente) {
         $scope.cliente = itemCliente;
@@ -244,19 +242,19 @@
                 if ($scope.model.idMoneda == 1) {
                     $scope.carrito.lista.push(producto);
                     $scope.soles = (producto.cantidad * producto.precio) + $scope.soles;
-                    //$scope.model.subtotal = $scope.soles.toFixed(2);
-                    //$scope.solesTotal = (($scope.soles * ($scope.igv / 100)) + $scope.soles);
-                    $scope.model.subtotal = ($scope.soles - ($scope.soles * ($scope.igv / 100)));
-                    $scope.solesTotal = $scope.soles;
+                    $scope.model.subtotal = $scope.soles.toFixed(2);
+                    $scope.solesTotal = (($scope.soles * ($scope.igv / 100)) + $scope.soles);
+                    //$scope.model.subtotal = ($scope.soles - ($scope.soles * ($scope.igv / 100)));
+                    //$scope.solesTotal = $scope.soles;
                     $scope.model.total = $scope.solesTotal.toFixed(2);
                     $scope.producto = {};
                 }
                 if ($scope.model.idMoneda == 2) {
                     $scope.carrito.lista.push(producto);
-                    //$scope.soles = (producto.cantidad * producto.precio) + $scope.soles;
-                    //$scope.solesTotal = (($scope.soles * ($scope.igv / 100)) + $scope.soles);
-                    $scope.soles = ($scope.soles - ($scope.soles * ($scope.igv / 100)));
-                    $scope.solesTotal = (producto.cantidad * producto.precio) + $scope.soles;
+                    $scope.soles = (producto.cantidad * producto.precio) + $scope.soles;
+                    $scope.solesTotal = (($scope.soles * ($scope.igv / 100)) + $scope.soles);
+                    //$scope.soles = ($scope.soles - ($scope.soles * ($scope.igv / 100)));
+                    //$scope.solesTotal = (producto.cantidad * producto.precio) + $scope.soles;
                     $scope.cambioMoneda();
                     $scope.producto = {};
                 }

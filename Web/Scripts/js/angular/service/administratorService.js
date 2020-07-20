@@ -299,3 +299,26 @@ app.factory('ordenServicioService', function ($http) {
         }
     };
 });
+
+app.factory('comprobanteElectronicoService', function ($http) {
+    return {
+        listarComprobante: function (params) {
+            return $http.post(URL + "/Comprobante/ListarComprobanteElectronicos", params);
+        },
+        ObtenerDocumentoComprobante: function (params) {
+            return $http.post(URL + "/Comprobante/ObtenerDocumentoComprobante", params);
+        },
+        ObtenerRepresentacionImpresa: function (params) {
+            return $http.post(URL + "/Comprobante/ObtenerRepresentacionImpresa", params);
+        },
+        ObtenerRespuestaComprobante: function (params) {
+            return $http.post(URL + "/Comprobante/ObtenerRespuestaComprobante", params);
+        },
+        GenerarNotaCredito: function (params) {
+            return $http.post(URL + "/Comprobante/GenerarNotaCredito", params);
+        },
+        listarCliente: function (params) {
+            return $http.post(URL + "/Venta/listarCliente", params);
+        }
+    };
+});

@@ -2032,6 +2032,463 @@ namespace Web.Service.RC.FactElect {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="En_SalidaArchivo", Namespace="http://schemas.datacontract.org/2004/07/FactElec.CapaEntidad.ObtenerArchivo")]
+    [System.SerializableAttribute()]
+    public partial class En_SalidaArchivo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CodigoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ContenidoArchivoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DescripcionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NombreArchivoField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Codigo {
+            get {
+                return this.CodigoField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CodigoField, value) != true)) {
+                    this.CodigoField = value;
+                    this.RaisePropertyChanged("Codigo");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ContenidoArchivo {
+            get {
+                return this.ContenidoArchivoField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContenidoArchivoField, value) != true)) {
+                    this.ContenidoArchivoField = value;
+                    this.RaisePropertyChanged("ContenidoArchivo");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Descripcion {
+            get {
+                return this.DescripcionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DescripcionField, value) != true)) {
+                    this.DescripcionField = value;
+                    this.RaisePropertyChanged("Descripcion");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NombreArchivo {
+            get {
+                return this.NombreArchivoField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NombreArchivoField, value) != true)) {
+                    this.NombreArchivoField = value;
+                    this.RaisePropertyChanged("NombreArchivo");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="En_EntradaListarComprobante", Namespace="http://schemas.datacontract.org/2004/07/FactElec.CapaEntidad.ListarComprobanteEle" +
+        "ctronicos")]
+    [System.SerializableAttribute()]
+    public partial class En_EntradaListarComprobante : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int EstadoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FechaFinalField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FechaInicialField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NumeroDocumentoIdentidadEmisorField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NumeroDocumentoIdentidadReceptorField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SerieNumeroField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TipoComprobanteField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Estado {
+            get {
+                return this.EstadoField;
+            }
+            set {
+                if ((this.EstadoField.Equals(value) != true)) {
+                    this.EstadoField = value;
+                    this.RaisePropertyChanged("Estado");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FechaFinal {
+            get {
+                return this.FechaFinalField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FechaFinalField, value) != true)) {
+                    this.FechaFinalField = value;
+                    this.RaisePropertyChanged("FechaFinal");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FechaInicial {
+            get {
+                return this.FechaInicialField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FechaInicialField, value) != true)) {
+                    this.FechaInicialField = value;
+                    this.RaisePropertyChanged("FechaInicial");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NumeroDocumentoIdentidadEmisor {
+            get {
+                return this.NumeroDocumentoIdentidadEmisorField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NumeroDocumentoIdentidadEmisorField, value) != true)) {
+                    this.NumeroDocumentoIdentidadEmisorField = value;
+                    this.RaisePropertyChanged("NumeroDocumentoIdentidadEmisor");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NumeroDocumentoIdentidadReceptor {
+            get {
+                return this.NumeroDocumentoIdentidadReceptorField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NumeroDocumentoIdentidadReceptorField, value) != true)) {
+                    this.NumeroDocumentoIdentidadReceptorField = value;
+                    this.RaisePropertyChanged("NumeroDocumentoIdentidadReceptor");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SerieNumero {
+            get {
+                return this.SerieNumeroField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SerieNumeroField, value) != true)) {
+                    this.SerieNumeroField = value;
+                    this.RaisePropertyChanged("SerieNumero");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string TipoComprobante {
+            get {
+                return this.TipoComprobanteField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TipoComprobanteField, value) != true)) {
+                    this.TipoComprobanteField = value;
+                    this.RaisePropertyChanged("TipoComprobante");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="En_SalidaListarComprobante", Namespace="http://schemas.datacontract.org/2004/07/FactElec.CapaEntidad.ListarComprobanteEle" +
+        "ctronicos")]
+    [System.SerializableAttribute()]
+    public partial class En_SalidaListarComprobante : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ComprobanteReferenciadoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DescripcionEstadoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EstadoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FechaEmisionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long IdComprobanteField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdEstadoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MonedaField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NumeroDocumentoIdentidadField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string RazonSocialField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SerieNumeroField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TipoComprobanteField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private decimal TotalPrecioVentaField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ComprobanteReferenciado {
+            get {
+                return this.ComprobanteReferenciadoField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ComprobanteReferenciadoField, value) != true)) {
+                    this.ComprobanteReferenciadoField = value;
+                    this.RaisePropertyChanged("ComprobanteReferenciado");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DescripcionEstado {
+            get {
+                return this.DescripcionEstadoField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DescripcionEstadoField, value) != true)) {
+                    this.DescripcionEstadoField = value;
+                    this.RaisePropertyChanged("DescripcionEstado");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Estado {
+            get {
+                return this.EstadoField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EstadoField, value) != true)) {
+                    this.EstadoField = value;
+                    this.RaisePropertyChanged("Estado");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FechaEmision {
+            get {
+                return this.FechaEmisionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FechaEmisionField, value) != true)) {
+                    this.FechaEmisionField = value;
+                    this.RaisePropertyChanged("FechaEmision");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long IdComprobante {
+            get {
+                return this.IdComprobanteField;
+            }
+            set {
+                if ((this.IdComprobanteField.Equals(value) != true)) {
+                    this.IdComprobanteField = value;
+                    this.RaisePropertyChanged("IdComprobante");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int IdEstado {
+            get {
+                return this.IdEstadoField;
+            }
+            set {
+                if ((this.IdEstadoField.Equals(value) != true)) {
+                    this.IdEstadoField = value;
+                    this.RaisePropertyChanged("IdEstado");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Moneda {
+            get {
+                return this.MonedaField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MonedaField, value) != true)) {
+                    this.MonedaField = value;
+                    this.RaisePropertyChanged("Moneda");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NumeroDocumentoIdentidad {
+            get {
+                return this.NumeroDocumentoIdentidadField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NumeroDocumentoIdentidadField, value) != true)) {
+                    this.NumeroDocumentoIdentidadField = value;
+                    this.RaisePropertyChanged("NumeroDocumentoIdentidad");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string RazonSocial {
+            get {
+                return this.RazonSocialField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RazonSocialField, value) != true)) {
+                    this.RazonSocialField = value;
+                    this.RaisePropertyChanged("RazonSocial");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SerieNumero {
+            get {
+                return this.SerieNumeroField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SerieNumeroField, value) != true)) {
+                    this.SerieNumeroField = value;
+                    this.RaisePropertyChanged("SerieNumero");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string TipoComprobante {
+            get {
+                return this.TipoComprobanteField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TipoComprobanteField, value) != true)) {
+                    this.TipoComprobanteField = value;
+                    this.RaisePropertyChanged("TipoComprobante");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal TotalPrecioVenta {
+            get {
+                return this.TotalPrecioVentaField;
+            }
+            set {
+                if ((this.TotalPrecioVentaField.Equals(value) != true)) {
+                    this.TotalPrecioVentaField = value;
+                    this.RaisePropertyChanged("TotalPrecioVenta");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Service.RC.FactElect.IService1")]
     public interface IService1 {
@@ -2041,6 +2498,30 @@ namespace Web.Service.RC.FactElect {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/RegistroComprobante", ReplyAction="http://tempuri.org/IService1/RegistroComprobanteResponse")]
         System.Threading.Tasks.Task<Web.Service.RC.FactElect.En_Respuesta> RegistroComprobanteAsync(Web.Service.RC.FactElect.En_ComprobanteElectronico Comprobante);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ObtenerRepresentacionImpresa", ReplyAction="http://tempuri.org/IService1/ObtenerRepresentacionImpresaResponse")]
+        Web.Service.RC.FactElect.En_SalidaArchivo ObtenerRepresentacionImpresa(long idComprobante);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ObtenerRepresentacionImpresa", ReplyAction="http://tempuri.org/IService1/ObtenerRepresentacionImpresaResponse")]
+        System.Threading.Tasks.Task<Web.Service.RC.FactElect.En_SalidaArchivo> ObtenerRepresentacionImpresaAsync(long idComprobante);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ObtenerDocumentoComprobante", ReplyAction="http://tempuri.org/IService1/ObtenerDocumentoComprobanteResponse")]
+        Web.Service.RC.FactElect.En_SalidaArchivo ObtenerDocumentoComprobante(long idComprobante);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ObtenerDocumentoComprobante", ReplyAction="http://tempuri.org/IService1/ObtenerDocumentoComprobanteResponse")]
+        System.Threading.Tasks.Task<Web.Service.RC.FactElect.En_SalidaArchivo> ObtenerDocumentoComprobanteAsync(long idComprobante);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ObtenerRespuestaComprobante", ReplyAction="http://tempuri.org/IService1/ObtenerRespuestaComprobanteResponse")]
+        Web.Service.RC.FactElect.En_SalidaArchivo ObtenerRespuestaComprobante(long idComprobante);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ObtenerRespuestaComprobante", ReplyAction="http://tempuri.org/IService1/ObtenerRespuestaComprobanteResponse")]
+        System.Threading.Tasks.Task<Web.Service.RC.FactElect.En_SalidaArchivo> ObtenerRespuestaComprobanteAsync(long idComprobante);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ListarComprobanteElectronicos", ReplyAction="http://tempuri.org/IService1/ListarComprobanteElectronicosResponse")]
+        Web.Service.RC.FactElect.En_SalidaListarComprobante[] ListarComprobanteElectronicos(Web.Service.RC.FactElect.En_EntradaListarComprobante entrada);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ListarComprobanteElectronicos", ReplyAction="http://tempuri.org/IService1/ListarComprobanteElectronicosResponse")]
+        System.Threading.Tasks.Task<Web.Service.RC.FactElect.En_SalidaListarComprobante[]> ListarComprobanteElectronicosAsync(Web.Service.RC.FactElect.En_EntradaListarComprobante entrada);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -2076,6 +2557,38 @@ namespace Web.Service.RC.FactElect {
         
         public System.Threading.Tasks.Task<Web.Service.RC.FactElect.En_Respuesta> RegistroComprobanteAsync(Web.Service.RC.FactElect.En_ComprobanteElectronico Comprobante) {
             return base.Channel.RegistroComprobanteAsync(Comprobante);
+        }
+        
+        public Web.Service.RC.FactElect.En_SalidaArchivo ObtenerRepresentacionImpresa(long idComprobante) {
+            return base.Channel.ObtenerRepresentacionImpresa(idComprobante);
+        }
+        
+        public System.Threading.Tasks.Task<Web.Service.RC.FactElect.En_SalidaArchivo> ObtenerRepresentacionImpresaAsync(long idComprobante) {
+            return base.Channel.ObtenerRepresentacionImpresaAsync(idComprobante);
+        }
+        
+        public Web.Service.RC.FactElect.En_SalidaArchivo ObtenerDocumentoComprobante(long idComprobante) {
+            return base.Channel.ObtenerDocumentoComprobante(idComprobante);
+        }
+        
+        public System.Threading.Tasks.Task<Web.Service.RC.FactElect.En_SalidaArchivo> ObtenerDocumentoComprobanteAsync(long idComprobante) {
+            return base.Channel.ObtenerDocumentoComprobanteAsync(idComprobante);
+        }
+        
+        public Web.Service.RC.FactElect.En_SalidaArchivo ObtenerRespuestaComprobante(long idComprobante) {
+            return base.Channel.ObtenerRespuestaComprobante(idComprobante);
+        }
+        
+        public System.Threading.Tasks.Task<Web.Service.RC.FactElect.En_SalidaArchivo> ObtenerRespuestaComprobanteAsync(long idComprobante) {
+            return base.Channel.ObtenerRespuestaComprobanteAsync(idComprobante);
+        }
+        
+        public Web.Service.RC.FactElect.En_SalidaListarComprobante[] ListarComprobanteElectronicos(Web.Service.RC.FactElect.En_EntradaListarComprobante entrada) {
+            return base.Channel.ListarComprobanteElectronicos(entrada);
+        }
+        
+        public System.Threading.Tasks.Task<Web.Service.RC.FactElect.En_SalidaListarComprobante[]> ListarComprobanteElectronicosAsync(Web.Service.RC.FactElect.En_EntradaListarComprobante entrada) {
+            return base.Channel.ListarComprobanteElectronicosAsync(entrada);
         }
     }
 }

@@ -15,6 +15,9 @@
     <link href="~/Scripts/datatable/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet" />
     <link href="~/Content/scroller.dataTables.min.css" type="text/css" rel="stylesheet" />
     <link href="~/Content/fixedColumns.dataTables.min.css" type="text/css" rel="stylesheet" />
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+    
 </head>
 <body class="hold-transition skin-blue sidebar-mini" ng-app="app">
     <!-- Site wrapper -->
@@ -32,7 +35,7 @@
         <!-- Content Footer -->
         @Html.Partial("Partial/_Footer")
     </div>
-    @Scripts.Render("~/Js")    
+    @Scripts.Render("~/Js")
     <script src="~/Scripts/js/angular.min.js"></script>
     <script src="~/Scripts/js/angular/angular-sanitize.js"></script>
     <script src="~/Scripts/js/angular/angular-resource.min.js"></script>
@@ -68,8 +71,10 @@
     <script>
         var URL = "@this.Request.Url.GetLeftPart( UriPartial.Authority )";
         URL = URL + "@Request.ApplicationPath";
-    </script>    
+    </script>
     @RenderSection("scripts", required: false)
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 
 </body>
 </html>

@@ -11,17 +11,11 @@ using Negocio;
 using Web.Models.Producto;
 using Web.Models;
 using Web.Models.Cotizacion;
-using Rotativa;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Web.Service.RC.FactElect;
 using Web.Models.Clientes;
 using System.Data.Entity.Migrations;
 using Microsoft.Reporting.WebForms;
 using System.IO;
-using System.Data.SqlClient;
 using Web.Models.OrdenServicio;
 using Web.Models.Parametro;
 
@@ -549,7 +543,7 @@ namespace Web.Controllers
                 Service1Client client = new Service1Client();
                 string serie = "";
                 long numero = 0;
-                comprobanteNEG.ListarSerieCorrelativo(ref serie, ref numero);
+                comprobanteNEG.ListarSerieCorrelativo("FACTURA", ref serie, ref numero);
 
                 En_Emisor emisor = new En_Emisor
                 {
@@ -576,7 +570,7 @@ namespace Web.Controllers
                     //Provincia = "LIMA",
                     RazonSocial = cliente.empresaNombre,
                     TipoDocumentoIdentidad = "6",
-                    Urbanizacion = ""
+                    //Urbanizacion = ""
                 };
 
                 En_ComprobanteDetalleImpuestos comprobanteDetalleImpuestos = new En_ComprobanteDetalleImpuestos
@@ -660,7 +654,7 @@ namespace Web.Controllers
                 if (respuesta.Codigo == "0")
                 {
                     respuesta.Descripcion += " Comprobante: " + cotizacion.SerieNumero;
-                    comprobanteNEG.ActualizarSerieCorrelativo(serie);
+                    comprobanteNEG.ActualizarSerieCorrelativo(serie, "FACTURA");
                     db.Set<Cotizacion>().AddOrUpdate(cotizacion);
                     db.SaveChanges();
                 }

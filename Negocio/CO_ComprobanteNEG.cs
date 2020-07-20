@@ -21,9 +21,9 @@ namespace Negocio
         {
             return comprobanteDAT.ObtenerCotizacionImpresion(idCotizacion);
         }
-        public void ActualizarSerieCorrelativo(string serie)
+        public void ActualizarSerieCorrelativo(string serie, string tipoComprobante)
         {
-            comprobanteDAT.ActualizarSerieCorrelativo(serie);
+            comprobanteDAT.ActualizarSerieCorrelativo(serie, tipoComprobante);
         }
 
         public DataSet CargarVenta(long idComprobante)
@@ -31,12 +31,12 @@ namespace Negocio
             return comprobanteDAT.CargarVenta(idComprobante);
         }
 
-        public void ListarSerieCorrelativo(ref string serie, ref long numero)
+        public void ListarSerieCorrelativo(string tipoComprobante, ref string serie, ref long numero)
         {
-            comprobanteDAT.ListarSerieCorrelativo(ref serie, ref numero);
+            comprobanteDAT.ListarSerieCorrelativo(tipoComprobante, ref serie, ref numero);
         }
 
-        public OperationResult guardarComprobante(int idCorrelativo,string serieCorrlativo ,string descripcion, string estado, decimal subtotal, decimal total, string textoTotal, string usuarioRegistro, string idUsuario, int idCliente, int idMoneda, int idIGV)
+        public OperationResult guardarComprobante(int idCorrelativo, string serieCorrlativo, string descripcion, string estado, decimal subtotal, decimal total, string textoTotal, string usuarioRegistro, string idUsuario, int idCliente, int idMoneda, int idIGV)
         {
             try
             {
@@ -100,7 +100,7 @@ namespace Negocio
                 throw;
             }
         }
-        
+
         public List<CO_Comprobante> listarComprobante()
         {
             try
@@ -122,7 +122,7 @@ namespace Negocio
         {
             return comprobanteDAT.tmpComprobante(idComprobante);
         }
-        
+
         public string tmpClienteCorreo(int idCliente)
         {
             return comprobanteDAT.tmpClienteCorreo(idCliente);
@@ -144,15 +144,20 @@ namespace Negocio
                 throw;
             }
         }
-        
+
         public string DevolverCorrelativoComprobante(int id)
         {
             return comprobanteDAT.DevolverCorrelativoComprobante(id);
         }
 
         public string DevolverSerieComprobante(int id)
-        {            
+        {
             return comprobanteDAT.DevolverSerieComprobante(id);
+        }
+
+        public string DevolverTipoComprobante(int idCorrelativo)
+        {
+            return comprobanteDAT.DevolverTipoComprobante(idCorrelativo);
         }
 
 
