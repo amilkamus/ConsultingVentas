@@ -19,17 +19,17 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:57980/Service1.svc" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://webservice.amilcarhuaman.com/Service1.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="Service15.xsd" MetadataType="Schema" ID="0a51b102-2c18-40c1-9a66-8b7497afe87e" SourceId="1" SourceUrl="http://localhost:57980/Service1.svc?xsd=xsd5" />
-    <MetadataFile FileName="Service16.xsd" MetadataType="Schema" ID="6cd6dc98-4e69-45bf-b1bc-315483f38eb6" SourceId="1" SourceUrl="http://localhost:57980/Service1.svc?xsd=xsd3" />
-    <MetadataFile FileName="Service17.xsd" MetadataType="Schema" ID="b22f43d0-751b-4bc2-a9ac-4eee9f5283bc" SourceId="1" SourceUrl="http://localhost:57980/Service1.svc?xsd=xsd4" />
-    <MetadataFile FileName="Service1.disco" MetadataType="Disco" ID="77732855-9abb-4148-96a6-12d2500442ab" SourceId="1" SourceUrl="http://localhost:57980/Service1.svc?disco" />
-    <MetadataFile FileName="Service18.xsd" MetadataType="Schema" ID="e1ab2040-7e78-40ca-8f37-53dbfc052654" SourceId="1" SourceUrl="http://localhost:57980/Service1.svc?xsd=xsd2" />
-    <MetadataFile FileName="Service19.xsd" MetadataType="Schema" ID="f6290325-c634-443d-b67f-804b19813207" SourceId="1" SourceUrl="http://localhost:57980/Service1.svc?xsd=xsd1" />
-    <MetadataFile FileName="Service11.wsdl" MetadataType="Wsdl" ID="4b1fb0f7-b284-4085-8c10-3ee00455def3" SourceId="1" SourceUrl="http://localhost:57980/Service1.svc?wsdl" />
-    <MetadataFile FileName="Service110.xsd" MetadataType="Schema" ID="080ff249-85a1-4b93-bbec-83651eb3d8f9" SourceId="1" SourceUrl="http://localhost:57980/Service1.svc?xsd=xsd0" />
+    <MetadataFile FileName="Service11.disco" MetadataType="Disco" ID="972328a9-a673-475f-88aa-255c58c9d033" SourceId="1" SourceUrl="http://webservice.amilcarhuaman.com/Service1.svc?disco" />
+    <MetadataFile FileName="Service11.wsdl" MetadataType="Wsdl" ID="0bc40ee6-90f2-424c-8c38-9f59eb696c9a" SourceId="1" SourceUrl="http://webservice.amilcarhuaman.com/Service1.svc?wsdl" />
+    <MetadataFile FileName="Service110.xsd" MetadataType="Schema" ID="a1b733c7-7f49-4e90-9979-8b2da5bbfbf0" SourceId="1" SourceUrl="http://webservice.amilcarhuaman.com/Service1.svc?xsd=xsd5" />
+    <MetadataFile FileName="Service15.xsd" MetadataType="Schema" ID="ee99f5c4-9505-48fb-9717-db1a5afe33be" SourceId="1" SourceUrl="http://webservice.amilcarhuaman.com/Service1.svc?xsd=xsd4" />
+    <MetadataFile FileName="Service16.xsd" MetadataType="Schema" ID="e0d56201-0604-4a88-88f8-725438a6dd31" SourceId="1" SourceUrl="http://webservice.amilcarhuaman.com/Service1.svc?xsd=xsd1" />
+    <MetadataFile FileName="Service17.xsd" MetadataType="Schema" ID="f1226cf1-9ef0-4bf9-9720-24d6a2f0822e" SourceId="1" SourceUrl="http://webservice.amilcarhuaman.com/Service1.svc?xsd=xsd0" />
+    <MetadataFile FileName="Service18.xsd" MetadataType="Schema" ID="d04350dc-2e20-4661-845f-abb3d9a9ea12" SourceId="1" SourceUrl="http://webservice.amilcarhuaman.com/Service1.svc?xsd=xsd3" />
+    <MetadataFile FileName="Service19.xsd" MetadataType="Schema" ID="af1318d7-b28d-4ac6-bd9a-b2cba467d864" SourceId="1" SourceUrl="http://webservice.amilcarhuaman.com/Service1.svc?xsd=xsd2" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

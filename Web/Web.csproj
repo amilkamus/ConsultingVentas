@@ -1573,7 +1573,7 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Service References\Service.RC.FactElect\Service1.disco" />
+    <None Include="Service References\Service.RC.FactElect\Service11.disco" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -1671,6 +1671,7 @@
     <Content Include="Views\OrdenServicio\Edit.cshtml" />
     <Content Include="Views\OrdenServicio\Index.cshtml" />
     <Content Include="Views\OrdenServicio\Print.cshtml" />
+    <Content Include="Views\Comprobante\Index.cshtml" />
     <None Include="Service References\Service.RC.FactElect\Service11.wsdl" />
     <None Include="Service References\Service.RC.FactElect\Service110.xsd">
       <SubType>Designer</SubType>
@@ -1696,7 +1697,6 @@
     <Content Include="Service References\Service.RC.FactElect\Web.Service.RC.FactElect.En_SalidaListarComprobante.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <Content Include="Views\Comprobante\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
