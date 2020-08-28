@@ -246,9 +246,25 @@ namespace Web.Controllers
                     }
                 };
 
-                comprobante.FechaEmision = DateTime.Now.ToString("yyyy-MM-dd"); //Util.NodeValue(nav.SelectSingleNode("*/cbc:IssueDate", ns), "");
+                DateTime dt;
+                DateTime fechaRegistro = DateTime.Now;
+
+                try//21.08.2020 - 13L
+                {
+                    DateTime convertedDate = DateTime.SpecifyKind(DateTime.Parse(DateTime.Now.ToString()), DateTimeKind.Utc);
+
+                    var kind = convertedDate.Kind;
+                    dt = convertedDate.ToLocalTime().AddHours(-9);
+                    fechaRegistro = dt;
+                }
+                catch
+                {
+                    fechaRegistro = DateTime.Now;
+                }
+
+                comprobante.FechaEmision = fechaRegistro.ToString("yyyy-MM-dd");   //DateTime.Now.ToString("yyyy-MM-dd"); //Util.NodeValue(nav.SelectSingleNode("*/cbc:IssueDate", ns), "");
                 //comprobante.FechaVencimiento = Util.NodeValue(nav.SelectSingleNode("*/cbc:DueDate", ns), "");
-                comprobante.HoraEmision = DateTime.Now.ToString("HH:mm:ss");  //Util.NodeValue(nav.SelectSingleNode("*/cbc:IssueTime", ns), "");
+                comprobante.HoraEmision = fechaRegistro.ToString("HH:mm:ss");    //DateTime.Now.ToString("HH:mm:ss");  //Util.NodeValue(nav.SelectSingleNode("*/cbc:IssueTime", ns), "");
                 comprobante.Moneda = Util.NodeValue(nav.SelectSingleNode("*/cbc:DocumentCurrencyCode", ns), "");
                 comprobante.ImporteTotal = decimal.Parse(Util.NodeValue(nav.SelectSingleNode("*/cac:LegalMonetaryTotal/cbc:PayableAmount", ns), "0"));
                 comprobante.Emisor = emisor;

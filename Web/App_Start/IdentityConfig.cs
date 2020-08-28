@@ -33,9 +33,9 @@ namespace Web
         {
             #region formatter
             string text = string.Format("Please click on this link to {0}: {1}", message.Subject, message.Body);
-            string html = "Por favor confirmar su cuenta haciendo clic en este enlace: <a href=\"" + message.Body + "\">link</a><br/>";
+            string html = message.Body + "<br/><br/><b>El equipo de QUY</b><br/>"  + "<a href =\"" + "https://www.quypay.com/" + "\">https://www.quypay.com/</a><br/>"; // "Por favor confirmar su cuenta haciendo clic en este enlace: <a href=\"" + message.Body + "\">link</a><br/>";
 
-            html += HttpUtility.HtmlEncode(@"O haga clic en la copia el siguiente enlace en el navegador" + message.Body);
+            //html += HttpUtility.HtmlEncode(@" o copia el siguiente enlace en el navegador: <br/>" + message.Body + "<b>El equipo de Quy</b>");
             #endregion
 
             MailMessage msg = new MailMessage();
@@ -47,7 +47,10 @@ namespace Web
 
             SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", Convert.ToInt32(587));
             System.Net.NetworkCredential credentials = new System.Net.NetworkCredential(ConfigurationManager.AppSettings["Email"].ToString(), ConfigurationManager.AppSettings["Password"].ToString());
+
+            smtpClient.UseDefaultCredentials = true;
             smtpClient.Credentials = credentials;
+
             smtpClient.EnableSsl = true;
             smtpClient.Send(msg);
         }

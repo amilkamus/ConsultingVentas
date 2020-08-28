@@ -1,0 +1,37 @@
+ MESSAGE: No se pudo cargar una sección de configuración de extremo para el contrato 'Service.RC.FactElect.IService1' porque se encontró más de una configuración de extremo para dicho contrato. Indique la sección de configuración de extremo preferida por nombre. SOURCE: Web STACKTRACE:    en Web.Controllers.VentaController.guardarComprobante(VentaViewModels ventaViewModels, List`1 ventaDetalleViewModels, List`1 productoViewModels) en C:\CESAR\ROUILLON CONSULTING\Sistema de Facturacion\2020\ConsultingVentas-RequerimientoVentas\Web\Controllers\VentaController.cs:línea 241totGC:System.InvalidOperationException: No se pudo cargar una sección de configuración de extremo para el contrato 'Service.RC.FactElect.IService1' porque se encontró más de una configuración de extremo para dicho contrato. Indique la sección de configuración de extremo preferida por nombre.
+   en Web.Controllers.VentaController.guardarComprobante(VentaViewModels ventaViewModels, List`1 ventaDetalleViewModels, List`1 productoViewModels) en C:\CESAR\ROUILLON CONSULTING\Sistema de Facturacion\2020\ConsultingVentas-RequerimientoVentas\Web\Controllers\VentaController.cs:línea 241
+ MESSAGE: No se pudo cargar una sección de configuración de extremo para el contrato 'Service.RC.FactElect.IService1' porque se encontró más de una configuración de extremo para dicho contrato. Indique la sección de configuración de extremo preferida por nombre. SOURCE: Web STACKTRACE:    en Web.Controllers.VentaController.guardarComprobante(VentaViewModels ventaViewModels, List`1 ventaDetalleViewModels, List`1 productoViewModels) en C:\CESAR\ROUILLON CONSULTING\Sistema de Facturacion\2020\ConsultingVentas-RequerimientoVentas\Web\Controllers\VentaController.cs:línea 241totGC:System.InvalidOperationException: No se pudo cargar una sección de configuración de extremo para el contrato 'Service.RC.FactElect.IService1' porque se encontró más de una configuración de extremo para dicho contrato. Indique la sección de configuración de extremo preferida por nombre.
+   en Web.Controllers.VentaController.guardarComprobante(VentaViewModels ventaViewModels, List`1 ventaDetalleViewModels, List`1 productoViewModels) en C:\CESAR\ROUILLON CONSULTING\Sistema de Facturacion\2020\ConsultingVentas-RequerimientoVentas\Web\Controllers\VentaController.cs:línea 241
+ MESSAGE: No había ningún extremo escuchando en http://localhost:57980/Service1.svc que pudiera aceptar el mensaje. La causa suele ser una dirección o una acción SOAP incorrecta. Consulte InnerException, si está presente, para obtener más información. SOURCE: Web STACKTRACE: 
+Server stack trace: 
+   en System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStream()
+   en System.ServiceModel.Channels.HttpOutput.Send(TimeSpan timeout)
+   en System.ServiceModel.Channels.HttpChannelFactory`1.HttpRequestChannel.HttpChannelRequest.SendRequest(Message message, TimeSpan timeout)
+   en System.ServiceModel.Channels.RequestChannel.Request(Message message, TimeSpan timeout)
+   en System.ServiceModel.Dispatcher.RequestChannelBinder.Request(Message message, TimeSpan timeout)
+   en System.ServiceModel.Channels.ServiceChannel.Call(String action, Boolean oneway, ProxyOperationRuntime operation, Object[] ins, Object[] outs, TimeSpan timeout)
+   en System.ServiceModel.Channels.ServiceChannelProxy.InvokeService(IMethodCallMessage methodCall, ProxyOperationRuntime operation)
+   en System.ServiceModel.Channels.ServiceChannelProxy.Invoke(IMessage message)
+
+Exception rethrown at [0]: 
+   en Web.Controllers.VentaController.guardarComprobante(VentaViewModels ventaViewModels, List`1 ventaDetalleViewModels, List`1 productoViewModels) en C:\CESAR\ROUILLON CONSULTING\Sistema de Facturacion\2020\ConsultingVentas-RequerimientoVentas\Web\Controllers\VentaController.cs:línea 241totGC:System.ServiceModel.EndpointNotFoundException: No había ningún extremo escuchando en http://localhost:57980/Service1.svc que pudiera aceptar el mensaje. La causa suele ser una dirección o una acción SOAP incorrecta. Consulte InnerException, si está presente, para obtener más información. ---> System.Net.WebException: No es posible conectar con el servidor remoto ---> System.Net.Sockets.SocketException: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión 127.0.0.1:57980
+   en System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   en System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- Fin del seguimiento de la pila de la excepción interna ---
+   en System.Net.HttpWebRequest.GetRequestStream(TransportContext& context)
+   en System.Net.HttpWebRequest.GetRequestStream()
+   en System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStream()
+   --- Fin del seguimiento de la pila de la excepción interna ---
+
+Server stack trace: 
+   en System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStream()
+   en System.ServiceModel.Channels.HttpOutput.Send(TimeSpan timeout)
+   en System.ServiceModel.Channels.HttpChannelFactory`1.HttpRequestChannel.HttpChannelRequest.SendRequest(Message message, TimeSpan timeout)
+   en System.ServiceModel.Channels.RequestChannel.Request(Message message, TimeSpan timeout)
+   en System.ServiceModel.Dispatcher.RequestChannelBinder.Request(Message message, TimeSpan timeout)
+   en System.ServiceModel.Channels.ServiceChannel.Call(String action, Boolean oneway, ProxyOperationRuntime operation, Object[] ins, Object[] outs, TimeSpan timeout)
+   en System.ServiceModel.Channels.ServiceChannelProxy.InvokeService(IMethodCallMessage methodCall, ProxyOperationRuntime operation)
+   en System.ServiceModel.Channels.ServiceChannelProxy.Invoke(IMessage message)
+
+Exception rethrown at [0]: 
+   en Web.Controllers.VentaController.guardarComprobante(VentaViewModels ventaViewModels, List`1 ventaDetalleViewModels, List`1 productoViewModels) en C:\CESAR\ROUILLON CONSULTING\Sistema de Facturacion\2020\ConsultingVentas-RequerimientoVentas\Web\Controllers\VentaController.cs:línea 241

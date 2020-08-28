@@ -25,7 +25,7 @@
     $scope.producto = {};
 
     $scope.parametro = {};
-
+    
     $scope.init = function () {
         $scope.cliente.cliente = "";
         $scope.cliente.numeroDocumento = "";
@@ -149,7 +149,7 @@
         });
     }
     //Fin
-
+    
     //Listar Correlativo
     $scope.listarCorrelativoMast = function () {
         comprobanteService.listarCorrelativoMast().then(function (data) {
@@ -217,6 +217,8 @@
     }
     //Fin
 
+
+
     //Obtener cliente para la venta
     $scope.selccionCliente = function (itemCliente) {
         $scope.cliente = itemCliente;
@@ -239,7 +241,7 @@
     $scope.agregar = function (producto) {
         if (producto.estado == "ACTIVO") {
             if (producto.cantidad < producto.stock) {
-                if ($scope.model.idMoneda == 1) {
+                if ($scope.model.idMoneda == 1) {                    
                     $scope.carrito.lista.push(producto);
                     $scope.soles = (producto.cantidad * producto.precio) + $scope.soles;
                     $scope.model.subtotal = $scope.soles.toFixed(2);
@@ -341,23 +343,23 @@
     //Inicio - Cotizacion
 
     //Agregar producto al carro de venta
-    $scope.agregarCotizacion = function (producto) {
+    $scope.agregarCotizacion = function (producto) {        
         if (producto.estado == "ACTIVO") {
-            if ($scope.model.idMoneda == 1) {
-                $scope.carrito.lista.push(producto);
-                $scope.soles = (producto.cantidad * producto.precio) + $scope.soles;
-                $scope.model.subtotal = $scope.soles.toFixed(2);
-                $scope.solesTotal = (($scope.soles * ($scope.igv / 100)) + $scope.soles);
-                $scope.model.total = $scope.solesTotal.toFixed(2);
-                $scope.producto = {};
-            }
-            if ($scope.model.idMoneda == 2) {
-                $scope.carrito.lista.push(producto);
-                $scope.soles = (producto.cantidad * producto.precio) + $scope.soles;
-                $scope.solesTotal = (($scope.soles * ($scope.igv / 100)) + $scope.soles);
-                $scope.cambioMoneda();
-                $scope.producto = {};
-            }
+                if ($scope.model.idMoneda == 1) {
+                    $scope.carrito.lista.push(producto);
+                    $scope.soles = (producto.cantidad * producto.precio) + $scope.soles;
+                    $scope.model.subtotal = $scope.soles.toFixed(2);
+                    $scope.solesTotal = (($scope.soles * ($scope.igv / 100)) + $scope.soles);
+                    $scope.model.total = $scope.solesTotal.toFixed(2);
+                    $scope.producto = {};
+                }
+                if ($scope.model.idMoneda == 2) {
+                    $scope.carrito.lista.push(producto);
+                    $scope.soles = (producto.cantidad * producto.precio) + $scope.soles;
+                    $scope.solesTotal = (($scope.soles * ($scope.igv / 100)) + $scope.soles);
+                    $scope.cambioMoneda();
+                    $scope.producto = {};
+                } 
         } else {
             $.notify({
                 icon: 'fa fa-exclamation-circle',
@@ -377,7 +379,7 @@
                         contador = contador + 1;
                     }
                 }
-                $scope.agregarCotizacion(producto);
+                    $scope.agregarCotizacion(producto);
             } else {
                 $scope.agregarCotizacion(producto);
             }
@@ -394,7 +396,7 @@
 
     //Fin - Cotizacion
 
-
+    
     //Ontencion de Igv
     $scope.campoIgv = function () {
         console.log("sssss" + $scope.cmbIGV.length);

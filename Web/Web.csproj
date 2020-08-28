@@ -1548,6 +1548,7 @@
     <Content Include="Scripts\js\angular\controller\tipoComprobante\tipoComprobanteController.js" />
     <Content Include="Scripts\js\angular\controller\tipoPersona\tipoPersonaController.js" />
     <Content Include="Scripts\js\angular\controller\tipoProducto\tipoProductoController.js" />
+    <Content Include="Scripts\js\angular\frontapp.js" />
     <Content Include="Scripts\js\angular\i18n\angular-locale_es.js" />
     <Content Include="Scripts\js\angular\ngPrint.min.js" />
     <Content Include="Scripts\js\angular\plugin\blockUI\angular-block-ui.min.css" />
@@ -1573,7 +1574,7 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Service References\Service.RC.FactElect\Service11.disco" />
+    <None Include="Service References\Service.RC.FactElect\Service1.disco" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -1645,9 +1646,6 @@
     <Content Include="Views\Venta\ViewAllVentas.cshtml" />
     <Content Include="Views\Role\Index.cshtml" />
     <Content Include="Views\Account\EditUser.cshtml" />
-    <Content Include="Service References\Service.RC.FactElect\Web.Service.RC.FactElect.En_Respuesta.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
     <Content Include="Views\Cotizacion\Create.cshtml" />
     <Content Include="Views\Cotizacion\Delete.cshtml" />
     <Content Include="Views\Cotizacion\Details.cshtml" />
@@ -1672,31 +1670,34 @@
     <Content Include="Views\OrdenServicio\Index.cshtml" />
     <Content Include="Views\OrdenServicio\Print.cshtml" />
     <Content Include="Views\Comprobante\Index.cshtml" />
-    <None Include="Service References\Service.RC.FactElect\Service11.wsdl" />
-    <None Include="Service References\Service.RC.FactElect\Service110.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\Service.RC.FactElect\Service15.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\Service.RC.FactElect\Service16.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\Service.RC.FactElect\Service17.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\Service.RC.FactElect\Service18.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\Service.RC.FactElect\Service19.xsd">
-      <SubType>Designer</SubType>
-    </None>
+    <Content Include="Service References\Service.RC.FactElect\Web.Service.RC.FactElect.En_Respuesta.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <Content Include="Service References\Service.RC.FactElect\Web.Service.RC.FactElect.En_SalidaArchivo.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <Content Include="Service References\Service.RC.FactElect\Web.Service.RC.FactElect.En_SalidaListarComprobante.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <None Include="Service References\Service.RC.FactElect\Service11.wsdl" />
+    <None Include="Service References\Service.RC.FactElect\Service16.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Service.RC.FactElect\Service161.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Service.RC.FactElect\Service162.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Service.RC.FactElect\Service163.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Service.RC.FactElect\Service164.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Service.RC.FactElect\Service165.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

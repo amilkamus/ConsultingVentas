@@ -171,8 +171,24 @@ namespace Web.Controllers
                     }
                 };
 
-                comprobante.FechaEmision = DateTime.Now.ToString("yyyy-MM-dd");
-                comprobante.HoraEmision = DateTime.Now.ToString("HH:mm:ss");
+                DateTime dt;
+                DateTime fechaRegistro = DateTime.Now;
+
+                try//23.08.2020 - 13L
+                {
+                    DateTime convertedDate = DateTime.SpecifyKind(DateTime.Parse(DateTime.Now.ToString()), DateTimeKind.Utc);
+
+                    var kind = convertedDate.Kind;
+                    dt = convertedDate.ToLocalTime().AddHours(-9);
+                    fechaRegistro = dt;
+                }
+                catch
+                {
+                    fechaRegistro = DateTime.Now;
+                }
+
+                comprobante.FechaEmision = fechaRegistro.ToString("yyyy-MM-dd");   //DateTime.Now.ToString("yyyy-MM-dd");
+                comprobante.HoraEmision = fechaRegistro.ToString("HH:mm:ss");      //DateTime.Now.ToString("HH:mm:ss");
                 comprobante.Moneda = "PEN";
                 comprobante.ImporteTotal = total;
                 comprobante.Emisor = emisor;
@@ -386,7 +402,7 @@ namespace Web.Controllers
         #endregion
 
         #region Descargar PDF del Comprobante        
-        [HttpGet]
+        [HttpGet]        
         public ActionResult imprimirVentas(string idComprobante)
         {
             Microsoft.Reporting.WebForms.ReportViewer reportViewer = new Microsoft.Reporting.WebForms.ReportViewer();
@@ -413,7 +429,7 @@ namespace Web.Controllers
 
                     var serieCorrelativo = tmpComprobante.serieCorrelativo;
                     string serie = "", numero = "";
-                    if (serieCorrelativo.Length > 0)
+                    if(serieCorrelativo.Length > 0)
                     {
                         serie = serieCorrelativo.Split('-')[0];
                         numero = serieCorrelativo.Split('-')[1];
@@ -441,7 +457,7 @@ namespace Web.Controllers
                     string[] streams;
                     Warning[] warnings;
                     byte[] renderByte;
-                    var fileName = tmpComprobante.serieCorrelativo;
+                    var fileName = tmpComprobante.serieCorrelativo;                    
 
                     renderByte = reportViewer.LocalReport.Render("PDF");
                     Response.Buffer = true;

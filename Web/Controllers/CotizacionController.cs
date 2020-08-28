@@ -11,11 +11,17 @@ using Negocio;
 using Web.Models.Producto;
 using Web.Models;
 using Web.Models.Cotizacion;
+using Rotativa;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Web.Service.RC.FactElect;
 using Web.Models.Clientes;
 using System.Data.Entity.Migrations;
 using Microsoft.Reporting.WebForms;
 using System.IO;
+using System.Data.SqlClient;
 using Web.Models.OrdenServicio;
 using Web.Models.Parametro;
 
@@ -130,7 +136,16 @@ namespace Web.Controllers
 
                 lr.SetParameters(new ReportParameter("RUC", ds.Tables[0].Rows[0]["RUC"].ToString()));
                 lr.SetParameters(new ReportParameter("RazonSocial", ds.Tables[0].Rows[0]["Solicitante"].ToString()));
-                lr.SetParameters(new ReportParameter("Direccion", cliente.empresaDomicilio));
+
+                if (cliente.empresaDomicilio == null)//16.07.2020
+                {
+                    lr.SetParameters(new ReportParameter("Direccion", cliente.titularDomicilio));
+                }
+                else
+                { 
+                    lr.SetParameters(new ReportParameter("Direccion", cliente.empresaDomicilio));
+                }
+
                 lr.SetParameters(new ReportParameter("Responsable", ds.Tables[0].Rows[0]["Contacto"].ToString()));
                 lr.SetParameters(new ReportParameter("Telefono", ds.Tables[0].Rows[0]["Telefono"].ToString()));
                 lr.SetParameters(new ReportParameter("Email", ds.Tables[0].Rows[0]["Email"].ToString()));
@@ -399,6 +414,25 @@ namespace Web.Controllers
 
                 string numeroCotizacion = "", numeroCotizacionBD = cotizacion.NumeroCotizacion, letra = "";
 
+                DateTime dt;
+                if (cotizacionMod == null)
+                {
+                    try//15.07.2020 - 13L
+                    {
+                        DateTime convertedDate = DateTime.SpecifyKind(DateTime.Parse(fechaRegistro.ToString()), DateTimeKind.Utc);
+
+                        var kind = convertedDate.Kind; // will equal DateTimeKind.Utc
+                        dt = convertedDate.ToLocalTime().AddHours(-9);
+                        fechaRegistro = dt;
+                    }
+                    catch
+                    {
+                        string a = "";
+                        fechaRegistro = DateTime.Now;
+                    }
+                }                
+
+
                 if (string.IsNullOrEmpty(numeroCotizacionBD))
                 {
                     List<Cotizacion> cotizaciones = (from c in db.Cotizacions.ToList()
@@ -625,10 +659,27 @@ namespace Web.Controllers
                     Valor = Util.Enletras(cotizacion.Total)
                 };
 
+
+                DateTime dt;
+                DateTime fechaRegistro = DateTime.Now;
+
+                try//19.08.2020 - 13L
+                {
+                    DateTime convertedDate = DateTime.SpecifyKind(DateTime.Parse(DateTime.Now.ToString()), DateTimeKind.Utc);
+
+                    var kind = convertedDate.Kind;
+                    dt = convertedDate.ToLocalTime().AddHours(-9);
+                    fechaRegistro = dt;
+                }
+                catch
+                {
+                    fechaRegistro = DateTime.Now;
+                }
+
                 En_ComprobanteElectronico comprobante = new En_ComprobanteElectronico
                 {
-                    FechaEmision = DateTime.Now.ToString("yyyy-MM-dd"),
-                    HoraEmision = DateTime.Now.ToString("HH:mm:ss"),
+                    FechaEmision = fechaRegistro.ToString("yyyy-MM-dd"), //DateTime.Now.ToString("yyyy-MM-dd"),
+                    HoraEmision = fechaRegistro.ToString("HH:mm:ss"), //DateTime.Now.ToString("HH:mm:ss"),
                     Moneda = "PEN",
                     ImporteTotal = cotizacion.Total,
                     Emisor = emisor,

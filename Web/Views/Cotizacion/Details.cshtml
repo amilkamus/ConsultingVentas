@@ -86,10 +86,22 @@
                             <td Width="38%">Empresa: @Html.DisplayFor(model => model.Cotizacion.Solicitante)</td>
                             <td Width="36%" Font-Bold="true" Font-Size="16px">RUC: @Html.DisplayFor(model => model.Cotizacion.RUC)</td>
                         </tr>
-                        <tr>
-                            <td Width="38%">Dirección: @Html.DisplayFor(model => model.Cliente.titularDomicilio)</td>
-                            <td Width="36%" Font-Bold="true" Font-Size="16px">Teléfono: @Html.DisplayFor(model => model.Cotizacion.Telefono)</td>
-                        </tr>
+
+                        @if (Model.Cliente.empresaDomicilio == null)
+                        {
+                            <tr>
+                                <td Width="38%">Dirección: @Html.DisplayFor(model => model.Cliente.titularDomicilio)</td>
+                                <td Width="36%" Font-Bold="true" Font-Size="16px">Teléfono: @Html.DisplayFor(model => model.Cotizacion.Telefono)</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr>
+                                <td Width="38%">Dirección: @Html.DisplayFor(model => model.Cliente.empresaDomicilio)</td>
+                                <td Width="36%" Font-Bold="true" Font-Size="16px">Teléfono: @Html.DisplayFor(model => model.Cotizacion.Telefono)</td>
+                            </tr>
+                        }
+
                         <tr>
                             <td Width="38%">Responsable: @Html.DisplayFor(model => model.Cotizacion.Contacto)</td>
                             <td Width="36%" Font-Bold="true" Font-Size="16px">E-mail: @Html.DisplayFor(model => model.Cotizacion.Email)</td>

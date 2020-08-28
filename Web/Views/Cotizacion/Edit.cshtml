@@ -92,9 +92,10 @@
                         <input class="form-control" placeholder="Cantidad de muestra" ng-model="model.CantidadMuestra" required />
                     </div>
 
-                    <label for="Telefono" class="control-label col-md-2">Telefono:</label>
+                    <label for="Telefono" class="control-label col-md-2">Teléfono:</label>
                     <div class="col-md-2">
                         <input class="form-control" placeholder="Telefono" ng-model="model.Telefono" onkeypress="return soloNumeros(event);" required />
+                        @*<input class="form-control" placeholder="Teléfono" ng-model="cliente.contactoTelefono" onkeypress="return soloNumeros(event);" required />*@
                     </div>
                 </div>
 
@@ -554,6 +555,7 @@
                                         <th>N° Documento</th>
                                         <th>Contacto</th>
                                         <th>Email</th>
+                                        <th>Teléfono</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -563,6 +565,7 @@
                                         <td>{{itemCliente.numeroDocumento}}</td>
                                         <td>{{itemCliente.contacto}}</td>
                                         <td>{{itemCliente.contactoCorreo}}</td>
+                                        <td>{{itemCliente.contactoTelefono}}</td>
                                     </tr>
                                 </tbody>
                             </table>

@@ -230,7 +230,17 @@
             $scope.model.Contacto = $scope.cliente.contacto;
             $scope.model.Email = $scope.cliente.contactoCorreo;
             $scope.model.Solicitante = $scope.cliente.cliente;
-            $scope.model.Certificados = $scope.elementosCertificado.lista;
+            $scope.model.Certificados = $scope.elementosCertificado.lista;          
+
+
+            if ($scope.cliente.contactoTelefono != undefined) {
+                $scope.model.Telefono = $scope.cliente.contactoTelefono;//
+            }
+            else
+            {
+                $scope.model.Telefono = $scope.model.Telefono;//
+            }
+
 
             var lista = [];
 

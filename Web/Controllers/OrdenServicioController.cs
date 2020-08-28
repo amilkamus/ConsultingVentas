@@ -183,7 +183,8 @@ namespace Web.Controllers
                 lr.SetParameters(new ReportParameter("PresentacionInspeccion", ordenServicio.PresentacionInspeccion));
                 lr.SetParameters(new ReportParameter("CantidadLoteInspeccion", ordenServicio.CantidadLoteInspeccion));
                 lr.SetParameters(new ReportParameter("CodigosLoteInspeccion", ordenServicio.CodigosLoteInspeccion));
-                lr.SetParameters(new ReportParameter("OtrosInspeccion", ordenServicio.ObservacionesInspeccion));
+                //lr.SetParameters(new ReportParameter("OtrosInspeccion", ordenServicio.ObservacionesInspeccion));
+                lr.SetParameters(new ReportParameter("OtrosInspeccion", cotizacion.Observaciones));
 
                 lr.SetParameters(new ReportParameter("Usuario", NombreUsuario(ordenServicio.IdUsuarioRegistro)));
                 lr.SetParameters(new ReportParameter("FechaRegistro", ordenServicio.FechaRegistro.ToString("dd/MM/yyyy")));
@@ -290,7 +291,26 @@ namespace Web.Controllers
         {
             try
             {
-                IOrderedQueryable<Cotizacion> cotizaciones = db.Cotizacions.OrderBy(x => x.TipoCotizacion).ThenBy(x => x.NumeroCotizacion).ThenBy(x => x.Correlativo).ThenByDescending(x => x.CorrelativoInicial);
+                //original
+                //IOrderedQueryable<Cotizacion> cotizaciones = db.Cotizacions.OrderBy(x => x.TipoCotizacion).ThenBy(x => x.NumeroCotizacion).ThenBy(x => x.Correlativo).ThenByDescending(x => x.CorrelativoInicial);
+                //return Json(cotizaciones);
+
+                //2da opcion seteando el MaxValue
+                //IOrderedQueryable<Cotizacion> cotizaciones = db.Cotizacions.OrderBy(x => x.TipoCotizacion).ThenBy(x => x.NumeroCotizacion).ThenBy(x => x.Correlativo).ThenByDescending(x => x.CorrelativoInicial);
+                //var jsonResult = Json(cotizaciones, JsonRequestBehavior.AllowGet);
+                //jsonResult.MaxJsonLength = int.MaxValue;
+                //return jsonResult;
+
+                var cotizaciones = db.Cotizacions.Select(p => new
+                {
+                    p.ID,
+                    p.TipoCotizacion,
+                    p.NumeroCotizacion,
+                    p.SubTotal,
+                    p.IGV,
+                    p.Total
+                }).ToList();
+
                 return Json(cotizaciones);
             }
             catch (Exception e)
@@ -311,6 +331,23 @@ namespace Web.Controllers
                 if (string.IsNullOrEmpty(ordenServicio.NumeroOrdenServicio) || string.IsNullOrWhiteSpace(ordenServicio.NumeroOrdenServicio))
                 {
                     DateTime fechaRegistro = DateTime.Now;
+
+                    DateTime dt;
+                    try//15.07.2020 - 13L
+                    {
+                        DateTime convertedDate = DateTime.SpecifyKind(DateTime.Parse(fechaRegistro.ToString()), DateTimeKind.Utc);
+
+                        var kind = convertedDate.Kind; // will equal DateTimeKind.Utc
+                        dt = convertedDate.ToLocalTime().AddHours(-9);
+                        fechaRegistro = dt;
+                    }
+                    catch
+                    {
+                        string a = "";
+                        fechaRegistro = DateTime.Now;
+                    }
+
+
                     int correlativo = (from o in db.OrdenServicio.ToList()
                                        where o.FechaRegistro.Date == fechaRegistro.Date
                                        select o.Correlativo).LastOrDefault();

@@ -393,7 +393,8 @@ namespace Web.Controllers
                 // Envíe un correo electrónico con este enlace:
                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                //await UserManager.SendEmailAsync(user.Id, "Reset Password", "Hola!, pediste resetear tu password. <br/><br/> Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                await UserManager.SendEmailAsync(user.Id, "Reset Password", "<b>Hola "+ user.FirstName +"!</b><br/><br/> Recibimos una solicitud para resetear el password de tu cuenta en QUY. <br/> Puedes resetear tu password haciendo clic <b><a href=\"" + callbackUrl + "\">aquí</a></b>");
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
 
                 //return RedirectToAction("ForgotPassword", "Account");

@@ -49,8 +49,8 @@ namespace Web.Controllers
             menu.Add(new NavBar { Id = 16, Nombre = "Nueva Venta", Controlador = "Venta", Accion = "AddVenta", Icono = "fa fa-cart-plus", Estado = true, EsPadre = false, IdPadre = 15 });
             menu.Add(new NavBar { Id = 17, Nombre = "Listar Venta", Controlador = "Venta", Accion = "ViewAllVentas", Icono = "fa fa-circle-o", Estado = true, EsPadre = false, IdPadre = 15 });
 
-            menu.Add(new NavBar { Id = 56, Nombre = "Comprobantes electrónicos", Icono = "fa fa-line-chart", Estado = true, EsPadre = true, IdPadre = 0, Rol = 1 });
-            menu.Add(new NavBar { Id = 57, Nombre = "Listar comprobantes electrónicos", Controlador = "Comprobante", Accion = "Index", Icono = "fa fa-circle-o", Estado = true, EsPadre = false, IdPadre = 56 });
+            menu.Add(new NavBar { Id = 56, Nombre = "Comprobante electrónico", Icono = "fa fa-line-chart", Estado = true, EsPadre = true, IdPadre = 0, Rol = 1 });
+            menu.Add(new NavBar { Id = 57, Nombre = "Listar comprobantes", Controlador = "Comprobante", Accion = "Index", Icono = "fa fa-circle-o", Estado = true, EsPadre = false, IdPadre = 56 });
 
             menu.Add(new NavBar { Id = 18, Nombre = "Nosotros", Icono = "fa fa-building", Estado = true, EsPadre = true, IdPadre = 0, Rol = 1 });
             menu.Add(new NavBar { Id = 19, Nombre = "Info. de la Empresa", Controlador = "Compania", Accion = "AddCompania", Icono = "fa fa-circle-o", Estado = true, EsPadre = false, IdPadre = 18 });
@@ -116,8 +116,8 @@ namespace Web.Controllers
             menu.Add(new NavBar { Id = 354, Nombre = "Nueva Orden Servicio", Controlador = "OrdenServicio", Accion = "Create", Icono = "fa fa-cart-plus", Estado = true, EsPadre = false, IdPadre = 353 });
             menu.Add(new NavBar { Id = 355, Nombre = "Listar Orden Servicio", Controlador = "OrdenServicio", Accion = "Index", Icono = "fa fa-circle-o", Estado = true, EsPadre = false, IdPadre = 353 });
 
-            menu.Add(new NavBar { Id = 356, Nombre = "Comprobantes electrónicos", Icono = "fa fa-line-chart", Estado = true, EsPadre = true, IdPadre = 0, Rol = 2 });
-            menu.Add(new NavBar { Id = 557, Nombre = "Listar comprobantes electrónicos", Controlador = "Comprobante", Accion = "Index", Icono = "fa fa-circle-o", Estado = true, EsPadre = false, IdPadre = 356 });
+            menu.Add(new NavBar { Id = 356, Nombre = "Comprobante electrónico", Icono = "fa fa-line-chart", Estado = true, EsPadre = true, IdPadre = 0, Rol = 2 });
+            menu.Add(new NavBar { Id = 557, Nombre = "Listar comprobantes", Controlador = "Comprobante", Accion = "Index", Icono = "fa fa-circle-o", Estado = true, EsPadre = false, IdPadre = 356 });
 
             //PARAMETRIZADOR            
             menu.Add(new NavBar { Id = 120, Nombre = "Cotizacion", Icono = "fa fa-shopping-cart", Estado = true, EsPadre = true, IdPadre = 0, Rol = 4 });
@@ -134,6 +134,7 @@ namespace Web.Controllers
             menu.Add(new NavBar { Id = 151, Nombre = "Nuevo Tipos Parametro", Controlador = "TipoParametro", Accion = "Create", Icono = "fa fa-cart-plus", Estado = true, EsPadre = false, IdPadre = 150 });
             menu.Add(new NavBar { Id = 152, Nombre = "Listar Tipos Parametro", Controlador = "TipoParametro", Accion = "Index", Icono = "fa fa-circle-o", Estado = true, EsPadre = false, IdPadre = 150 });
 
+
             //FACTURACION
             menu.Add(new NavBar { Id = 220, Nombre = "Cotizacion", Icono = "fa fa-shopping-cart", Estado = true, EsPadre = true, IdPadre = 0, Rol = 5 });
             menu.Add(new NavBar { Id = 240, Nombre = "Listar Cotizacion", Controlador = "Cotizacion", Accion = "Index", Icono = "fa fa-circle-o", Estado = true, EsPadre = false, IdPadre = 220 });
@@ -141,8 +142,8 @@ namespace Web.Controllers
             menu.Add(new NavBar { Id = 253, Nombre = "Orden de Servicio", Icono = "fa fa-shopping-cart", Estado = true, EsPadre = true, IdPadre = 0, Rol = 5 });
             menu.Add(new NavBar { Id = 255, Nombre = "Listar Orden Servicio", Controlador = "OrdenServicio", Accion = "Index", Icono = "fa fa-circle-o", Estado = true, EsPadre = false, IdPadre = 253 });
 
-            menu.Add(new NavBar { Id = 247, Nombre = "Comprobantes electrónicos", Icono = "fa fa-line-chart", Estado = true, EsPadre = true, IdPadre = 0, Rol = 5 });
-            menu.Add(new NavBar { Id = 248, Nombre = "Listar comprobantes electrónicos", Controlador = "Comprobante", Accion = "Index", Icono = "fa fa-circle-o", Estado = true, EsPadre = false, IdPadre = 247 });
+            menu.Add(new NavBar { Id = 247, Nombre = "Comprobante electrónico", Icono = "fa fa-line-chart", Estado = true, EsPadre = true, IdPadre = 0, Rol = 5 });
+            menu.Add(new NavBar { Id = 248, Nombre = "Listar comprobantes", Controlador = "Comprobante", Accion = "Index", Icono = "fa fa-circle-o", Estado = true, EsPadre = false, IdPadre = 247 });
 
             menu.Add(new NavBar { Id = 244, Nombre = "Correlativo Comprob", Icono = "fa fa-plus-square-o", Estado = true, EsPadre = true, IdPadre = 0, Rol = 5 });
             menu.Add(new NavBar { Id = 245, Nombre = "Nuevo Correlativo", Controlador = "CorrelativoMast", Accion = "AddCorrelativo", Icono = "fa fa-cart-plus", Estado = true, EsPadre = false, IdPadre = 244 });
