@@ -1,9 +1,7 @@
-﻿@{
-    ViewBag.Title = "Crear Orden de Servicio";
-    Layout = "~/Views/Shared/_LayoutMain.cshtml";
-}
+﻿@{ ViewBag.Title = "Crear Orden de Servicio";
+                Layout = "~/Views/Shared/_LayoutMain.cshtml"; }
 
-@section Scripts{    
+@section Scripts{
     <script src=@Url.Content("~/Scripts/js/angular/controller/ordenServicio/ordenServicioController.js")></script>
 }
 
@@ -179,6 +177,10 @@
                         <input class="form-control" placeholder="N°. de Copias" ng-model="model.NumeroCopiasInforme" onkeypress="return soloNumeros(event);" />
                     </div>
                     <div class="col-md-2"></div>
+                    <label for="idEmisionDigital" class="control-label col-md-2">Informes en físico:</label>
+                    <div class="col-md-2">
+                        <input id="idEmisionDigital" class="form-control" placeholder="Informes en físico" ng-model="model.Cotizacion.EmisionDigital" readonly />
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="ObservacionesInforme" class="control-label col-md-2">Otros / Observaciones:</label>

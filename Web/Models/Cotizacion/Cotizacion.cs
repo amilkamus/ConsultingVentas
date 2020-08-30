@@ -47,6 +47,7 @@ namespace Web.Models.Cotizacion
         public string SerieNumero { get; set; }
         public decimal SubTotalFinal { get; set; }
         public string Proyecto { get; set; }
+        public bool EmisionDigital { get; set; }
         public enum TeaType
         {
             Tea, Coffee, GreenTea, BlackTea

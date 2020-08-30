@@ -1,18 +1,14 @@
 ﻿@model Web.Models.Cotizacion.CotizacionViewModel
 
-@{
-    ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_LayoutMain.cshtml";
-}
+@{ ViewBag.Title = "Details";
+                Layout = "~/Views/Shared/_LayoutMain.cshtml"; }
 
 @section Scripts{
     <script src=@Url.Content("~/Scripts/js/angular/controller/cotizacion/cotizacionController.js")></script>
 }
 
-@{
-    var listaProductos = (from d in Model.Detalles
-                          select d.producto).ToList().Distinct();
-}
+@{ var listaProductos = (from d in Model.Detalles
+                                      select d.producto).ToList().Distinct(); }
 <style type="text/css">
     th {
         padding: 5px;
@@ -132,6 +128,10 @@
                             <td>Cantidad de Muestra:</td>
                             <td>@Html.DisplayFor(model => model.Cotizacion.CantidadMuestra)</td>
                         </tr>
+                        <tr>
+                            <td>Informes en físico:</td>
+                            <td>@(Model.Cotizacion.EmisionDigital?"Si":"No")</td>
+                        </tr>
                     </table>
                 </p>
                 <br />
@@ -150,42 +150,38 @@
                         </tr>
                         @foreach (var item in listaProductos)
                         {
-                            <tbody>
-                                <tr style="background-color:lightskyblue">
-                                    <th colspan="6" style="text-align:center">@item.nombre</th>
-                                </tr>
-                                @{ var elementosDetalle = (from n in Model.Detalles
-                                                            where n.producto.idProducto == item.idProducto
-                                                            select n).ToList();
-                                }
-                                @foreach (var item2 in elementosDetalle)
-                                {
-                                    var subTotalDetalle = item2.productoCotizacion.Cantidad * item2.Precio;
-                                    if (Model.Cotizacion.TipoCotizacion == "AMB")
-                                    {
-                                        <tr>
-                                            <td>@item2.parametro.ParametroDescripcion</td>
-                                            <td>@item2.parametro.Metodologia</td>
-                                            <td>@item2.tipoParametro.TipoParametroDescripcion</td>
-                                            <td>@item2.productoCotizacion.Cantidad</td>
-                                            <td>S/ @item2.Precio</td>
-                                            <td>S/ @subTotalDetalle</td>
-                                        </tr>
-                                    }
-                                    else
-                                    {
-                                        <tr>
-                                            <td>@item2.parametro.ParametroDescripcion</td>
-                                            <td>@item2.parametro.Metodologia</td>
-                                            <td>@item2.tipoParametro.TipoParametroDescripcion</td>
-                                            <td>@item2.productoCotizacion.Cantidad</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                        </tr>
-                                    }
-                                }
-                            </tbody>
-                        }
+            <tbody>
+                <tr style="background-color:lightskyblue">
+                    <th colspan="6" style="text-align:center">@item.nombre</th>
+                </tr>
+                @{ var elementosDetalle = (from n in Model.Detalles
+                                            where n.producto.idProducto == item.idProducto
+                                            select n).ToList(); }
+                @foreach (var item2 in elementosDetalle)
+                {
+                    var subTotalDetalle = item2.productoCotizacion.Cantidad * item2.Precio;
+                    if (Model.Cotizacion.TipoCotizacion == "AMB")
+                    {
+<tr>
+    <td>@item2.parametro.ParametroDescripcion</td>
+    <td>@item2.parametro.Metodologia</td>
+    <td>@item2.tipoParametro.TipoParametroDescripcion</td>
+    <td>@item2.productoCotizacion.Cantidad</td>
+    <td>S/ @item2.Precio</td>
+    <td>S/ @subTotalDetalle</td>
+</tr> }
+                    else
+                    {
+<tr>
+    <td>@item2.parametro.ParametroDescripcion</td>
+    <td>@item2.parametro.Metodologia</td>
+    <td>@item2.tipoParametro.TipoParametroDescripcion</td>
+    <td>@item2.productoCotizacion.Cantidad</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+</tr>}
+                }
+            </tbody>}
                     </table>
                 </p>
                 <br />
@@ -203,20 +199,18 @@
                         {
                             if (Model.Cotizacion.TipoCotizacion == "AMB")
                             {
-                                <tr>
-                                    <td>@item.Documento</td>
-                                    <td>@item.NormaReferencia</td>
-                                    <td>S/ @item.Precio</td>
-                                </tr>
-                            }
+            <tr>
+                <td>@item.Documento</td>
+                <td>@item.NormaReferencia</td>
+                <td>S/ @item.Precio</td>
+            </tr> }
                             else
                             {
-                                <tr>
-                                    <td>@item.Documento</td>
-                                    <td>@item.NormaReferencia</td>
-                                    <td>&nbsp;</td>
-                                </tr>
-                            }
+            <tr>
+                <td>@item.Documento</td>
+                <td>@item.NormaReferencia</td>
+                <td>&nbsp;</td>
+            </tr>}
                         }
                     </table>
                 </p>
@@ -244,32 +238,30 @@
                             {
                                 if (Model.Cotizacion.TipoCotizacion == "AMB")
                                 {
-                                    <tr>
-                                        <td>@item.Actividad</td>
-                                        <td>@item.Procedimiento</td>
-                                        <td>@item.ReferenciaNormativa</td>
-                                        <td>@item.ReferenciaMuestreo</td>
-                                        <td>@item.PlanMuestreo</td>
-                                        <td>@item.LugarMuestreo</td>
-                                        <td>S/ @item.Precio</td>
-                                        <td>@item.Cantidad</td>
-                                        <td>S/ @item.Subtotal</td>
-                                    </tr>
-                                }
+                <tr>
+                    <td>@item.Actividad</td>
+                    <td>@item.Procedimiento</td>
+                    <td>@item.ReferenciaNormativa</td>
+                    <td>@item.ReferenciaMuestreo</td>
+                    <td>@item.PlanMuestreo</td>
+                    <td>@item.LugarMuestreo</td>
+                    <td>S/ @item.Precio</td>
+                    <td>@item.Cantidad</td>
+                    <td>S/ @item.Subtotal</td>
+                </tr> }
                                 else
                                 {
-                                    <tr>
-                                        <td>@item.Actividad</td>
-                                        <td>@item.Procedimiento</td>
-                                        <td>@item.ReferenciaNormativa</td>
-                                        <td>@item.ReferenciaMuestreo</td>
-                                        <td>@item.PlanMuestreo</td>
-                                        <td>@item.LugarMuestreo</td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                    </tr>
-                                }
+                <tr>
+                    <td>@item.Actividad</td>
+                    <td>@item.Procedimiento</td>
+                    <td>@item.ReferenciaNormativa</td>
+                    <td>@item.ReferenciaMuestreo</td>
+                    <td>@item.PlanMuestreo</td>
+                    <td>@item.LugarMuestreo</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>}
                             }
                         </tbody>
                     </table>
@@ -295,43 +287,39 @@
 
                                 var suma = elementosDetalle.Where(x => x.producto.idProducto == item.idProducto).Sum(x => x.productoCotizacion.Cantidad * x.Precio);
 
-                                <tr>
-                                    <td>@index.- @item.descripcion</td>
-                                    <td>S/ @suma</td>
-                                    <td>-</td>
-                                    <td>S/ @suma</td>
-                                </tr>
-                                index++;
+                <tr>
+                    <td>@index.- @item.descripcion</td>
+                    <td>S/ @suma</td>
+                    <td>-</td>
+                    <td>S/ @suma</td>
+                </tr>index++;
                             }
                             @foreach (var item in Model.Certificados)
                             {
-                                <tr>
-                                    <td>@index.- @item.Documento</td>
-                                    <td>S/ @item.Precio</td>
-                                    <td>-</td>
-                                    <td>S/ @item.Precio</td>
-                                </tr>
-                                index++;
+                <tr>
+                    <td>@index.- @item.Documento</td>
+                    <td>S/ @item.Precio</td>
+                    <td>-</td>
+                    <td>S/ @item.Precio</td>
+                </tr>index++;
                             }
                             @foreach (var item in Model.Inspeccion)
                             {
-                                <tr>
-                                    <td>@index.- @item.Actividad</td>
-                                    <td>S/ @item.Precio</td>
-                                    <td>@item.Cantidad</td>
-                                    <td>S/ @item.Subtotal</td>
-                                </tr>
-                                index++;
+                <tr>
+                    <td>@index.- @item.Actividad</td>
+                    <td>S/ @item.Precio</td>
+                    <td>@item.Cantidad</td>
+                    <td>S/ @item.Subtotal</td>
+                </tr>index++;
                             }
                             @foreach (var item in Model.Resumen)
                             {
-                                <tr>
-                                    <td>@index.- @item.Descripcion</td>
-                                    <td>S/ @item.Precio</td>
-                                    <td>@item.NumeroDias</td>
-                                    <td>S/ @item.Total</td>
-                                </tr>
-                                index++;
+                <tr>
+                    <td>@index.- @item.Descripcion</td>
+                    <td>S/ @item.Precio</td>
+                    <td>@item.NumeroDias</td>
+                    <td>S/ @item.Total</td>
+                </tr>index++;
                             }
                             <tr>
                                 <td style="background-color:#fff;border-left:hidden;border-bottom:hidden">&nbsp;</td>
@@ -420,7 +408,7 @@
                 <br />
                 <strong><u>OBSERVACIONES</u></strong>
                 <p style="background-color:orange; width:95%">
-                    @Html.DisplayFor(model => model.Cotizacion.Observaciones)                    
+                    @Html.DisplayFor(model => model.Cotizacion.Observaciones)
                 </p>
 
                 <p style="width:95%; text-align:justify; font-size:10px; color:black">
@@ -485,8 +473,7 @@
         @Html.ActionLink("Imprimir", "PrintCotizacion", new { id = Model.Cotizacion.ID }, new { @class = "btn btn-sm btn-primary" }) |
         @if (string.IsNullOrEmpty(Model.Cotizacion.SerieNumero))
         {
-            <a id="linkRegistrarComprobante" ng-click="registrarComprobante(@Model.Cotizacion.ID)" class="btn btn-sm btn-primary">Generar factura</a>
-        }
+<a id="linkRegistrarComprobante" ng-click="registrarComprobante(@Model.Cotizacion.ID)" class="btn btn-sm btn-primary">Generar factura</a>}
         @Html.ActionLink("Regresar a Listado", "Index", null, new { @class = "btn btn-sm btn-danger cancelar" })
     </p>
     <div id="myModal" class="modalDetalle">

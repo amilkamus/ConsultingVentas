@@ -1,5 +1,5 @@
 ﻿app.controller('ordenServicioController', ['$rootScope', '$scope', 'ordenServicioService', function ($rootScope, $scope, ordenServicioService) {
-    
+
     $scope.model = {};
     $scope.model.Cotizacion = {};
     $scope.cliente = {};
@@ -8,6 +8,7 @@
     $scope.elementosCertificado = { lista: [] };
     $scope.productosDetalle = [];
     $scope.elementosInspeccion = { lista: [] };
+    $scope.model.Cotizacion.EmisionDigital = "No";
 
     $scope.init = function () {
         $('#FechaEnvioMateriales,#FechaInspeccion').datepicker({ format: "dd/mm/yyyy", language: "es" });
@@ -16,7 +17,7 @@
         var idCotizacion = $("#IdCotizacion").attr("value");
 
         if (idOrdenServicio != undefined) {
-            obtenerDatosOrdenServicio(idOrdenServicio, idCotizacion);            
+            obtenerDatosOrdenServicio(idOrdenServicio, idCotizacion);
         }
     }
 
@@ -107,6 +108,7 @@
                 $scope.model.DescripcionProducto = data.data.Cotizacion.DescripcionProducto;
                 $scope.model.CantidadMuestra = data.data.Cotizacion.CantidadMuestra;
                 $scope.model.Cotizacion.Observaciones = data.data.Cotizacion.Observaciones;
+                $scope.model.Cotizacion.EmisionDigital = (data.data.Cotizacion.EmisionDigital) ? "Si" : "No";
 
                 for (var i = 0; i < data.data.Certificados.length; i++) {
                     var itemDetalle = data.data.Certificados[i];

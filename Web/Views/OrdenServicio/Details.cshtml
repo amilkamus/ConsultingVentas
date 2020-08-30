@@ -1,9 +1,7 @@
 ﻿@model Web.Models.OrdenServicio.OrdenServicioViewModel
 
-@{
-    ViewBag.Title = "Detalle Orden de Servicio";
-    Layout = "~/Views/Shared/_LayoutMain.cshtml";
-}
+@{ ViewBag.Title = "Detalle Orden de Servicio";
+                Layout = "~/Views/Shared/_LayoutMain.cshtml"; }
 <style type="text/css">
     #detalle th, #detalle td {
         padding: 5px;
@@ -11,7 +9,7 @@
 
     .fondoCabecera {
         background-color: rgb(252,213,180);
-    }    
+    }
 </style>
 @section Scripts{
     <script src=@Url.Content("~/Scripts/js/angular/controller/ordenServicio/ordenServicioController.js")></script>
@@ -76,7 +74,9 @@
                     </tr>
                     <tr>
                         <th>N° Copias:</th>
-                        <td colspan="3">@Html.DisplayFor(model => model.OrdenServicio.NumeroCopiasInforme)</td>
+                        <td>@Html.DisplayFor(model => model.OrdenServicio.NumeroCopiasInforme)</td>
+                        <th>Informes en físico:</th>
+                        <td>@(Model.Cotizacion.EmisionDigital?"Si":"No")</td>
                     </tr>
                     <tr>
                         <th>Otros / Observaciones:</th>
@@ -150,10 +150,8 @@
                         <th>Observaciones de producto:</th>
                         <td colspan="3">@Html.DisplayFor(model => model.Cotizacion.Observaciones)</td>
                     </tr>
-                    @{
-                        var listaProductos = (from d in Model.Detalles
-                                              select d.producto).ToList().Distinct();
-                    }
+                    @{ var listaProductos = (from d in Model.Detalles
+                                                          select d.producto).ToList().Distinct(); }
                     <tr style="border:hidden !important;padding:0">
                         <td colspan="4" style="padding:0;">
                             <table border="1" width="100%">
@@ -169,26 +167,23 @@
                                 </tr>
                                 @foreach (var item in listaProductos)
                                 {
-                                    <tbody>
-                                        <tr>
-                                            <th colspan="5" style="text-align:center">@item.nombre</th>
-                                        </tr>
-                                        @{ var elementosDetalle = (from n in Model.Detalles
-                                                                    where n.producto.idProducto == item.idProducto
-                                                                    select n).ToList();
-                                        }
-                                        @foreach (var item2 in elementosDetalle)
-                                        {
-                                            <tr>
-                                                <td>@item2.parametro.ParametroDescripcion</td>
-                                                <td>@item2.parametro.Metodologia</td>
-                                                <td>@item2.tipoParametro.TipoParametroDescripcion</td>
-                                                <td>@item2.parametro.LimiteDeteccion</td>
-                                                <td>@item2.productoCotizacion.Cantidad</td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                }
+                    <tbody>
+                        <tr>
+                            <th colspan="5" style="text-align:center">@item.nombre</th>
+                        </tr>
+                        @{ var elementosDetalle = (from n in Model.Detalles
+                                                    where n.producto.idProducto == item.idProducto
+                                                    select n).ToList(); }
+                        @foreach (var item2 in elementosDetalle)
+                        {
+        <tr>
+            <td>@item2.parametro.ParametroDescripcion</td>
+            <td>@item2.parametro.Metodologia</td>
+            <td>@item2.tipoParametro.TipoParametroDescripcion</td>
+            <td>@item2.parametro.LimiteDeteccion</td>
+            <td>@item2.productoCotizacion.Cantidad</td>
+        </tr>}
+                    </tbody>}
                             </table>
                             <table border="1" width="100%" style="border-top:hidden">
                                 <tr>
@@ -198,19 +193,15 @@
                                     <th>Documento</th>
                                     <th>Norma de referencia</th>
                                 </tr>
-                                @{
-                                    if (Model.Certificados.Count == 0)
-                                    {
-                                        <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
-                                    }
-                                }
+                                @{ if (Model.Certificados.Count == 0)
+                                                {
+                                    <tr><td>&nbsp;</td><td>&nbsp;</td></tr> } }
                                 @foreach (var certificado in Model.Certificados)
                                 {
-                                    <tr>
-                                        <td>@certificado.Documento</td>
-                                        <td>@certificado.NormaReferencia</td>
-                                    </tr>
-                                }
+                    <tr>
+                        <td>@certificado.Documento</td>
+                        <td>@certificado.NormaReferencia</td>
+                    </tr>}
                             </table>
                             <table border="1" width="100%" style="border-top:hidden">
                                 <thead>
@@ -230,16 +221,15 @@
                                 <tbody>
                                     @foreach (var item in Model.Inspeccion)
                                     {
-                                        <tr>
-                                            <td>@item.Actividad</td>
-                                            <td>@item.Procedimiento</td>
-                                            <td>@item.ReferenciaNormativa</td>
-                                            <td>@item.ReferenciaMuestreo</td>
-                                            <td>@item.PlanMuestreo</td>
-                                            <td>@item.LugarMuestreo</td>
-                                            <td>@item.Cantidad</td>
-                                        </tr>
-                                    }
+                        <tr>
+                            <td>@item.Actividad</td>
+                            <td>@item.Procedimiento</td>
+                            <td>@item.ReferenciaNormativa</td>
+                            <td>@item.ReferenciaMuestreo</td>
+                            <td>@item.PlanMuestreo</td>
+                            <td>@item.LugarMuestreo</td>
+                            <td>@item.Cantidad</td>
+                        </tr>}
                                 </tbody>
                             </table>
                         </td>
@@ -256,7 +246,7 @@
             </p>
         </div>
     </div>
-    <br />    
+    <br />
 </div>
 <p style="width:95%; text-align:center">
     @Html.ActionLink("Editar", "Edit", new { id = Model.OrdenServicio.ID }, new { @class = "btn btn-sm btn-primary" }) |
