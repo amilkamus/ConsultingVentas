@@ -142,7 +142,7 @@ namespace Web.Controllers
                     lr.SetParameters(new ReportParameter("Direccion", cliente.titularDomicilio));
                 }
                 else
-                { 
+                {
                     lr.SetParameters(new ReportParameter("Direccion", cliente.empresaDomicilio));
                 }
 
@@ -173,6 +173,7 @@ namespace Web.Controllers
                 lr.SetParameters(new ReportParameter("Detracciones", ds.Tables[0].Rows[0]["Detracciones"].ToString()));
                 lr.SetParameters(new ReportParameter("Usuario", NombreUsuario(cotizacion.IdUsuarioRegistro)));
                 lr.SetParameters(new ReportParameter("Observaciones", cotizacion.Observaciones));
+                lr.SetParameters(new ReportParameter("EmisionDigital", (cotizacion.EmisionDigital) ? "Si" : "No"));
 
                 lr.DataSources.Add(new ReportDataSource("CotizacionCabecera", ds.Tables[0]));
                 lr.DataSources.Add(new ReportDataSource("Productos", ds.Tables[1]));
@@ -343,7 +344,7 @@ namespace Web.Controllers
         public JsonResult ObtenerParametrosProducto(long id)
         {
             try
-            {                
+            {
                 CotizacionViewModel modelo = new CotizacionViewModel();
                 List<WH_ProductoServicio> resultado = productoServicioNEG.listarProducto();
                 List<MostrarProductoServicioViewModels> productos = MostrarProductoServicioViewModels.convert(resultado);
@@ -430,7 +431,7 @@ namespace Web.Controllers
                         string a = "";
                         fechaRegistro = DateTime.Now;
                     }
-                }                
+                }
 
 
                 if (string.IsNullOrEmpty(numeroCotizacionBD))

@@ -747,7 +747,7 @@
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.21539in</Height>
+              <Height>0.19108in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -818,7 +818,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.20497in</Height>
+              <Height>0.18066in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -889,7 +889,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.20497in</Height>
+              <Height>0.17233in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -959,6 +959,81 @@
                 </TablixCell>
               </TablixCells>
             </TablixRow>
+            <TablixRow>
+              <Height>0.23622in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox77">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Informes en físico:</Value>
+                              <Style>
+                                <FontStyle>Normal</FontStyle>
+                                <FontSize>8pt</FontSize>
+                                <FontWeight>Normal</FontWeight>
+                                <TextDecoration>None</TextDecoration>
+                                <Color>#000000</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox77</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>White</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox79">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Parameters!EmisionDigital.Value</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox79</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>White</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
           </TablixRows>
         </TablixBody>
         <TablixColumnHierarchy>
@@ -975,14 +1050,15 @@
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
+                <TablixMember />
               </TablixMembers>
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>CotizacionCabecera</DataSetName>
-        <Top>5.87667cm</Top>
+        <Top>5.72675cm</Top>
         <Left>0.0001cm</Left>
-        <Height>1.58834cm</Height>
+        <Height>1.98195cm</Height>
         <Width>16.98625cm</Width>
         <ZIndex>5</ZIndex>
         <Style>
@@ -4925,6 +5001,12 @@ Telf. (01) 7504454</Value>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
     <ReportParameter Name="Observaciones">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="EmisionDigital">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
       <AllowBlank>true</AllowBlank>
