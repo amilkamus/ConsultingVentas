@@ -1,13 +1,13 @@
 ﻿app.controller('ordenServicioController', ['$rootScope', '$scope', 'ordenServicioService', function ($rootScope, $scope, ordenServicioService) {
 
     $scope.model = {};
-    $scope.model.Cotizacion = {};
+    $scope.model.Cotizacion = {};    
     $scope.cliente = {};
     $scope.elementosCotizacion = { lista: [] };
     $scope.elementosDetalle = { lista: [] };
     $scope.elementosCertificado = { lista: [] };
     $scope.productosDetalle = [];
-    $scope.elementosInspeccion = { lista: [] };
+    $scope.elementosInspeccion = { lista: [] };    
     $scope.model.Cotizacion.EmisionDigital = "No";
 
     $scope.init = function () {
@@ -96,9 +96,15 @@
     }
 
     obtenerDatosCotizacion = function (id) {
+
+        $scope.model.Cotizacion = {};
+
         var parametro = { id: id }
         ordenServicioService.obtenerCotizacion(parametro).then(function (data) {
             if (data.data) {
+
+                console.log(data.data);
+
                 $scope.model.NumeroCotizacion = data.data.Cotizacion.NumeroCotizacion;
                 $scope.cliente.cliente = data.data.Cotizacion.Solicitante;
                 $scope.cliente.numeroDocumento = data.data.Cotizacion.RUC;

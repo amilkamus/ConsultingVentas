@@ -188,6 +188,7 @@ namespace Web.Controllers
 
                 lr.SetParameters(new ReportParameter("Usuario", NombreUsuario(ordenServicio.IdUsuarioRegistro)));
                 lr.SetParameters(new ReportParameter("FechaRegistro", ordenServicio.FechaRegistro.ToString("dd/MM/yyyy")));
+                lr.SetParameters(new ReportParameter("EmisionDigital", (cotizacion.EmisionDigital) ? "Si" : "No"));
 
                 lr.DataSources.Add(new ReportDataSource("CotizacionCabecera", ds.Tables[0]));
                 lr.DataSources.Add(new ReportDataSource("Productos", ds.Tables[1]));
