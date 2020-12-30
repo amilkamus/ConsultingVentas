@@ -19,17 +19,17 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="https://www.quypay.com/FactElectTest/Service1.svc" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost:57980/Service1.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="Service16.xsd" MetadataType="Schema" ID="65da8858-a64c-42be-8331-d907ba2ca463" SourceId="1" SourceUrl="https://www.quypay.com/FactElectTest/Service1.svc?xsd=xsd4" />
-    <MetadataFile FileName="Service11.wsdl" MetadataType="Wsdl" ID="e56ed7dc-caa7-412d-812f-01485b93b42e" SourceId="1" SourceUrl="https://www.quypay.com/FactElectTest/Service1.svc?wsdl" />
-    <MetadataFile FileName="Service1.disco" MetadataType="Disco" ID="58b4bf00-3ab8-40ba-834b-89b7074f5501" SourceId="1" SourceUrl="https://www.quypay.com/FactElectTest/Service1.svc?disco" />
-    <MetadataFile FileName="Service161.xsd" MetadataType="Schema" ID="7fdf813f-c490-4694-afa1-6d1cab65634d" SourceId="1" SourceUrl="https://www.quypay.com/FactElectTest/Service1.svc?xsd=xsd5" />
-    <MetadataFile FileName="Service162.xsd" MetadataType="Schema" ID="be0d9361-120f-4bc6-8336-772bc9de26ec" SourceId="1" SourceUrl="https://www.quypay.com/FactElectTest/Service1.svc?xsd=xsd2" />
-    <MetadataFile FileName="Service163.xsd" MetadataType="Schema" ID="6adb8b11-22f6-4096-91b1-ae99dd34ba23" SourceId="1" SourceUrl="https://www.quypay.com/FactElectTest/Service1.svc?xsd=xsd3" />
-    <MetadataFile FileName="Service164.xsd" MetadataType="Schema" ID="2a515bd9-867a-42c0-afee-5d3f1bc858bc" SourceId="1" SourceUrl="https://www.quypay.com/FactElectTest/Service1.svc?xsd=xsd0" />
-    <MetadataFile FileName="Service165.xsd" MetadataType="Schema" ID="76a24936-9147-4b94-87c0-a4bf6821e57d" SourceId="1" SourceUrl="https://www.quypay.com/FactElectTest/Service1.svc?xsd=xsd1" />
+    <MetadataFile FileName="Service16.xsd" MetadataType="Schema" ID="7d04d4f7-5db2-41d6-bd1d-b01f4b0f19a1" SourceId="1" SourceUrl="http://localhost:57980/Service1.svc?xsd=xsd5" />
+    <MetadataFile FileName="Service111.xsd" MetadataType="Schema" ID="af5ee3f4-aebd-433b-b37a-54d130b2e2e8" SourceId="1" SourceUrl="http://localhost:57980/Service1.svc?xsd=xsd3" />
+    <MetadataFile FileName="Service112.xsd" MetadataType="Schema" ID="2da889d2-3292-41a5-901a-9fef206e5e71" SourceId="1" SourceUrl="http://localhost:57980/Service1.svc?xsd=xsd4" />
+    <MetadataFile FileName="Service111.disco" MetadataType="Disco" ID="db0058e2-7897-43d2-bc94-c70199f19a4c" SourceId="1" SourceUrl="http://localhost:57980/Service1.svc?disco" />
+    <MetadataFile FileName="Service113.xsd" MetadataType="Schema" ID="fb61e9a7-aec7-44a0-881a-733615ce74de" SourceId="1" SourceUrl="http://localhost:57980/Service1.svc?xsd=xsd2" />
+    <MetadataFile FileName="Service114.xsd" MetadataType="Schema" ID="5330d7f4-bf12-4fc2-910c-213c17462eea" SourceId="1" SourceUrl="http://localhost:57980/Service1.svc?xsd=xsd1" />
+    <MetadataFile FileName="Service11.wsdl" MetadataType="Wsdl" ID="95a350dc-7500-4e88-b336-3c30f6e901bc" SourceId="1" SourceUrl="http://localhost:57980/Service1.svc?wsdl" />
+    <MetadataFile FileName="Service115.xsd" MetadataType="Schema" ID="99b2f9cc-88ce-4c52-aa84-5f6559860425" SourceId="1" SourceUrl="http://localhost:57980/Service1.svc?xsd=xsd0" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

@@ -18,6 +18,8 @@ using System.Data.Entity.Migrations;
 using Microsoft.Reporting.WebForms;
 using Web.Models.Clientes;
 using System.IO;
+using Entidad;
+using NPOI.SS.UserModel;
 
 namespace Web.Controllers
 {
@@ -28,23 +30,152 @@ namespace Web.Controllers
         [Authorize(Roles = "ADMINISTRADOR, OPERADOR, PARAMETRIZADOR, FACTURACION")]
         public ActionResult Index()
         {
-            List<OrdenServicioCotizacion> lista = (from o in db.OrdenServicio
-                                                   join c in db.Cotizacions on o.NumeroCotizacion equals c.NumeroCotizacion
-                                                   select new OrdenServicioCotizacion
-                                                   {
-                                                       ID = o.ID,
-                                                       NumeroOrdenServicio = o.NumeroOrdenServicio,
-                                                       NumeroCotizacion = o.NumeroCotizacion,
-                                                       Contacto = c.Contacto,
-                                                       Fecha = c.Fecha,
-                                                       RUC = c.RUC,
-                                                       Solicitante = c.Solicitante,
-                                                       Email = c.Email,
-                                                       Telefono = c.Telefono,
-                                                       Correlativo = o.Correlativo
-                                                   }).ToList();
+            return View();
+        }
 
-            return View(lista.OrderBy(x => x.NumeroOrdenServicio).ThenBy(x => x.NumeroCotizacion).ThenBy(x => x.Correlativo));
+        [Authorize(Roles = "ADMINISTRADOR, OPERADOR, PARAMETRIZADOR, FACTURACION")]
+        public JsonResult ListarOrdenesServicio(EnOrdenServicioIn ordenServicioIn)
+        {
+            try
+            {
+                CO_ComprobanteNEG comprobanteNEG = new CO_ComprobanteNEG();
+                List<EnOrdenServicioOut> lista = comprobanteNEG.ListarOrdenServicio(ordenServicioIn);
+                return Json(lista);
+            }
+            catch (Exception e)
+            {
+                HttpContext.Response.StatusCode = 500;
+                return Json(Util.errorJson(e));
+            }
+        }
+
+        [Authorize(Roles = "ADMINISTRADOR, OPERADOR")]
+        public ActionResult Exportar(EnOrdenServicioIn ordenServicioIn)
+        {
+            int filaError = 0;
+            int columnaError = 0;
+            string nombreColumnaError = "";
+            try
+            {
+                CO_ComprobanteNEG comprobanteNEG = new CO_ComprobanteNEG();
+                List<EnOrdenServicioOut> lista = comprobanteNEG.ListarOrdenServicio(ordenServicioIn);
+
+                IWorkbook wb = new NPOI.XSSF.UserModel.XSSFWorkbook();
+
+                ISheet sheet = wb.CreateSheet("OrdenServicio");
+                IRow row;
+                ICell cell;
+                IFont font = wb.CreateFont();
+                font.Boldweight = (short)FontBoldWeight.Bold;
+
+                ICellStyle styleNegrita = wb.CreateCellStyle();
+                styleNegrita.SetFont(font);
+
+                ICellStyle styleNegritaBorde = wb.CreateCellStyle();
+                styleNegritaBorde.SetFont(font);
+                styleNegritaBorde.BorderBottom = BorderStyle.Thin;
+                styleNegritaBorde.BorderTop = BorderStyle.Thin;
+                styleNegritaBorde.BorderLeft = BorderStyle.Thin;
+                styleNegritaBorde.BorderRight = BorderStyle.Thin;
+
+                ICellStyle styleBorde = wb.CreateCellStyle();
+                styleBorde.BorderBottom = BorderStyle.Thin;
+                styleBorde.BorderTop = BorderStyle.Thin;
+                styleBorde.BorderLeft = BorderStyle.Thin;
+                styleBorde.BorderRight = BorderStyle.Thin;
+
+                ICellStyle styleEntero = wb.CreateCellStyle();
+                styleEntero.DataFormat = wb.CreateDataFormat().GetFormat("0");
+
+                ICellStyle styleDecimal = wb.CreateCellStyle();
+                styleDecimal.DataFormat = wb.CreateDataFormat().GetFormat("0.00");
+
+                ICellStyle styleFecha = wb.CreateCellStyle();
+                styleFecha.DataFormat = wb.CreateDataFormat().GetFormat("dd/mm/yyyy");
+
+                ICellStyle styleFechaHora = wb.CreateCellStyle();
+                styleFechaHora.DataFormat = wb.CreateDataFormat().GetFormat("dd/mm/yyyy HH:mm:ss");
+
+                int rowIndex = 0;
+
+                // cabcera del reporte
+                int columna = 1;
+                row = sheet.CreateRow(rowIndex);
+
+                Dictionary<string, string> columnasCabecera = new Dictionary<string, string>();
+                columnasCabecera.Add("NumeroOrdenServicio", "Número Orden Servicio");
+                columnasCabecera.Add("NumeroCotizacion", "Número Cotización");
+                columnasCabecera.Add("RUC", "RUC Solicitante");
+                columnasCabecera.Add("Solicitante", "Razón Social Solicitante");
+                columnasCabecera.Add("Fecha", "Fecha");
+                columnasCabecera.Add("DescripcionProducto", "Descripción Producto");
+                columnasCabecera.Add("Observaciones", "Observaciones Producto");
+                columnasCabecera.Add("ObservacionesInforme", "Observaciones Informe");
+                columnasCabecera.Add("UsuarioRegistro", "Usuario Registro");
+
+                foreach (KeyValuePair<string, string> cabecera in columnasCabecera)
+                {
+                    cell = row.CreateCell(columna);
+                    cell.SetCellValue(cabecera.Value);
+                    cell.CellStyle = styleNegritaBorde;
+                    columna += 1;
+                }
+
+                rowIndex += 1;
+                string[] columnasNumericas = new[] { "" };
+                string[] columnasFecha = new[] { "Fecha" };
+                string[] columnasFechaHora = new[] { "" };
+                filaError = rowIndex;
+                foreach (var item in lista)
+                {
+                    columna = 1;
+                    row = sheet.CreateRow(rowIndex);
+                    foreach (KeyValuePair<string, string> cabecera in columnasCabecera)
+                    {
+                        string nombreColumna = cabecera.Key;
+                        columnaError = columna;
+                        nombreColumnaError = nombreColumna;
+                        cell = row.CreateCell(columna);
+
+                        if (columnasNumericas.Contains(nombreColumna))
+                        {
+                            cell.SetCellValue(Convert.ToDouble(item.GetType().GetProperty(cabecera.Key).GetValue(item, null)));
+                            cell.CellStyle = styleDecimal;
+                        }
+                        else if (columnasFecha.Contains(nombreColumna))
+                        {
+                            cell.SetCellValue(item.GetType().GetProperty(cabecera.Key).GetValue(item, null).ToString());
+                            cell.CellStyle = styleFecha;
+                        }
+                        else
+                            cell.SetCellValue(item.GetType().GetProperty(cabecera.Key).GetValue(item, null).ToString());
+
+                        cell.CellStyle = styleBorde;
+                        columna += 1;
+                    }
+                    rowIndex += 1;
+                }
+
+                rowIndex += 1;
+
+                byte[] xlsInBytes;
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    wb.Write(ms);
+                    xlsInBytes = ms.ToArray();
+                }
+                return File(xlsInBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "ReporteOrdenServicio.xlsx");
+            }
+            catch (Exception e)
+            {
+                var respuesta = new
+                {
+                    Codigo = "1",
+                    Mensaje = "Ocurrió un error al procesar la información, Columna: " + nombreColumnaError.ToString() + ", Fila: " + filaError.ToString() + " error: " + e.Message.ToString()
+                };
+
+                return Json(respuesta, JsonRequestBehavior.AllowGet);
+            }
         }
 
         [Authorize(Roles = "ADMINISTRADOR, OPERADOR")]
@@ -92,7 +223,6 @@ namespace Web.Controllers
 
             return View(modelo);
         }
-
 
         public ActionResult Print(long id)
         {

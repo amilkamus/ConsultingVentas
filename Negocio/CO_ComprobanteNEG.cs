@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Datos;
+using Entidad;
 
 namespace Negocio
 {
@@ -16,14 +17,27 @@ namespace Negocio
         {
             comprobanteDAT = new CO_ComprobanteDAT();
         }
-
+                
         public DataSet ObtenerCotizacionImpresion(long idCotizacion)
         {
             return comprobanteDAT.ObtenerCotizacionImpresion(idCotizacion);
         }
+        
         public void ActualizarSerieCorrelativo(string serie, string tipoComprobante)
         {
             comprobanteDAT.ActualizarSerieCorrelativo(serie, tipoComprobante);
+        }
+
+        public void RegistrarCobranza(EnCobranza cobranza)
+        {
+            comprobanteDAT = new CO_ComprobanteDAT();
+            comprobanteDAT.RegistrarCobranza(cobranza);
+        }
+
+        public EnCobranza ListarCobranzasPorCotizacion(long idCotizacion)
+        {
+            comprobanteDAT = new CO_ComprobanteDAT();
+            return comprobanteDAT.ListarCobranzasPorCotizacion(idCotizacion);
         }
 
         public DataSet CargarVenta(long idComprobante)
@@ -199,6 +213,30 @@ namespace Negocio
             return generadorCodigo;
         }
         #endregion
+
+        public List<EnCotizacionOut> ListarCotizaciones(EnContizacionIn cotizacionIn)
+        {
+            comprobanteDAT = new CO_ComprobanteDAT();
+            return comprobanteDAT.ListarCotizaciones(cotizacionIn);
+        }
+
+        public List<EnOrdenServicioOut> ListarOrdenServicio(EnOrdenServicioIn ordenServicioIn)
+        {
+            comprobanteDAT = new CO_ComprobanteDAT();
+            return comprobanteDAT.ListarOrdenServicio(ordenServicioIn);
+        }
+
+        public List<EnCobranzaOut> ListarCobranzas(EnCobranzaIn cobranzaIn)
+        {
+            comprobanteDAT = new CO_ComprobanteDAT();
+            return comprobanteDAT.ListarCobranzas(cobranzaIn);
+        }
+
+        public List<EnUsuario> ListarUsuarios()
+        {
+            comprobanteDAT = new CO_ComprobanteDAT();
+            return comprobanteDAT.ListarUsuarios();
+        }
 
     }
 }

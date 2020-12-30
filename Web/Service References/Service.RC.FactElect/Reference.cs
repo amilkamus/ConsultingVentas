@@ -2311,7 +2311,16 @@ namespace Web.Service.RC.FactElect {
         private string TipoComprobanteField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private decimal TotalDescuentoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private decimal TotalImpuestoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private decimal TotalPrecioVentaField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private decimal TotalValorVentaField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -2467,6 +2476,32 @@ namespace Web.Service.RC.FactElect {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal TotalDescuento {
+            get {
+                return this.TotalDescuentoField;
+            }
+            set {
+                if ((this.TotalDescuentoField.Equals(value) != true)) {
+                    this.TotalDescuentoField = value;
+                    this.RaisePropertyChanged("TotalDescuento");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal TotalImpuesto {
+            get {
+                return this.TotalImpuestoField;
+            }
+            set {
+                if ((this.TotalImpuestoField.Equals(value) != true)) {
+                    this.TotalImpuestoField = value;
+                    this.RaisePropertyChanged("TotalImpuesto");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public decimal TotalPrecioVenta {
             get {
                 return this.TotalPrecioVentaField;
@@ -2475,6 +2510,19 @@ namespace Web.Service.RC.FactElect {
                 if ((this.TotalPrecioVentaField.Equals(value) != true)) {
                     this.TotalPrecioVentaField = value;
                     this.RaisePropertyChanged("TotalPrecioVenta");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal TotalValorVenta {
+            get {
+                return this.TotalValorVentaField;
+            }
+            set {
+                if ((this.TotalValorVentaField.Equals(value) != true)) {
+                    this.TotalValorVentaField = value;
+                    this.RaisePropertyChanged("TotalValorVenta");
                 }
             }
         }

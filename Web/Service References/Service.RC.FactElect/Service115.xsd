@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="https://www.quypay.com/FactElectTest/Service1.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/FactElec.CapaEntidad.RegistroComprobante" />
-  <xs:import schemaLocation="https://www.quypay.com/FactElectTest/Service1.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/FactElec.CapaEntidad.ObtenerArchivo" />
-  <xs:import schemaLocation="https://www.quypay.com/FactElectTest/Service1.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/FactElec.CapaEntidad.ListarComprobanteElectronicos" />
+  <xs:import schemaLocation="http://localhost:57980/Service1.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/FactElec.CapaEntidad.RegistroComprobante" />
+  <xs:import schemaLocation="http://localhost:57980/Service1.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/FactElec.CapaEntidad.ObtenerArchivo" />
+  <xs:import schemaLocation="http://localhost:57980/Service1.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/FactElec.CapaEntidad.ListarComprobanteElectronicos" />
   <xs:element name="RegistroComprobante">
     <xs:complexType>
       <xs:sequence>

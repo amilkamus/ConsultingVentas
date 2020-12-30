@@ -11,19 +11,15 @@ using Negocio;
 using Web.Models.Producto;
 using Web.Models;
 using Web.Models.Cotizacion;
-using Rotativa;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Web.Service.RC.FactElect;
 using Web.Models.Clientes;
 using System.Data.Entity.Migrations;
 using Microsoft.Reporting.WebForms;
 using System.IO;
-using System.Data.SqlClient;
 using Web.Models.OrdenServicio;
 using Web.Models.Parametro;
+using Entidad;
+using NPOI.SS.UserModel;
 
 namespace Web.Controllers
 {
@@ -38,12 +34,186 @@ namespace Web.Controllers
         [Authorize(Roles = "ADMINISTRADOR, OPERADOR, PARAMETRIZADOR, FACTURACION")]
         public ActionResult Index()
         {
-            return View(db.Cotizacions.OrderByDescending(x => (x.FechaModificacion == null) ? x.FechaRegistro : x.FechaModificacion)); //.ThenBy(x => x.NumeroCotizacion).ThenBy(x => x.Correlativo).ThenByDescending(x => x.CorrelativoInicial));
+            return View();
+        }
+
+        [Authorize(Roles = "ADMINISTRADOR, OPERADOR, PARAMETRIZADOR, FACTURACION")]
+        public JsonResult ListarCotizaciones(EnContizacionIn cotizacionIn)
+        {
+            try
+            {
+                CO_ComprobanteNEG comprobanteNEG = new CO_ComprobanteNEG();
+                List<EnCotizacionOut> lista = comprobanteNEG.ListarCotizaciones(cotizacionIn);
+                return Json(lista);
+            }
+            catch (Exception e)
+            {
+                HttpContext.Response.StatusCode = 500;
+                return Json(Util.errorJson(e));
+            }
+        }
+
+        [Authorize(Roles = "ADMINISTRADOR, OPERADOR, PARAMETRIZADOR, FACTURACION")]
+        public JsonResult ListarUsuarios()
+        {
+            try
+            {
+                CO_ComprobanteNEG comprobanteNEG = new CO_ComprobanteNEG();
+                List<EnUsuario> lista = comprobanteNEG.ListarUsuarios();
+                return Json(lista);
+            }
+            catch (Exception e)
+            {
+                HttpContext.Response.StatusCode = 500;
+                return Json(Util.errorJson(e));
+            }
+        }
+
+        [Authorize(Roles = "ADMINISTRADOR, OPERADOR")]
+        public ActionResult Exportar(EnContizacionIn cotizacionIn)
+        {
+            int filaError = 0;
+            int columnaError = 0;
+            string nombreColumnaError = "";
+            try
+            {
+                CO_ComprobanteNEG comprobanteNEG = new CO_ComprobanteNEG();
+                List<EnCotizacionOut> lista = comprobanteNEG.ListarCotizaciones(cotizacionIn);
+
+                IWorkbook wb = new NPOI.XSSF.UserModel.XSSFWorkbook();
+
+                ISheet sheet = wb.CreateSheet("Cotizacion");
+                IRow row;
+                ICell cell;
+                IFont font = wb.CreateFont();
+                font.Boldweight = (short)FontBoldWeight.Bold;
+
+                ICellStyle styleNegrita = wb.CreateCellStyle();
+                styleNegrita.SetFont(font);
+
+                ICellStyle styleNegritaBorde = wb.CreateCellStyle();
+                styleNegritaBorde.SetFont(font);
+                styleNegritaBorde.BorderBottom = BorderStyle.Thin;
+                styleNegritaBorde.BorderTop = BorderStyle.Thin;
+                styleNegritaBorde.BorderLeft = BorderStyle.Thin;
+                styleNegritaBorde.BorderRight = BorderStyle.Thin;
+
+                ICellStyle styleBorde = wb.CreateCellStyle();
+                styleBorde.BorderBottom = BorderStyle.Thin;
+                styleBorde.BorderTop = BorderStyle.Thin;
+                styleBorde.BorderLeft = BorderStyle.Thin;
+                styleBorde.BorderRight = BorderStyle.Thin;
+
+                ICellStyle styleEntero = wb.CreateCellStyle();
+                styleEntero.DataFormat = wb.CreateDataFormat().GetFormat("0");
+
+                ICellStyle styleDecimal = wb.CreateCellStyle();
+                styleDecimal.DataFormat = wb.CreateDataFormat().GetFormat("0.00");
+
+                ICellStyle styleFecha = wb.CreateCellStyle();
+                styleFecha.DataFormat = wb.CreateDataFormat().GetFormat("dd/mm/yyyy");
+
+                ICellStyle styleFechaHora = wb.CreateCellStyle();
+                styleFechaHora.DataFormat = wb.CreateDataFormat().GetFormat("dd/mm/yyyy HH:mm:ss");
+
+                int rowIndex = 0;
+
+                // cabcera del reporte
+                int columna = 1;
+                row = sheet.CreateRow(rowIndex);
+
+                Dictionary<string, string> columnasCabecera = new Dictionary<string, string>();
+                columnasCabecera.Add("TipoCotizacion", "Tipo Cotización");
+                columnasCabecera.Add("NumeroCotizacion", "Número Cotización");
+                columnasCabecera.Add("SerieNumero", "Serie y Número");
+                columnasCabecera.Add("RUC", "RUC Solicitante");
+                columnasCabecera.Add("Solicitante", "Razón Social Solicitante");
+                columnasCabecera.Add("Fecha", "Fecha");
+                columnasCabecera.Add("DescripcionProducto", "Descripción Producto");
+                columnasCabecera.Add("Observaciones", "Observaciones Producto");
+                columnasCabecera.Add("Contacto", "Contacto");
+                columnasCabecera.Add("UsuarioRegistro", "Usuario Registro");
+
+                foreach (KeyValuePair<string, string> cabecera in columnasCabecera)
+                {
+                    cell = row.CreateCell(columna);
+                    cell.SetCellValue(cabecera.Value);
+                    cell.CellStyle = styleNegritaBorde;
+                    columna += 1;
+                }
+
+                rowIndex += 1;
+                string[] columnasNumericas = new[] { "" };
+                string[] columnasFecha = new[] { "Fecha" };
+                string[] columnasFechaHora = new[] { "" };
+                filaError = rowIndex;
+                foreach (var item in lista)
+                {
+                    columna = 1;
+                    row = sheet.CreateRow(rowIndex);
+                    foreach (KeyValuePair<string, string> cabecera in columnasCabecera)
+                    {
+                        string nombreColumna = cabecera.Key;
+                        columnaError = columna;
+                        nombreColumnaError = nombreColumna;
+                        cell = row.CreateCell(columna);
+
+                        if (columnasNumericas.Contains(nombreColumna))
+                        {
+                            cell.SetCellValue(Convert.ToDouble(item.GetType().GetProperty(cabecera.Key).GetValue(item, null)));
+                            cell.CellStyle = styleDecimal;
+                        }
+                        else if (columnasFecha.Contains(nombreColumna))
+                        {
+                            cell.SetCellValue(item.GetType().GetProperty(cabecera.Key).GetValue(item, null).ToString());
+                            cell.CellStyle = styleFecha;
+                        }
+                        else
+                            cell.SetCellValue(item.GetType().GetProperty(cabecera.Key).GetValue(item, null).ToString());
+
+                        cell.CellStyle = styleBorde;
+                        columna += 1;
+                    }
+                    rowIndex += 1;
+                }
+
+                rowIndex += 1;
+
+                byte[] xlsInBytes;
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    wb.Write(ms);
+                    xlsInBytes = ms.ToArray();
+                }
+                return File(xlsInBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "ReporteCotizacion.xlsx");
+            }
+            catch (Exception e)
+            {
+                var respuesta = new
+                {
+                    Codigo = "1",
+                    Mensaje = "Ocurrió un error al procesar la información, Columna: " + nombreColumnaError.ToString() + ", Fila: " + filaError.ToString() + " error: " + e.Message.ToString()
+                };
+
+                return Json(respuesta, JsonRequestBehavior.AllowGet);
+            }
         }
 
         // GET: Cotizacion/Details/5
         [Authorize]
         public ActionResult Details(long id)
+        {
+            Cotizacion cotizacion = db.Cotizacions.Find(id);
+            if (cotizacion == null)
+                return HttpNotFound();
+
+            ViewBag.ID = id;
+            var modelo = ObtenerCotizacionViewModel(cotizacion, id);
+            return View(modelo);
+        }
+
+        [Authorize]
+        public ActionResult Payment(long id)
         {
             Cotizacion cotizacion = db.Cotizacions.Find(id);
             if (cotizacion == null)
@@ -93,6 +263,7 @@ namespace Web.Controllers
                               where i.IdCotizacion == id
                               select i).ToList();
             modelo.NombreUsuario = NombreUsuario(cotizacion.IdUsuarioRegistro);
+            modelo.Cobranza = new CO_ComprobanteNEG().ListarCobranzasPorCotizacion(id);
             return modelo;
         }
 
@@ -720,6 +891,35 @@ namespace Web.Controllers
                 {
                     Codigo = "99",
                     Descripcion = e.Message.ToString()
+                };
+                return Json(respuesta);
+            }
+        }
+
+        public JsonResult RegistrarCobranza(EnCobranza cobranza)
+        {
+            try
+            {
+                string idUsuario = (string)Session["IdUser"];
+
+                CO_ComprobanteNEG comprobanteNEG = new CO_ComprobanteNEG();
+                cobranza.IdUsuario = idUsuario;
+                comprobanteNEG.RegistrarCobranza(cobranza);
+
+                var mensaje = "Se grabó correctamente la cobranza.";
+                var respuesta = new
+                {
+                    Codigo = "0",
+                    Mensaje = mensaje
+                };
+                return Json(respuesta);
+            }
+            catch (Exception e)
+            {
+                var respuesta = new
+                {
+                    Codigo = "1",
+                    Mensaje = e.Message.ToString()
                 };
                 return Json(respuesta);
             }

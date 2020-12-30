@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Entidad;
+using System.Collections.Generic;
 using Web.Models.Clientes;
 using Web.Models.Producto;
 
@@ -14,6 +15,7 @@ namespace Web.Models.Cotizacion
         public List<CotizacionInspeccion> Inspeccion { get; set; }
         public List<CotizacionResumen> Resumen { get; set; }
         public string NombreUsuario { get; set; }
+        public EnCobranza Cobranza { get; set; }
     }
     public class DetalleCotizacionViewModel
     {

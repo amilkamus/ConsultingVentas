@@ -1,0 +1,246 @@
+﻿@{
+    ViewBag.Title = "Payment";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+@section Scripts{
+    <script src=@Url.Content("~/Scripts/js/angular/controller/cotizacion/cotizacionController.js")></script>
+}
+<style type="text/css">
+    th {
+        padding: 5px;
+        text-align: center;
+    }
+
+    td {
+        padding: 5px
+    }
+
+    .modalDetalle {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content/Box */
+    .modalDetalle-content {
+        background-color: #fefefe;
+        margin: 15% auto; /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 30%; /* Could be more or less, depending on screen size */
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+</style>
+<input type="hidden" id="idDetalle" value="@ViewBag.ID" />
+<div class="form-horizontal col-md-12">
+    <h2>Gestión de Cobranzas</h2>
+</div>
+<div ng-controller="cotizacionController" class="col-md-12 formulario-mediano" style="background-color:white">
+    <div class="form-horizontal col-md-12">
+        <form name="cotizacion" style="background-color:white">
+            <div class="form-horizontal" style="text-align:left">
+                <h4>Información de la cotización</h4>
+                <hr />
+                <div class="form-group">
+                    <div ng-if="model.TipoCotizacion=='ALI'">
+                        <div class="col-md-2 text-bold">Tipo de cotización</div>
+                        <div class="col-md-4">Alimentos</div>
+                    </div>
+                    <div ng-if="model.TipoCotizacion=='AMB'">
+                        <div class="col-md-2 text-bold">Tipo de cotización</div>
+                        <div class="col-md-4">Ambiental</div>
+                    </div>
+                    <div class="col-md-2 text-bold">Número de cotización</div>
+                    <div class="col-md-4">{{model.NumeroCotizacion}}</div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2 text-bold">RUC</div>
+                    <div class="col-md-4">{{cliente.numeroDocumento}}</div>
+                    <div class="col-md-2 text-bold">Solicitante</div>
+                    <div class="col-md-4">{{cliente.cliente}}</div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2 text-bold">Contacto</div>
+                    <div class="col-md-4">{{cliente.contacto}}</div>
+                    <div class="col-md-2 text-bold">Email</div>
+                    <div class="col-md-4">{{cliente.contactoCorreo}}</div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2 text-bold">Teléfono</div>
+                    <div class="col-md-4">{{model.Telefono}}</div>
+                    <div class="col-md-2 text-bold">Fecha</div>
+                    <div class="col-md-4">{{model.Fecha}}</div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2 text-bold">Tipo documento solicitado</div>
+                    <div class="col-md-4">{{model.TipoDocumentoSolicitado}}</div>
+                    <div class="col-md-2 text-bold">Días de entrega</div>
+                    <div class="col-md-4">{{model.DiasEntrega}}</div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2 text-bold">Descripción de producto</div>
+                    <div class="col-md-10">{{model.DescripcionProducto}}</div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2 text-bold">Condición de pago 1</div>
+                    <div class="col-md-4">{{model.CondicionPago_1}}</div>
+                    <div class="col-md-2 text-bold">Condición de pago 2</div>
+                    <div class="col-md-4">{{model.CondicionPago_2}}</div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2 text-bold">Banco</div>
+                    <div class="col-md-4">{{model.Banco}}</div>
+                    <div class="col-md-2 text-bold">Moneda</div>
+                    <div class="col-md-4">{{model.Moneda}}</div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2 text-bold">Cuenta corriente</div>
+                    <div class="col-md-4">{{model.CuentaCorriente}}</div>
+                    <div class="col-md-2 text-bold">Cuenta de ahorro</div>
+                    <div class="col-md-4">{{model.CuentaAhorro}}</div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2 text-bold">CCI</div>
+                    <div class="col-md-4">{{model.CCI}}</div>
+                    <div class="col-md-2 text-bold">Correo de confirmación</div>
+                    <div class="col-md-4">{{model.CorreoConfirmacion}}</div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2 text-bold">Detracciones</div>
+                    <div class="col-md-10">{{model.Detracciones}}</div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2 text-bold">Sub - total</div>
+                    <div class="col-md-4">{{formatearDecimales(model.SubTotal)}}</div>
+                    <div class="col-md-2 text-bold">Descuento {{model.PorcentajeDescuento}}%</div>
+                    <div class="col-md-4">{{formatearDecimales(model.MontoDescuento)}}</div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2 text-bold">Sub total final</div>
+                    <div class="col-md-4">{{formatearDecimales(model.SubTotalFinal)}}</div>
+                    <div class="col-md-2 text-bold">IGV</div>
+                    <div class="col-md-4">{{formatearDecimales(model.IGV)}}</div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2 text-bold">Total</div>
+                    <div class="col-md-4">{{formatearDecimales(model.Total)}}</div>
+                </div>
+                <hr />
+                <h4>Información de cobranza</h4>
+                <hr />
+                <div class="form-group">
+                    <div class="col-md-2 control-label text-bold" style="text-align:left">O.S</div>
+                    <div class="col-md-4"><input class="form-control" ng-model="cobranza.OS" /></div>
+                    <div class="col-md-2 control-label text-bold" style="text-align:left">Ejecutivo de venta</div>
+                    <div class="col-md-4"><input class="form-control" ng-model="cobranza.EjecutivoVenta" /></div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2 control-label text-bold" style="text-align:left">Fecha de ingreso</div>
+                    <div class="col-md-2"><input class="form-control txtFecha" ng-model="cobranza.FechaIngreso" readonly /></div>
+                    <div class="col-md-2"></div>
+                    <div class="col-md-2 control-label text-bold" style="text-align:left">Fecha de pago</div>
+                    <div class="col-md-2"><input class="form-control txtFecha" ng-model="cobranza.FechaPago" readonly /></div>
+                    <div class="col-md-2"></div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2 control-label text-bold" style="text-align:left">Detracción (12%)</div>
+                    <div class="col-md-2"><input class="form-control" ng-model="cobranza.Detraccion" /></div>
+                    <div class="col-md-2"></div>
+                    <div class="col-md-2 control-label text-bold" style="text-align:left">Desc. Detr. / Total</div>
+                    <div class="col-md-2"><input class="form-control" ng-model="cobranza.TotalConDetraccion" /></div>
+                    <div class="col-md-2"></div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2 control-label text-bold" style="text-align:left">F. Pago (1)</div>
+                    <div class="col-md-2"><input class="form-control txtFecha" ng-model="cobranza.FechaPago1" readonly /></div>
+                    <div class="col-md-2"></div>
+                    <div class="col-md-2 control-label text-bold" style="text-align:left">Importe (1)</div>
+                    <div class="col-md-2"><input class="form-control" ng-model="cobranza.Importe1" /></div>
+                    <div class="col-md-2"></div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2 control-label text-bold" style="text-align:left">F. Pago (2)</div>
+                    <div class="col-md-2"><input class="form-control txtFecha" ng-model="cobranza.FechaPago2" readonly /></div>
+                    <div class="col-md-2"></div>
+                    <div class="col-md-2 control-label text-bold" style="text-align:left">Importe (2)</div>
+                    <div class="col-md-2"><input class="form-control" ng-model="cobranza.Importe2" /></div>
+                    <div class="col-md-2"></div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2 control-label text-bold" style="text-align:left">Importe debe (2)</div>
+                    <div class="col-md-2"><input class="form-control" ng-model="cobranza.ImporteDebe2" /></div>
+                    <div class="col-md-2"></div>
+                    <div class="col-md-2 control-label text-bold" style="text-align:left">Pagó detracción</div>
+                    <div class="col-md-2">
+                        <select class="form-control" ng-model="cobranza.PagoDetraccion">
+                            <option value="-1">Seleccionar</option>
+                            <option value="SI">SI</option>
+                            <option value="NO">NO</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2 control-label text-bold" style="text-align:left">Observacion 1</div>
+                    <div class="col-md-10"><input class="form-control" ng-model="cobranza.Observacion1" /></div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2 control-label text-bold" style="text-align:left">Observacion 2</div>
+                    <div class="col-md-10"><input class="form-control" ng-model="cobranza.Observacion2" /></div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2 control-label text-bold" style="text-align:left">Autodetracción detracción</div>
+                    <div class="col-md-2"><input class="form-control" ng-model="cobranza.Autodetraccion" /></div>
+                    <div class="col-md-2"></div>
+                    <div class="col-md-2 control-label text-bold" style="text-align:left">Tipo</div>
+                    <div class="col-md-2"><input class="form-control" ng-model="cobranza.Tipo" /></div>
+                    <div class="col-md-2"></div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2 control-label text-bold" style="text-align:left">Saldo</div>
+                    <div class="col-md-2">
+                        <select class="form-control" ng-model="cobranza.Saldo">
+                            <option value="0">Seleccionar</option>
+                            <option value="EnProceso">En Proceso</option>
+                            <option value="Cancelo">Cancelo</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-4 col-md-8" style="margin-top: 20px">
+                    <a class="btn btn-sm btn-primary" ng-click="registrarCobranza(model.ID)">Grabar cobranza</a>
+                    <a class="btn btn-sm btn-danger" href="~/Cotizacion/Details/{{model.ID}}">Regresar a la cotización</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div id="myModal" class="modalDetalle">
+    <div class="modalDetalle-content">
+        <p>Se está cargando la información de la cotización, esta acción tomará unos segundos...</p>
+    </div>
+</div>

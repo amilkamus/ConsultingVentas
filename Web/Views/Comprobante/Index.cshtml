@@ -1,4 +1,4 @@
-﻿
+﻿@model Web.Models.Comprobante.ComprobanteViewModel
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutMain.cshtml";
@@ -9,7 +9,7 @@
 }
 
 <style type="text/css">
-    
+
     .modalDetalle {
         display: none;
         position: fixed;
@@ -30,7 +30,6 @@
         border: 1px solid #888;
         width: 30%;
     }
-    
 </style>
 
 <section class="content">
@@ -41,61 +40,64 @@
         <div class="box-body">
             <div ng-controller="comprobanteElectronicoController" ng-cloak>
                 <div class="table-responsive">
-                    <div class="input-small formulario-mediano col-md-12 table-options form-horizontal">
-                        <div class="form-group">
-                            <label for="date_from" class="control-label col-md-2">RUC / DNI Receptor:</label>
-                            <div class="col-md-2">
-                                <input type="text" class="form-control" id="rucDniReceptor" ng-model="model.NumeroDocumentoIdentidadReceptor" />
+                    @using (Html.BeginForm("Exportar", "Comprobante", FormMethod.Post))
+                    {
+                        <div class="input-small formulario-mediano col-md-12 table-options form-horizontal">
+                            <div class="form-group">
+                                <label for="NumeroDocumentoIdentidadReceptor" class="control-label col-md-2">RUC / DNI Receptor:</label>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control" id="NumeroDocumentoIdentidadReceptor" name="NumeroDocumentoIdentidadReceptor" ng-model="model.NumeroDocumentoIdentidadReceptor" />
+                                </div>
+                                <div class="col-md-1">
+                                    <a title="Buscar Cliente" class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-buscarCliente"><span class="glyphicon glyphicon-search"></span></a>
+                                </div>
+                                <label for="Estado" class="control-label col-md-2">Estado:</label>
+                                <div class="col-md-2">
+                                    <select id="Estado" name="Estado" class="select2 form-control" ng-model="model.Estado">
+                                        <option value="-1">Todos</option>
+                                        <option value="0">Aceptado</option>
+                                        <option value="3">Aceptado con observación</option>
+                                        <option value="2">Excepción</option>
+                                        <option value="1">Rechazado</option>
+                                        <option value="4">Sin respuesta</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="col-md-1">
-                                <a title="Buscar Cliente" class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-buscarCliente"><span class="glyphicon glyphicon-search"></span></a>
+                            <div class="form-group">
+                                <label for="FechaInicial" class="control-label col-md-2">Fecha de inicio:</label>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control txtFecha" id="FechaInicial" name="FechaInicial" ng-model="model.FechaInicial" readonly />
+                                </div>
+                                <div class="col-md-1"></div>
+                                <label for="FechaFinal" class="control-label col-md-2">Fecha de fin:</label>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control txtFecha" id="FechaFinal" name="FechaFinal" ng-model="model.FechaFinal" readonly />
+                                </div>
+                                <div class="col-md-1"></div>
+                                <div class="col-md-1"></div>
                             </div>
-                            <label for="cboEstado" class="control-label col-md-2">Estado:</label>
-                            <div class="col-md-2">
-                                <select id="cboEstado" class="select2 form-control" ng-model="model.Estado">
-                                    <option value="-1">Todos</option>
-                                    <option value="0">Aceptado</option>
-                                    <option value="3">Aceptado con observación</option>
-                                    <option value="2">Excepción</option>
-                                    <option value="1">Rechazado</option>
-                                    <option value="4">Sin respuesta</option>
-                                </select>
+                            <div class="form-group">
+                                <label for="TipoComprobante" class="control-label col-md-2">Tipo comprobante:</label>
+                                <div class="col-md-2">
+                                    <select id="TipoComprobante" name="TipoComprobante" class="select2 form-control" ng-model="model.TipoComprobante">
+                                        <option value="0">Todos</option>
+                                        <option value="01">Factura</option>
+                                        <option value="03">Boleta</option>
+                                        <option value="07">Nota de crédito</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-1"></div>
+                                <label for="SerieNumero" class="control-label col-md-2">Serie y número:</label>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control" id="SerieNumero" name="SerieNumero" ng-model="model.SerieNumero" />
+                                </div>
+                                <div class="col-md-1"><a id="btnBuscarComprobantes" class="btn btn-sm btn-primary" ng-click="listarComprobante()">BUSCAR</a></div>
+                                <div class="col-md-1">
+                                    <input type="submit" class="btn btn-sm btn-primary" value="EXPORTAR" />
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="date_from" class="control-label col-md-2">Fecha de inicio:</label>
-                            <div class="col-md-2">
-                                <input type="text" class="form-control txtFecha" id="date_from" ng-model="model.FechaInicial" readonly />
-                            </div>
-                            <div class="col-md-1"></div>
-                            <label for="date_to" class="control-label col-md-2">Fecha de fin:</label>
-                            <div class="col-md-2">
-                                <input type="text" class="form-control txtFecha" id="date_to" ng-model="model.FechaFinal" readonly />
-                            </div>
-                            <div class="col-md-1"></div>
-                            <div class="col-md-1"></div>
-                        </div>
-                        <div class="form-group">
-                            <label for="date_from" class="control-label col-md-2">Tipo comprobante:</label>
-                            <div class="col-md-2">
-                                <select id="cboTipoComprobante" class="select2 form-control" ng-model="model.TipoComprobante">
-                                    <option value="0">Todos</option>
-                                    <option value="01">Factura</option>
-                                    <option value="03">Boleta</option>
-                                    <option value="07">Nota de crédito</option>
-                                </select>
-                            </div>
-                            <div class="col-md-1"></div>
-                            <label for="date_to" class="control-label col-md-2">Serie y número:</label>
-                            <div class="col-md-2">
-                                <input type="text" class="form-control" id="txtSerieNumero" ng-model="model.SerieNumero" />
-                            </div>
-                            <div class="col-md-1"></div>
-                            <div class="col-md-1">
-                                <a id="btnBuscarComprobantes" class="btn btn-sm btn-primary" ng-click="listarComprobante()">BUSCAR</a>
-                            </div>
-                        </div>
-                    </div>
+                    }
                     <table id="tabla-comprobante" datatable="ng" dt-options="dtOptions" dt-column-defs="elementos.dtColumnDefs" class="row-border hover table table-bordered table-striped tabla-bandeja">
                         <thead>
                             <tr>
@@ -220,7 +222,7 @@
                                         <tbody>
                                             <tr ng-repeat="itemCliente in elementosCliente.lista" ng-click="seleccionCliente(itemCliente)" data-dismiss="modal">
                                                 <td>{{itemCliente.tipoDocumento}}</td>
-                                                <td>{{itemCliente.cliente}}</td>                                                
+                                                <td>{{itemCliente.cliente}}</td>
                                                 <td>{{itemCliente.numeroDocumento}}</td>
                                             </tr>
                                         </tbody>

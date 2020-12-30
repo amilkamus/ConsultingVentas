@@ -1,7 +1,7 @@
 ﻿app.controller('cotizacionController', ['$rootScope', '$scope', 'cotizacionService', function ($rootScope, $scope, cotizacionService) {
 
     $scope.model = {};
-
+    $scope.cobranza = {};
     $scope.elementosCliente = { lista: [] };
     $scope.elementosProducto = { lista: [] };
     $scope.elementosParametro = { lista: [] };
@@ -24,18 +24,25 @@
 
     $scope.init = function () {
 
-        $('#Fecha').datepicker({
+        $('.txtFecha').datepicker({
+            todayHighlight: true,
             format: "dd/mm/yyyy",
-            language: "es"
+            language: "es",
+            autoclose: true
         });
+
+        $scope.cobranza.Saldo = "0";
+        $scope.cobranza.PagoDetraccion = "-1";
 
         var parametro = $("#idDetalle").attr("value");
 
         if (parametro != undefined) {
             var parametro = { id: $("#idDetalle").attr("value") }
+            $("#myModal").css("display", "block");
             cotizacionService.obtenerCotizacion(parametro).then(function (data) {
                 if (data.data) {
                     $scope.model = data.data.Cotizacion;
+                    $scope.cobranza = data.data.Cobranza;
                     $scope.model.Fecha = data.data.Cotizacion.Fecha;
                     $scope.cliente.numeroDocumento = data.data.Cotizacion.RUC;
                     $scope.cliente.contacto = data.data.Cotizacion.Contacto;
@@ -80,6 +87,7 @@
                 } else {
                     $scope.mensajeAlerta('Ocurrió un error en el registro, contáctese con el administrador.');
                 }
+                $("#myModal").css("display", "none");
             });
         } else {
             var current_datetime = new Date()
@@ -230,14 +238,13 @@
             $scope.model.Contacto = $scope.cliente.contacto;
             $scope.model.Email = $scope.cliente.contactoCorreo;
             $scope.model.Solicitante = $scope.cliente.cliente;
-            $scope.model.Certificados = $scope.elementosCertificado.lista;          
+            $scope.model.Certificados = $scope.elementosCertificado.lista;
 
 
             if ($scope.cliente.contactoTelefono != undefined) {
                 $scope.model.Telefono = $scope.cliente.contactoTelefono;//
             }
-            else
-            {
+            else {
                 $scope.model.Telefono = $scope.model.Telefono;//
             }
 
@@ -313,6 +320,51 @@
                     $scope.mensajeExito(data.data.Descripcion);
                 } else {
                     $scope.mensajeAlerta(data.data.Descripcion);
+                }
+            } else {
+                $scope.mensajeAlerta('Ocurrió un error en el registro, contáctese con el administrador.');
+            }
+            $("#myModal").css("display", "none");
+        });
+
+    }
+
+    $scope.registrarCobranza = function (idCotizacion) {
+        $scope.cobranza.IdCotizacion = idCotizacion;
+
+        if ($scope.cobranza.EjecutivoVenta == undefined || $scope.cobranza.EjecutivoVenta == "") {
+            $scope.mensajeAlerta("Debe ingresar el ejecutivo de ventas");
+            return;
+        }
+
+        if ($scope.cobranza.FechaIngreso == undefined || $scope.cobranza.FechaIngreso == "") {
+            $scope.mensajeAlerta("Debe ingresar la fecha de ingreso");
+            return;
+        }
+
+        if ($scope.cobranza.FechaPago == undefined || $scope.cobranza.FechaPago == "") {
+            $scope.mensajeAlerta("Debe ingresar la fecha de pago");
+            return;
+        }
+
+        if ($scope.cobranza.PagoDetraccion == "-1") {
+            $scope.mensajeAlerta("Debe seleccionar pago de detracción");
+            return;
+        }
+
+        if ($scope.cobranza.Saldo == "0") {
+            $scope.mensajeAlerta("Debe seleccionar el saldo");
+            return;
+        }
+
+        $("#myModal").css("display", "block");
+        cotizacionService.registrarCobranza($scope.cobranza).then(function (data) {
+            if (data.data) {
+                if (data.data.Codigo == "0") {
+                    $("#linkRegistrarComprobante").css("display", "none");
+                    $scope.mensajeExito(data.data.Mensaje);
+                } else {
+                    $scope.mensajeAlerta(data.data.Mensaje);
                 }
             } else {
                 $scope.mensajeAlerta('Ocurrió un error en el registro, contáctese con el administrador.');
@@ -399,7 +451,7 @@
                 $scope.mensajeAlerta('Debe ingresar todos los datos del detalle a analizar.');
                 return;
             }
-            
+
             // obtener lista de parámetros y tipo de parámetros
             // recorrer la lista de parámetros e ir agregándolos
             cotizacionService.listarParametrosProducto({ id: $scope.producto.idProducto }).then(function (data) {

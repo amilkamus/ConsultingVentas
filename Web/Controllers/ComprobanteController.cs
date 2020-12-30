@@ -1,8 +1,7 @@
-﻿using Datos;
-using Negocio;
+﻿using Negocio;
+using NPOI.SS.UserModel;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Migrations;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -10,8 +9,6 @@ using System.Web.Mvc;
 using System.Xml;
 using System.Xml.XPath;
 using Web.Models;
-using Web.Models.Clientes;
-using Web.Models.Cotizacion;
 using Web.Service.RC.FactElect;
 using Web.Utilitario;
 
@@ -50,6 +47,155 @@ namespace Web.Controllers
                 {
                     Codigo = "1",
                     Mensaje = "Ocurrió un error al procesar la información, error: " + e.Message.ToString()
+                };
+
+                return Json(respuesta, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [Authorize(Roles = "ADMINISTRADOR, OPERADOR")]
+        public ActionResult Exportar(Web.Models.Comprobante.ComprobanteViewModel entrada)
+        {
+            int filaError = 0;
+            int columnaError = 0;
+            string nombreColumnaError = "";
+            try
+            {
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+                ServicePointManager.ServerCertificateValidationCallback = (snder, cert, chain, error) => true;
+                Service1Client client = new Service1Client();
+                En_EntradaListarComprobante entradaWS = new En_EntradaListarComprobante
+                {
+                    Estado = entrada.Estado,
+                    NumeroDocumentoIdentidadEmisor = "20602034675",
+                    NumeroDocumentoIdentidadReceptor = entrada.NumeroDocumentoIdentidadReceptor,
+                    FechaInicial = entrada.FechaInicial,
+                    FechaFinal = entrada.FechaFinal,
+                    TipoComprobante = entrada.TipoComprobante,
+                    SerieNumero = entrada.SerieNumero
+                };
+                En_SalidaListarComprobante[] comprobantes = client.ListarComprobanteElectronicos(entradaWS);
+                List<En_SalidaListarComprobante> listaComprobantes = new List<En_SalidaListarComprobante>();
+                if (comprobantes != null && comprobantes.Length > 0)
+                {
+                    listaComprobantes = comprobantes.ToList();
+                }
+
+                IWorkbook wb = new NPOI.XSSF.UserModel.XSSFWorkbook();
+
+                ISheet sheet = wb.CreateSheet("Reporte");
+                IRow row;
+                ICell cell;
+                IFont font = wb.CreateFont();
+                font.Boldweight = (short)FontBoldWeight.Bold;
+
+                ICellStyle styleNegrita = wb.CreateCellStyle();
+                styleNegrita.SetFont(font);
+
+                ICellStyle styleNegritaBorde = wb.CreateCellStyle();
+                styleNegritaBorde.SetFont(font);
+                styleNegritaBorde.BorderBottom = BorderStyle.Thin;
+                styleNegritaBorde.BorderTop = BorderStyle.Thin;
+                styleNegritaBorde.BorderLeft = BorderStyle.Thin;
+                styleNegritaBorde.BorderRight = BorderStyle.Thin;
+
+                ICellStyle styleBorde = wb.CreateCellStyle();                
+                styleBorde.BorderBottom = BorderStyle.Thin;
+                styleBorde.BorderTop = BorderStyle.Thin;
+                styleBorde.BorderLeft = BorderStyle.Thin;
+                styleBorde.BorderRight = BorderStyle.Thin;
+
+                ICellStyle styleEntero = wb.CreateCellStyle();
+                styleEntero.DataFormat = wb.CreateDataFormat().GetFormat("0");
+
+                ICellStyle styleDecimal = wb.CreateCellStyle();
+                styleDecimal.DataFormat = wb.CreateDataFormat().GetFormat("0.00");
+
+                ICellStyle styleFecha = wb.CreateCellStyle();
+                styleFecha.DataFormat = wb.CreateDataFormat().GetFormat("dd/mm/yyyy");
+
+                ICellStyle styleFechaHora = wb.CreateCellStyle();
+                styleFechaHora.DataFormat = wb.CreateDataFormat().GetFormat("dd/mm/yyyy HH:mm:ss");
+
+                int rowIndex = 0;
+
+                // cabcera del reporte
+                int columna = 1;
+                row = sheet.CreateRow(rowIndex);
+                
+                Dictionary<string, string> columnasCabecera = new Dictionary<string, string>();
+                columnasCabecera.Add("NumeroDocumentoIdentidad", "Número RUC");
+                columnasCabecera.Add("RazonSocial", "Razon Social");
+                columnasCabecera.Add("Estado", "Estado SUNAT");
+                columnasCabecera.Add("TipoComprobante", "Tipo de comprobante");
+                columnasCabecera.Add("SerieNumero", "Serie y número");
+                columnasCabecera.Add("FechaEmision", "Fecha de emisión");
+                columnasCabecera.Add("Moneda", "Moneda");
+                columnasCabecera.Add("ComprobanteReferenciado", "Comprobante Referenciado");
+                columnasCabecera.Add("TotalImpuesto", "IGV");
+                columnasCabecera.Add("TotalValorVenta", "Total sin IGV");
+                columnasCabecera.Add("TotalDescuento", "Descuento");
+                columnasCabecera.Add("TotalPrecioVenta", "Total con IGV");
+
+                foreach (KeyValuePair<string, string> cabecera in columnasCabecera)
+                {
+                    cell = row.CreateCell(columna);
+                    cell.SetCellValue(cabecera.Value);
+                    cell.CellStyle = styleNegritaBorde;
+                    columna += 1;
+                }
+
+                rowIndex += 1;
+                string[] columnasNumericas = new[] { "TotalPrecioVenta", "TotalImpuesto", "TotalValorVenta", "TotalDescuento" };
+                string[] columnasFecha = new[] { "FechaEmision" };
+                string[] columnasFechaHora = new[] { "" };
+                filaError = rowIndex;
+                foreach (var comprobante in listaComprobantes)
+                {
+                    columna = 1;
+                    row = sheet.CreateRow(rowIndex);
+                    foreach (KeyValuePair<string, string> cabecera in columnasCabecera)
+                    {
+                        string nombreColumna = cabecera.Key;
+                        columnaError = columna;
+                        nombreColumnaError = nombreColumna;
+                        cell = row.CreateCell(columna);
+                        
+                        if (columnasNumericas.Contains(nombreColumna))
+                        {
+                            cell.SetCellValue(Convert.ToDouble(comprobante.GetType().GetProperty(cabecera.Key).GetValue(comprobante, null)));
+                            cell.CellStyle = styleDecimal;
+                        }
+                        else if (columnasFecha.Contains(nombreColumna))
+                        {
+                            cell.SetCellValue(comprobante.GetType().GetProperty(cabecera.Key).GetValue(comprobante, null).ToString());
+                            cell.CellStyle = styleFecha;
+                        }
+                        else
+                            cell.SetCellValue(comprobante.GetType().GetProperty(cabecera.Key).GetValue(comprobante, null).ToString());
+
+                        cell.CellStyle = styleBorde;
+                        columna += 1;
+                    }
+                    rowIndex += 1;
+                }
+
+                rowIndex += 1;
+
+                byte[] xlsInBytes;
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    wb.Write(ms);
+                    xlsInBytes = ms.ToArray();
+                }
+                return File(xlsInBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Reporte.xlsx");
+            }
+            catch (Exception e)
+            {
+                var respuesta = new
+                {
+                    Codigo = "1",
+                    Mensaje = "Ocurrió un error al procesar la información, Columna: " + nombreColumnaError.ToString() + ", Fila: " + filaError.ToString() + " error: " + e.Message.ToString()
                 };
 
                 return Json(respuesta, JsonRequestBehavior.AllowGet);

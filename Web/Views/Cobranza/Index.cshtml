@@ -1,4 +1,4 @@
-﻿@model Entidad.EnContizacionIn
+﻿@model Entidad.EnCobranzaIn
 
 @{
     ViewBag.Title = "Index";
@@ -67,14 +67,9 @@
         <!-- BODY -->
         <div class="box-body">
             <div ng-controller="documentoController" ng-cloak>
-                <div class="table-responsive">
-                    <div class="input-small formulario-mediano col-md-7 table-options">
-                        <p>
-                            @Html.ActionLink("Crear Nueva Orden de Servicio", "Create", null, new { @class = "btn btn-sm btn-primary" })
-                        </p>
-                    </div>
+                <div class="table-responsive">                    
 
-                    @using (Html.BeginForm("Exportar", "OrdenServicio", FormMethod.Post))
+                    @using (Html.BeginForm("Exportar", "Cobranza", FormMethod.Post))
                     {
                         <div class="input-small formulario-mediano col-md-12 table-options form-horizontal">
                             <div class="form-group">
@@ -135,7 +130,7 @@
                             <div class="form-group">
                                 <div class="col-md-10"></div>
                                 <div class="col-md-1">
-                                    <a id="btnBuscarComprobantes" class="btn btn-sm btn-primary" ng-click="listarOrdenesServicio()">BUSCAR</a>
+                                    <a id="btnBuscarComprobantes" class="btn btn-sm btn-primary" ng-click="listarCobranzas()">BUSCAR</a>
                                 </div>
                                 <div class="col-md-1">
                                     <input type="submit" class="btn btn-sm btn-primary" value="EXPORTAR" />
@@ -147,34 +142,35 @@
                     <table id="tabla-comprobante" datatable="ng" dt-options="dtOptions" dt-column-defs="elementos.dtColumnDefs" class="row-border hover table table-bordered table-striped tabla-bandeja">
                         <thead>
                             <tr>
-                                <th>&nbsp;&nbsp;Opciones&nbsp;&nbsp;</th>
-                                <th>Número orden servicio</th>
+                                <th>&nbsp;</th>
+                                <th>Factura</th>
+                                <th>Número de OS</th>
                                 <th>Número de cotización</th>
-                                <th>RUC</th>
                                 <th>Solicitante</th>
-                                <th>Fecha</th>
                                 <th>Descripción de producto</th>
-                                <th>Observaciones</th>
-                                <th>Observaciones Informe</th>
-                                <th>Usuario registro</th>
+                                <th>Contacto</th>
+                                <th>Fecha Ingreso</th>
+                                <th>Fecha Pago</th>
+                                <th>Total</th>
+                                <th>Monto detracción</th>
+                                <th>Total con detracción</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="item in elementosOrdenServicio.lista">
-                                <td class="right">
-                                    <a class="glyphicon glyphicon-edit btn btn-xs btn-warning" href="~/OrdenServicio/Edit/{{item.ID}}"></a>
-                                    <a class="glyphicon glyphicon-eye-open btn btn-sm btn-primary" href="~/OrdenServicio/Details/{{item.ID}}"></a>
-                                    <a class="glyphicon glyphicon-trash btn btn-xs btn-danger" href="~/OrdenServicio/Delete/{{item.ID}}"></a>
-                                </td>
+                            <tr ng-repeat="item in elementosCobranza.lista">
+                                <td><a class="glyphicon glyphicon-edit btn btn-xs btn-warning" href="~/Cotizacion/Payment/{{item.IdCotizacion}}"></a></td>
+                                <td>{{item.SerieNumero}}</td>
                                 <td>{{item.NumeroOrdenServicio}}</td>
-                                <td>{{item.NumeroCotizacion}}</td>
-                                <td>{{item.RUC}}</td>
+                                <td>{{item.NumeroCotizacion}}</td>                                
                                 <td>{{item.Solicitante}}</td>
-                                <td>{{item.Fecha}}</td>
                                 <td>{{item.DescripcionProducto}}</td>
-                                <td>{{item.Observaciones}}</td>
-                                <td>{{item.ObservacionesInforme}}</td>
-                                <td>{{item.UsuarioRegistro}}</td>
+                                <td>{{item.Contacto}}</td>                                
+                                <td>{{item.FechaIngreso}}</td>
+                                <td>{{item.FechaPago}}</td>
+                                <td>{{item.Total}}</td>
+                                <td>{{item.Detraccion}}</td>
+                                <td>{{item.TotalConDetraccion}}</td>
+
                             </tr>
                         </tbody>
                     </table>

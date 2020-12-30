@@ -45,6 +45,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Lib\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -96,6 +100,22 @@
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI, Version=2.1.3.1, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Lib\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OOXML, Version=2.1.3.1, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Lib\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net, Version=2.1.3.1, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Lib\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats, Version=2.1.3.1, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Lib\NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
     <Reference Include="Rotativa, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Rotativa.1.6.4\lib\net40\Rotativa.dll</HintPath>
@@ -223,6 +243,7 @@
     <Compile Include="Controllers\CajaController.cs" />
     <Compile Include="Controllers\CambioMonedaController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
+    <Compile Include="Controllers\CobranzaController.cs" />
     <Compile Include="Controllers\CompaniaController.cs" />
     <Compile Include="Controllers\ComprobanteController.cs" />
     <Compile Include="Controllers\CorrelativoMastController.cs" />
@@ -260,6 +281,7 @@
     <Compile Include="Models\Compania\MostrarCompaniaViewModel.cs" />
     <Compile Include="Models\Compania\RegistroCompaniaViewModel.cs" />
     <Compile Include="Models\ComprobanteViewModel.cs" />
+    <Compile Include="Models\Comprobante\ComprobanteViewModel.cs" />
     <Compile Include="Models\CorrelativoMaster\CorrelativoMastViewModels.cs" />
     <Compile Include="Models\CotizacionContext.cs" />
     <Compile Include="Models\Cotizacion\Cotizacion.cs" />
@@ -1574,7 +1596,8 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Service References\Service.RC.FactElect\Service1.disco" />
+    <None Include="Service References\Service.RC.FactElect\Service11.wsdl" />
+    <None Include="Service References\Service.RC.FactElect\Service111.disco" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -1679,25 +1702,26 @@
     <Content Include="Service References\Service.RC.FactElect\Web.Service.RC.FactElect.En_SalidaListarComprobante.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <None Include="Service References\Service.RC.FactElect\Service11.wsdl" />
+    <None Include="Service References\Service.RC.FactElect\Service111.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Service.RC.FactElect\Service112.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Service.RC.FactElect\Service113.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Service.RC.FactElect\Service114.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Service.RC.FactElect\Service115.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\Service.RC.FactElect\Service16.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\Service.RC.FactElect\Service161.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\Service.RC.FactElect\Service162.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\Service.RC.FactElect\Service163.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\Service.RC.FactElect\Service164.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\Service.RC.FactElect\Service165.xsd">
-      <SubType>Designer</SubType>
-    </None>
+    <Content Include="Views\Cotizacion\Payment.cshtml" />
+    <Content Include="Views\Cobranza\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1716,6 +1740,10 @@
     <ProjectReference Include="..\Datos\Datos.csproj">
       <Project>{4cd926a1-cac5-471c-940f-9a4e79099f90}</Project>
       <Name>Datos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entidad\Entidad.csproj">
+      <Project>{6405096e-02e9-4fd7-a80e-0398117fe356}</Project>
+      <Name>Entidad</Name>
     </ProjectReference>
     <ProjectReference Include="..\Negocio\Negocio.csproj">
       <Project>{9587233e-8949-4d19-a78a-95b01f7e2004}</Project>

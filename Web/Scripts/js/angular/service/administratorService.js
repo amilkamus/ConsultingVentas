@@ -45,6 +45,18 @@ app.factory('documentoService', function ($http) {
         },
         eliminarDocumento: function (params) {
             return $http.post(URL + "/Documento/eliminarDocumento", params);
+        },
+        listarCotizaciones: function (params) {
+            return $http.post(URL + "/Cotizacion/ListarCotizaciones", params);
+        },
+        listarOrdenesServicio: function (params) {
+            return $http.post(URL + "/OrdenServicio/ListarOrdenesServicio", params);
+        },
+        listarUsuarios: function (params) {
+            return $http.post(URL + "/Cotizacion/ListarUsuarios", params);
+        },
+        listarCobranzas: function (params) {
+            return $http.post(URL + "/Cobranza/ListarCobranzas", params);
         }
     };
 });
@@ -279,6 +291,9 @@ app.factory('cotizacionService', function ($http) {
         },
         listarParametrosProducto: function (params) {
             return $http.post(URL + "/Cotizacion/ObtenerParametrosProducto", params);
+        },
+        registrarCobranza: function (params) {
+            return $http.post(URL + "/Cotizacion/RegistrarCobranza", params);
         }
     };
 });

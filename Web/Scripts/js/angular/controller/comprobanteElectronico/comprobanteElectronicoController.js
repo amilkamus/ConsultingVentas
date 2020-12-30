@@ -8,9 +8,9 @@
     $scope.init = function () {
 
         $('.txtFecha').datepicker({
+            todayHighlight: true,
             format: "dd/mm/yyyy",
-            language: "es",
-            buttonImage: "ui-icon-calendar",
+            language: "es",            
             autoclose: true
         });
 

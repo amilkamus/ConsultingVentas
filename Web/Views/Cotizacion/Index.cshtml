@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Web.Models.Cotizacion.Cotizacion>
+﻿@model Entidad.EnContizacionIn
 
 @{
     ViewBag.Title = "Index";
@@ -8,6 +8,54 @@
 @section scripts{
     <script src=@Url.Content("~/Scripts/js/angular/controller/documento/documentoController.js")></script>
 }
+
+<style type="text/css">
+    th {
+        padding: 5px;
+        text-align: center;
+    }
+
+    td {
+        padding: 5px
+    }
+
+    .modalDetalle {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content/Box */
+    .modalDetalle-content {
+        background-color: #fefefe;
+        margin: 15% auto; /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 30%; /* Could be more or less, depending on screen size */
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+</style>
 
 <!-- Main content -->
 <section class="content">
@@ -26,168 +74,124 @@
                         </p>
                     </div>
 
-                    <table dt-options="dtOptions" dt-column-defs="elementos.dtColumnDefs" class="row-border hover table table-striped table-bordered tabla-bandeja">
-                        <tr>
-                            <th>OpcionesCotización</th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.TipoCotizacion)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.NumeroCotizacion)
-                            </th>
-                            <th>
-                                Factura
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Solicitante)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.RUC)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Contacto)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Email)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Fecha)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.TipoDocumentoSolicitado)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.DescripcionProducto)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.CantidadMuestra)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Telefono)
-                            </th>
-                            <th>SubTotal</th>
-                            <th>IGV</th>
-                            <th>Total</th>
-                            <th>DiasEntrega</th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.CorreoConfirmacion)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.CondicionPago_1)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.CondicionPago_2)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Banco)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Moneda)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.CuentaCorriente)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.CuentaAhorro)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.CCI)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Detracciones)
-                            </th>
-                        </tr>
+                    @using (Html.BeginForm("Exportar", "Cotizacion", FormMethod.Post))
+                    {
+                        <div class="input-small formulario-mediano col-md-12 table-options form-horizontal">
+                            <div class="form-group">
+                                <label for="TipoCotizacion" class="control-label col-md-2">Tipo cotización:</label>
+                                <div class="col-md-2">
+                                    <select id="TipoCotizacion" name="TipoCotizacion" class="select2 form-control" ng-model="model.TipoCotizacion">
+                                        <option value="0">Todos</option>
+                                        <option value="ALI">Alimentos</option>
+                                        <option value="AMB">Ambiental</option>
+                                    </select>
+                                </div>
+                                <label for="NumeroCotizacion" class="control-label col-md-2">Número cotización:</label>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control" id="NumeroCotizacion" name="NumeroCotizacion" ng-model="model.NumeroCotizacion" />
+                                </div>
+                                <label for="SerieNumero" class="control-label col-md-2">Serie y número:</label>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control" id="SerieNumero" name="SerieNumero" ng-model="model.SerieNumero" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="RucSolicitante" class="control-label col-md-2">Ruc Solicitante:</label>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control" id="RucSolicitante" name="RucSolicitante" ng-model="model.RucSolicitante" />
+                                </div>
+                                <label for="NombreSolicitante" class="control-label col-md-2">Nombre Solicitante:</label>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control" id="NombreSolicitante" name="NombreSolicitante" ng-model="model.NombreSolicitante" />
+                                </div>
+                                <label for="NombreContacto" class="control-label col-md-2">Nombre Contacto:</label>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control" id="NombreContacto" name="NombreContacto" ng-model="model.NombreContacto" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="DescripcionProducto" class="control-label col-md-2">Descripcion Producto:</label>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control" id="DescripcionProducto" name="DescripcionProducto" ng-model="model.DescripcionProducto" />
+                                </div>
+                                <label for="ObservacionesProducto" class="control-label col-md-2">Observaciones Producto:</label>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control" id="ObservacionesProducto" name="ObservacionesProducto" ng-model="model.ObservacionesProducto" />
+                                </div>
+                                <label for="IdUsuarioRegistro" class="control-label col-md-2">Usuario Registro:</label>
+                                <div class="col-md-2">                                    
+                                    <select id="TipoCotizacion" name="TipoCotizacion" class="select2 form-control" ng-model="model.IdUsuarioRegistro">
+                                        <option value="0">Todos</option>
+                                        <option ng-repeat="item in elementosUsuario.lista" value="{{item.ID}}">{{item.Nombre}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="FechaInicio" class="control-label col-md-2">Fecha de inicio:</label>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control txtFecha" id="FechaInicio" name="FechaInicio" ng-model="model.FechaInicio" readonly />
+                                </div>
+                                <label for="FechaFin" class="control-label col-md-2">Fecha de fin:</label>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control txtFecha" id="FechaFin" name="FechaFin" ng-model="model.FechaFin" readonly />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10"></div>
+                                <div class="col-md-1">
+                                    <a id="btnBuscarComprobantes" class="btn btn-sm btn-primary" ng-click="listarCotizaciones()">BUSCAR</a>
+                                </div>
+                                <div class="col-md-1">
+                                    <input type="submit" class="btn btn-sm btn-primary" value="EXPORTAR" />
+                                </div>
+                            </div>
+                        </div>
+                    }
 
-                        @foreach (var item in Model)
-                        {
+                    <table id="tabla-comprobante" datatable="ng" dt-options="dtOptions" dt-column-defs="elementos.dtColumnDefs" class="row-border hover table table-bordered table-striped tabla-bandeja">
+                        <thead>
                             <tr>
-                                <td class="right">
-                                    @Html.ActionLink(" ", "Edit", new { id = item.ID }, new { @class = "glyphicon glyphicon-edit btn btn-xs btn-warning" })
-                                    @Html.ActionLink(" ", "Details", new { id = item.ID }, new { @class = "glyphicon glyphicon-eye-open btn btn-sm btn-primary" })
-                                    @Html.ActionLink(" ", "Delete", new { id = item.ID }, new { @class = "glyphicon glyphicon-trash btn btn-xs btn-danger" })
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.TipoCotizacion)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.NumeroCotizacion)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.SerieNumero)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Solicitante)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.RUC)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Contacto)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Email)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Fecha)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.TipoDocumentoSolicitado)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.DescripcionProducto)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.CantidadMuestra)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Telefono)
-                                </td>
-                                <td>
-                                    @item.SubTotal
-                                </td>
-                                <td>
-                                    @item.IGV
-                                </td>
-                                <td>
-                                    @item.Total
-                                </td>
-                                <td>
-                                    @item.DiasEntrega
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.CorreoConfirmacion)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.CondicionPago_1)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.CondicionPago_2)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Banco)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Moneda)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.CuentaCorriente)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.CuentaAhorro)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.CCI)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Detracciones)
-                                </td>
+                                <th>&nbsp;&nbsp;Opciones&nbsp;&nbsp;</th>
+                                <th>Tipo de cotización</th>
+                                <th>Número de cotización</th>
+                                <th>Serie y número</th>
+                                <th>RUC</th>
+                                <th>Solicitante</th>
+                                <th>Fecha</th>
+                                <th>Descripción de producto</th>
+                                <th>Observaciones</th>
+                                <th>Contacto</th>
+                                <th>Usuario registro</th>
                             </tr>
-                        }
-
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in elementosCotizacion.lista">
+                                <td class="right">
+                                    <a class="glyphicon glyphicon-edit btn btn-xs btn-warning" href="~/Cotizacion/Edit/{{item.ID}}"></a>
+                                    <a class="glyphicon glyphicon-eye-open btn btn-sm btn-primary" href="~/Cotizacion/Details/{{item.ID}}"></a>
+                                    <a class="glyphicon glyphicon-trash btn btn-xs btn-danger" href="~/Cotizacion/Delete/{{item.ID}}"></a>
+                                </td>
+                                <td>{{item.TipoCotizacion}}</td>
+                                <td>{{item.NumeroCotizacion}}</td>
+                                <td>{{item.SerieNumero}}</td>
+                                <td>{{item.RUC}}</td>
+                                <td>{{item.Solicitante}}</td>
+                                <td>{{item.Fecha}}</td>
+                                <td>{{item.DescripcionProducto}}</td>
+                                <td>{{item.Observaciones}}</td>
+                                <td>{{item.Contacto}}</td>
+                                <td>{{item.UsuarioRegistro}}</td>
+                            </tr>
+                        </tbody>
                     </table>
-
                 </div>
             </div>
+        </div>
+    </div>
+    <div id="myModal" class="modalDetalle">
+        <div class="modalDetalle-content">
+            <span class="close">&times;</span>
+            <p>Cargando información...</p>
         </div>
     </div>
 </section>
