@@ -17,6 +17,20 @@ namespace Web.Models.Cotizacion
         public string NombreUsuario { get; set; }
         public EnCobranza Cobranza { get; set; }
     }
+
+    public class CotizacionViewModelOut
+    {
+        public MostrarClienteViewModel Cliente { get; set; }
+        public Cotizacion Cotizacion { get; set; }
+        public List<EnCotizacionCertificado> Certificados { get; set; }
+        public List<CotizacionProducto> Productos { get; set; }
+        public List<DetalleCotizacionViewModel> Detalles { get; set; }
+        public List<EnCotizacionInspeccion> Inspeccion { get; set; }
+        public List<EnCotizacionResumen> Resumen { get; set; }
+        public string NombreUsuario { get; set; }
+        public EnCobranza Cobranza { get; set; }
+    }
+
     public class DetalleCotizacionViewModel
     {
         public MostrarProductoServicioViewModels producto { get; set; }

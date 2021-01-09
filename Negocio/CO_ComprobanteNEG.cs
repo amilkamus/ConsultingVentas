@@ -220,6 +220,24 @@ namespace Negocio
             return comprobanteDAT.ListarCotizaciones(cotizacionIn);
         }
 
+        public List<EnCotizacionCertificado> ObtenerCertificadosCotizacion(long idCotizacion)
+        {
+            comprobanteDAT = new CO_ComprobanteDAT();
+            return comprobanteDAT.ObtenerCertificadosCotizacion(idCotizacion);
+        }
+
+        public List<EnCotizacionInspeccion> ObtenerInspeccionesCotizacion(long idCotizacion)
+        {
+            comprobanteDAT = new CO_ComprobanteDAT();
+            return comprobanteDAT.ObtenerInspeccionesCotizacion(idCotizacion);
+        }
+
+        public List<EnCotizacionResumen> ObtenerResumenesCotizacion(long idCotizacion)
+        {
+            comprobanteDAT = new CO_ComprobanteDAT();
+            return comprobanteDAT.ObtenerResumenesCotizacion(idCotizacion);
+        }
+
         public List<EnOrdenServicioOut> ListarOrdenServicio(EnOrdenServicioIn ordenServicioIn)
         {
             comprobanteDAT = new CO_ComprobanteDAT();

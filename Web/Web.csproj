@@ -1557,6 +1557,7 @@
     <Content Include="Scripts\js\angular\controller\caja\cajaController.js" />
     <Content Include="Scripts\js\angular\controller\cambioMoneda\cambioMonedaController.js" />
     <Content Include="Scripts\js\angular\controller\cliente\clienteController.js" />
+    <Content Include="Scripts\js\angular\controller\cobranza\cobranzaController.js" />
     <Content Include="Scripts\js\angular\controller\compania\companiaController.js" />
     <Content Include="Scripts\js\angular\controller\comprobanteElectronico\comprobanteElectronicoController.js" />
     <Content Include="Scripts\js\angular\controller\comprobante\comprobanteController.js" />

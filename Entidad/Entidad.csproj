@@ -43,6 +43,9 @@
   <ItemGroup>
     <Compile Include="EnCobranza.cs" />
     <Compile Include="EnCotizacion.cs" />
+    <Compile Include="EnCotizacionCertificado.cs" />
+    <Compile Include="EnCotizacionInspeccion.cs" />
+    <Compile Include="EnCotizacionResumen.cs" />
     <Compile Include="EnOrdenServicio.cs" />
     <Compile Include="EnUsuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

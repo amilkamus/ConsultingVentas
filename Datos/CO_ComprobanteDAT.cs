@@ -269,6 +269,145 @@ namespace Datos
             }
         }
 
+        public List<EnCotizacionCertificado> ObtenerCertificadosCotizacion(long idCotizacion)
+        {
+            SqlConnection cn = new SqlConnection(_db.Database.Connection.ConnectionString);
+
+            try
+            {
+                List<EnCotizacionCertificado> certificados = null;
+                EnCotizacionCertificado certificado = null;
+
+                SqlCommand cmd = new SqlCommand("usp_ObtenerCertificadosCotizacion", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@IdCotizacion", SqlDbType.BigInt).Value = idCotizacion;
+
+                cn.Open();
+
+                certificados = new List<EnCotizacionCertificado>();
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    certificado = new EnCotizacionCertificado()
+                    {
+                        ID = dr.GetInt64(dr.GetOrdinal("ID")),
+                        IdCotizacion = dr.GetInt64(dr.GetOrdinal("IdCotizacion")),
+                        Documento = dr.GetString(dr.GetOrdinal("Documento")),
+                        NormaReferencia = dr.GetString(dr.GetOrdinal("NormaReferencia")),
+                        Precio = dr.GetDecimal(dr.GetOrdinal("Precio"))
+                    };
+                    certificados.Add(certificado);
+                }
+
+                cn.Close();
+                return certificados;
+            }
+            catch (Exception e)
+            {
+                if (cn.State == ConnectionState.Open)
+                {
+                    cn.Close();
+                }
+                throw e;
+            }
+        }
+
+        public List<EnCotizacionInspeccion> ObtenerInspeccionesCotizacion(long idCotizacion)
+        {
+            SqlConnection cn = new SqlConnection(_db.Database.Connection.ConnectionString);
+
+            try
+            {
+                List<EnCotizacionInspeccion> inspecciones = null;
+                EnCotizacionInspeccion inspeccion = null;
+
+                SqlCommand cmd = new SqlCommand("usp_ObtenerInspeccionesCotizacion", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@IdCotizacion", SqlDbType.BigInt).Value = idCotizacion;
+
+                cn.Open();
+
+                inspecciones = new List<EnCotizacionInspeccion>();
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    inspeccion = new EnCotizacionInspeccion()
+                    {
+                        ID = dr.GetInt64(dr.GetOrdinal("ID")),
+                        IdCotizacion = dr.GetInt64(dr.GetOrdinal("IdCotizacion")),
+                        Actividad = dr.GetString(dr.GetOrdinal("Actividad")),
+                        Procedimiento = dr.GetString(dr.GetOrdinal("Procedimiento")),
+                        ReferenciaNormativa = dr.GetString(dr.GetOrdinal("ReferenciaNormativa")),
+                        ReferenciaMuestreo = dr.GetString(dr.GetOrdinal("ReferenciaMuestreo")),
+                        PlanMuestreo = dr.GetString(dr.GetOrdinal("PlanMuestreo")),
+                        LugarMuestreo = dr.GetString(dr.GetOrdinal("LugarMuestreo")),
+                        Precio = dr.GetDecimal(dr.GetOrdinal("Precio")),
+                        Cantidad = dr.GetInt32(dr.GetOrdinal("Cantidad")),
+                        Subtotal = dr.GetDecimal(dr.GetOrdinal("Subtotal"))
+                    };
+                    inspecciones.Add(inspeccion);
+                }
+
+                cn.Close();
+                return inspecciones;
+            }
+            catch (Exception e)
+            {
+                if (cn.State == ConnectionState.Open)
+                {
+                    cn.Close();
+                }
+                throw e;
+            }
+        }
+
+        public List<EnCotizacionResumen> ObtenerResumenesCotizacion(long idCotizacion)
+        {
+            SqlConnection cn = new SqlConnection(_db.Database.Connection.ConnectionString);
+
+            try
+            {
+                List<EnCotizacionResumen> resumenes = null;
+                EnCotizacionResumen resumen = null;
+
+                SqlCommand cmd = new SqlCommand("usp_ObtenerResumenesCotizacion", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@IdCotizacion", SqlDbType.BigInt).Value = idCotizacion;
+
+                cn.Open();
+
+                resumenes = new List<EnCotizacionResumen>();
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    resumen = new EnCotizacionResumen()
+                    {
+                        ID = dr.GetInt64(dr.GetOrdinal("ID")),
+                        IdCotizacion = dr.GetInt64(dr.GetOrdinal("IdCotizacion")),
+                        Descripcion = dr.GetString(dr.GetOrdinal("Descripcion")),
+                        Precio = dr.GetDecimal(dr.GetOrdinal("Precio")),
+                        NumeroDias = dr.GetInt32(dr.GetOrdinal("NumeroDias")),
+                        Total = dr.GetDecimal(dr.GetOrdinal("Total"))
+                    };
+                    resumenes.Add(resumen);
+                }
+
+                cn.Close();
+                return resumenes;
+            }
+            catch (Exception e)
+            {
+                if (cn.State == ConnectionState.Open)
+                {
+                    cn.Close();
+                }
+                throw e;
+            }
+        }
+
         public List<EnOrdenServicioOut> ListarOrdenServicio(EnOrdenServicioIn ordenServicioIn)
         {
             SqlConnection cn = new SqlConnection(_db.Database.Connection.ConnectionString);

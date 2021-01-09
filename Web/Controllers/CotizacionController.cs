@@ -215,13 +215,14 @@ namespace Web.Controllers
         [Authorize]
         public ActionResult Payment(long id)
         {
+            /*
             Cotizacion cotizacion = db.Cotizacions.Find(id);
             if (cotizacion == null)
                 return HttpNotFound();
-
+            */
             ViewBag.ID = id;
-            var modelo = ObtenerCotizacionViewModel(cotizacion, id);
-            return View(modelo);
+            //var modelo = ObtenerCotizacionViewModel(cotizacion, id);
+            return View(); // modelo);
         }
 
         public ActionResult Print(long id)
@@ -234,36 +235,36 @@ namespace Web.Controllers
             return View(modelo);
         }
 
-        private CotizacionViewModel ObtenerCotizacionViewModel(Cotizacion cotizacion, long id)
+        private CotizacionViewModelOut ObtenerCotizacionViewModel(Cotizacion cotizacion, long id)
         {
+            CotizacionViewModelOut modelo = new CotizacionViewModelOut();
+
             ClienteNEG clienteNEG = new ClienteNEG();
             List<Cliente> clientes = clienteNEG.listarCliente();
             List<MostrarClienteViewModel> listaClientes = MostrarClienteViewModel.convert(clientes);
             List<WH_ProductoServicio> resultado = productoServicioNEG.listarProducto();
             List<MostrarProductoServicioViewModels> productos = MostrarProductoServicioViewModels.convert(resultado);
-            CotizacionViewModel modelo = new CotizacionViewModel();
+
 
             modelo.Cliente = (from c in listaClientes
                               where c.empresaNumeroDocumento == cotizacion.RUC
                               select c).FirstOrDefault();
             modelo.Cotizacion = cotizacion;
-            modelo.Certificados = (from c in db.CotizacionCertificado.ToList()
-                                   where c.IdCotizacion == id
-                                   select c).ToList();
+
+            CO_ComprobanteNEG comprobanteNEG = new CO_ComprobanteNEG();
+
+            modelo.Certificados = comprobanteNEG.ObtenerCertificadosCotizacion(id);
+
             modelo.Detalles = (from cp in db.CotizacionProducto.ToList()
                                join prd in productos on cp.IdProducto equals prd.idProducto
                                join p in dbParam.Parametroes on cp.IdParametro equals p.ID
                                join t in dbTipo.TipoParametroes on cp.IdTipoParametro equals t.ID
                                where cp.IdCotizacion == id
                                select new DetalleCotizacionViewModel { producto = prd, parametro = p, tipoParametro = t, productoCotizacion = cp, Precio = cp.Precio }).ToList();
-            modelo.Inspeccion = (from i in db.CotizacionInspeccion.ToList()
-                                 where i.IdCotizacion == id
-                                 select i).ToList();
-            modelo.Resumen = (from i in db.CotizacionResumen.ToList()
-                              where i.IdCotizacion == id
-                              select i).ToList();
+            modelo.Inspeccion = comprobanteNEG.ObtenerInspeccionesCotizacion(id);
+            modelo.Resumen = comprobanteNEG.ObtenerResumenesCotizacion(id);
             modelo.NombreUsuario = NombreUsuario(cotizacion.IdUsuarioRegistro);
-            modelo.Cobranza = new CO_ComprobanteNEG().ListarCobranzasPorCotizacion(id);
+            modelo.Cobranza = comprobanteNEG.ListarCobranzasPorCotizacion(id);
             return modelo;
         }
 
@@ -502,7 +503,7 @@ namespace Web.Controllers
                 if (cotizacion == null)
                     throw new Exception("No se encontró la cotización.");
 
-                CotizacionViewModel modelo = ObtenerCotizacionViewModel(cotizacion, id);
+                CotizacionViewModelOut modelo = ObtenerCotizacionViewModel(cotizacion, id);
                 return Json(modelo);
             }
             catch (Exception e)

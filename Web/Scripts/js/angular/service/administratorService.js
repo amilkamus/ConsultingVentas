@@ -337,3 +337,17 @@ app.factory('comprobanteElectronicoService', function ($http) {
         }
     };
 });
+
+app.factory('cobranzaService', function ($http) {
+    return {
+        obtenerCotizacion: function (params) {
+            return $http.post(URL + "/Cobranza/ObtenerCotizacion", params);
+        },
+        listarTipoCotizacion: function (params) {
+            return $http.post(URL + "/Cotizacion/listarTipoCotizacion", params);
+        },
+        registrarCobranza: function (params) {
+            return $http.post(URL + "/Cotizacion/RegistrarCobranza", params);
+        }
+    };
+});

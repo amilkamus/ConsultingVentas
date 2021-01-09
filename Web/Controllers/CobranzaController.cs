@@ -7,6 +7,8 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Web.Models;
+using Web.Models.Cotizacion;
 using Web.Utilitario;
 
 namespace Web.Controllers
@@ -89,7 +91,7 @@ namespace Web.Controllers
                 int columna = 1;
                 row = sheet.CreateRow(rowIndex);
 
-                Dictionary<string, string> columnasCabecera = new Dictionary<string, string>();                
+                Dictionary<string, string> columnasCabecera = new Dictionary<string, string>();
                 columnasCabecera.Add("Mes", "MES");
                 columnasCabecera.Add("TipoCotizacion", "DIVISIÓN");
                 columnasCabecera.Add("NumeroOrdenServicio", "O.S");
@@ -183,6 +185,36 @@ namespace Web.Controllers
                 };
 
                 return Json(respuesta, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        private CotizacionViewModelOut ObtenerCotizacionCobranza(Cotizacion cotizacion, long id)
+        {
+            CotizacionViewModelOut modelo = new CotizacionViewModelOut();
+            modelo.Cotizacion = cotizacion;
+
+            CO_ComprobanteNEG comprobanteNEG = new CO_ComprobanteNEG();
+            modelo.NombreUsuario = NombreUsuario(cotizacion.IdUsuarioRegistro);
+            modelo.Cobranza = comprobanteNEG.ListarCobranzasPorCotizacion(id);
+            return modelo;
+        }
+
+        public JsonResult ObtenerCotizacion(int id)
+        {
+            try
+            {
+                CotizacionContext db = new CotizacionContext();
+                Cotizacion cotizacion = db.Cotizacions.Find(id);
+                if (cotizacion == null)
+                    throw new Exception("No se encontró la cotización.");
+
+                CotizacionViewModelOut modelo = ObtenerCotizacionCobranza(cotizacion, id);
+                return Json(modelo);
+            }
+            catch (Exception e)
+            {
+                HttpContext.Response.StatusCode = 500;
+                return Json(Util.errorJson(e));
             }
         }
     }
