@@ -92,36 +92,20 @@ namespace Web.Controllers
                 row = sheet.CreateRow(rowIndex);
 
                 Dictionary<string, string> columnasCabecera = new Dictionary<string, string>();
-                columnasCabecera.Add("Mes", "MES");
-                columnasCabecera.Add("TipoCotizacion", "DIVISIÓN");
-                columnasCabecera.Add("NumeroOrdenServicio", "O.S");
-                columnasCabecera.Add("NumeroCotizacion", "COTIZACIÓN");
-                columnasCabecera.Add("EjecutivoVenta", "EJECUTIVO DE VENTA");
-                columnasCabecera.Add("Solicitante", "CLIENTE");
-                columnasCabecera.Add("DescripcionProducto", "PRODUCTO");
-                columnasCabecera.Add("Contacto", "RESPONSABLE");
-                columnasCabecera.Add("Email", "CORREO");
-                columnasCabecera.Add("Telefono", "TELEFONO");
-                columnasCabecera.Add("OS", "O.C");
+                columnasCabecera.Add("FechaIngreso", "FECHA DOC");
                 columnasCabecera.Add("SerieNumero", "FACTURA");
+                columnasCabecera.Add("Solicitante", "RAZÓN SOCIAL");
                 columnasCabecera.Add("CondicionPago_1", "CONDICIÓN DE PAGO 1");
                 columnasCabecera.Add("CondicionPago_2", "CONDICIÓN DE PAGO 2");
-                columnasCabecera.Add("FechaIngreso", "FECHA DE INGRESO");
-                columnasCabecera.Add("FechaPago", "FECHA DE PAGO");
-                columnasCabecera.Add("Total", "TOTAL");
-                columnasCabecera.Add("Detraccion", "DETRAC.");
-                columnasCabecera.Add("TotalConDetraccion", "DESC. DETR./TOTAL");
-                columnasCabecera.Add("FechaPago1", "F. PAGO (1)");
-                columnasCabecera.Add("Importe1", "IMPORTE (1)");
-                columnasCabecera.Add("FechaPago2", "F. PAGO (2)");
-                columnasCabecera.Add("Importe2", "IMPORTE (2)");
-                columnasCabecera.Add("ImporteDebe2", "IMPORTE DEBE (2)");
-                columnasCabecera.Add("PagoDetraccion", "¿PAGÓ DETRACCIÓN?");
+                columnasCabecera.Add("Total", "MONTO");
+                columnasCabecera.Add("Importe1", "PAGO1");
+                columnasCabecera.Add("Importe2", "PAGO2");
+                columnasCabecera.Add("Importe3", "PAGO3");
+                columnasCabecera.Add("Detraccion", "DETRACCIÓN");
                 columnasCabecera.Add("Saldo", "SALDO");
-                columnasCabecera.Add("Observacion1", "OBSERVACIÓN 1");
-                columnasCabecera.Add("Observacion2", "OBSERVACIÓN 2");
-                columnasCabecera.Add("Autodetraccion", "AUTODETRACCIÓN");
-                columnasCabecera.Add("Tipo", "TIPO");
+                columnasCabecera.Add("Observacion1", "OBSERVACIONES");
+                columnasCabecera.Add("NroOperacion", "N° OPERACIÓN");
+                columnasCabecera.Add("CodigoInterno", "CÓDIGO INTERNO");
 
                 foreach (KeyValuePair<string, string> cabecera in columnasCabecera)
                 {
@@ -132,8 +116,8 @@ namespace Web.Controllers
                 }
 
                 rowIndex += 1;
-                string[] columnasNumericas = new[] { "" };
-                string[] columnasFecha = new[] { "Fecha" };
+                string[] columnasNumericas = new[] { "Total", "Importe1", "Importe2", "Importe3" };
+                string[] columnasFecha = new[] { "FechaIngreso" };
                 string[] columnasFechaHora = new[] { "" };
                 filaError = rowIndex;
                 foreach (var item in lista)
@@ -196,6 +180,18 @@ namespace Web.Controllers
             CO_ComprobanteNEG comprobanteNEG = new CO_ComprobanteNEG();
             modelo.NombreUsuario = NombreUsuario(cotizacion.IdUsuarioRegistro);
             modelo.Cobranza = comprobanteNEG.ListarCobranzasPorCotizacion(id);
+            if (modelo.Cobranza == null)
+            {
+                modelo.Cobranza = new EnCobranza();
+                modelo.Cobranza.PagoDetraccion = "-1";
+                modelo.Cobranza.Autodetraccion = false;
+                if (cotizacion.Total > 700)
+                {
+                    modelo.Cobranza.Detraccion = cotizacion.Total * 0.12M;
+                    modelo.Cobranza.Saldo = cotizacion.Total - modelo.Cobranza.Detraccion;
+                }
+                modelo.Cobranza.EjecutivoVenta = modelo.NombreUsuario;
+            }
             return modelo;
         }
 

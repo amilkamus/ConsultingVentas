@@ -65,23 +65,22 @@ namespace Datos
                 SqlCommand cmd = new SqlCommand("usp_RegistrarCobranza", cn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@IdCotizacion", SqlDbType.BigInt).Value = cobranza.IdCotizacion;
-                cmd.Parameters.Add("@OS", SqlDbType.VarChar, 20).Value = cobranza.OS;
+                cmd.Parameters.Add("@NroOperacion", SqlDbType.VarChar, 400).Value = cobranza.NroOperacion;
+                cmd.Parameters.Add("@CodigoInterno", SqlDbType.VarChar, 400).Value = cobranza.CodigoInterno;
                 cmd.Parameters.Add("@EjecutivoVenta", SqlDbType.VarChar, 400).Value = cobranza.EjecutivoVenta;
                 cmd.Parameters.Add("@FechaIngreso", SqlDbType.VarChar, 20).Value = cobranza.FechaIngreso;
                 cmd.Parameters.Add("@FechaPago", SqlDbType.VarChar, 20).Value = cobranza.FechaPago;
                 cmd.Parameters.Add("@Detraccion", SqlDbType.Decimal).Value = cobranza.Detraccion;
-                cmd.Parameters.Add("@TotalConDetraccion", SqlDbType.Decimal).Value = cobranza.TotalConDetraccion;
                 cmd.Parameters.Add("@FechaPago1", SqlDbType.VarChar, 20).Value = cobranza.FechaPago1;
                 cmd.Parameters.Add("@Importe1", SqlDbType.Decimal).Value = cobranza.Importe1;
                 cmd.Parameters.Add("@FechaPago2", SqlDbType.VarChar, 20).Value = cobranza.FechaPago2;
                 cmd.Parameters.Add("@Importe2", SqlDbType.Decimal).Value = cobranza.Importe2;
-                cmd.Parameters.Add("@ImporteDebe2", SqlDbType.Decimal).Value = cobranza.ImporteDebe2;
+                cmd.Parameters.Add("@FechaPago3", SqlDbType.VarChar, 20).Value = cobranza.FechaPago3;
+                cmd.Parameters.Add("@Importe3", SqlDbType.Decimal).Value = cobranza.Importe3;
                 cmd.Parameters.Add("@PagoDetraccion", SqlDbType.Bit).Value = (cobranza.PagoDetraccion == "SI") ? true : false;
                 cmd.Parameters.Add("@Observacion1", SqlDbType.VarChar, 5000).Value = cobranza.Observacion1;
-                cmd.Parameters.Add("@Observacion2", SqlDbType.VarChar, 5000).Value = cobranza.Observacion2;
                 cmd.Parameters.Add("@Autodetraccion", SqlDbType.VarChar, 20).Value = cobranza.Autodetraccion;
-                cmd.Parameters.Add("@Tipo", SqlDbType.VarChar, 20).Value = cobranza.Tipo;
-                cmd.Parameters.Add("@Saldo", SqlDbType.VarChar, 20).Value = cobranza.Saldo;
+                cmd.Parameters.Add("@Saldo", SqlDbType.Decimal).Value = cobranza.Saldo;
                 cmd.Parameters.Add("@IdUsuario", SqlDbType.NVarChar, 128).Value = cobranza.IdUsuario;
 
                 cn.Open();
@@ -118,24 +117,23 @@ namespace Datos
                 {
                     cobranza = new EnCobranza()
                     {
-                        Autodetraccion = dr.GetString(dr.GetOrdinal("Autodetraccion")),
+                        Autodetraccion = dr.GetBoolean(dr.GetOrdinal("Autodetraccion")),
                         Detraccion = dr.GetDecimal(dr.GetOrdinal("Detraccion")),
                         EjecutivoVenta = dr.GetString(dr.GetOrdinal("EjecutivoVenta")),
                         FechaIngreso = dr.GetString(dr.GetOrdinal("FechaIngreso")),
                         FechaPago = dr.GetString(dr.GetOrdinal("FechaPago")),
                         FechaPago1 = dr.GetString(dr.GetOrdinal("FechaPago1")),
                         FechaPago2 = dr.GetString(dr.GetOrdinal("FechaPago2")),
+                        FechaPago3 = dr.GetString(dr.GetOrdinal("FechaPago3")),
                         IdCotizacion = dr.GetInt64(dr.GetOrdinal("IdCotizacion")),
                         Importe1 = dr.GetDecimal(dr.GetOrdinal("Importe1")),
                         Importe2 = dr.GetDecimal(dr.GetOrdinal("Importe2")),
-                        ImporteDebe2 = dr.GetDecimal(dr.GetOrdinal("ImporteDebe2")),
+                        Importe3 = dr.GetDecimal(dr.GetOrdinal("Importe3")),
                         Observacion1 = dr.GetString(dr.GetOrdinal("Observacion1")),
-                        Observacion2 = dr.GetString(dr.GetOrdinal("Observacion2")),
-                        OS = dr.GetString(dr.GetOrdinal("OS")),
                         PagoDetraccion = (dr.GetBoolean(dr.GetOrdinal("PagoDetraccion"))) ? "SI" : "NO",
-                        Saldo = dr.GetString(dr.GetOrdinal("Saldo")),
-                        Tipo = dr.GetString(dr.GetOrdinal("Tipo")),
-                        TotalConDetraccion = dr.GetDecimal(dr.GetOrdinal("TotalConDetraccion"))
+                        Saldo = dr.GetDecimal(dr.GetOrdinal("Saldo")),
+                        NroOperacion = dr.GetString(dr.GetOrdinal("NroOperacion")),
+                        CodigoInterno = dr.GetString(dr.GetOrdinal("CodigoInterno"))
                     };
                 }
 
@@ -477,8 +475,7 @@ namespace Datos
                 EnCobranzaOut cobranza = null;
 
                 SqlCommand cmd = new SqlCommand("usp_ListarCobranzas", cn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("@NumeroOrdenServicio", SqlDbType.VarChar, 20).Value = cobranzaIn.NumeroOrdenServicio;
+                cmd.CommandType = CommandType.StoredProcedure;                
                 cmd.Parameters.Add("@NumeroCotizacion", SqlDbType.VarChar, 200).Value = cobranzaIn.NumeroCotizacion;
                 cmd.Parameters.Add("@RucSolicitante", SqlDbType.VarChar, 20).Value = cobranzaIn.RucSolicitante;
                 cmd.Parameters.Add("@NombreSolicitante", SqlDbType.VarChar, 200).Value = cobranzaIn.NombreSolicitante;
@@ -502,7 +499,6 @@ namespace Datos
                         IdCotizacion = dr.GetInt64(dr.GetOrdinal("IdCotizacion")),
                         Mes = dr.GetString(dr.GetOrdinal("Mes")),
                         TipoCotizacion = dr.GetString(dr.GetOrdinal("TipoCotizacion")),
-                        NumeroOrdenServicio = dr.GetString(dr.GetOrdinal("NumeroOrdenServicio")),
                         NumeroCotizacion = dr.GetString(dr.GetOrdinal("NumeroCotizacion")),
                         EjecutivoVenta = dr.GetString(dr.GetOrdinal("EjecutivoVenta")),
                         Solicitante = dr.GetString(dr.GetOrdinal("Solicitante")),
@@ -510,7 +506,6 @@ namespace Datos
                         Contacto = dr.GetString(dr.GetOrdinal("Contacto")),
                         Email = dr.GetString(dr.GetOrdinal("Email")),
                         Telefono = dr.GetString(dr.GetOrdinal("Telefono")),
-                        OS = dr.GetString(dr.GetOrdinal("OS")),
                         SerieNumero = dr.GetString(dr.GetOrdinal("SerieNumero")),
                         CondicionPago_1 = dr.GetString(dr.GetOrdinal("CondicionPago_1")),
                         CondicionPago_2 = dr.GetString(dr.GetOrdinal("CondicionPago_2")),
@@ -518,18 +513,18 @@ namespace Datos
                         FechaPago = dr.GetString(dr.GetOrdinal("FechaPago")),
                         Total = dr.GetDecimal(dr.GetOrdinal("Total")),
                         Detraccion = dr.GetDecimal(dr.GetOrdinal("Detraccion")),
-                        TotalConDetraccion = dr.GetDecimal(dr.GetOrdinal("TotalConDetraccion")),
                         FechaPago1 = dr.GetString(dr.GetOrdinal("FechaPago1")),
                         Importe1 = dr.GetDecimal(dr.GetOrdinal("Importe1")),
                         FechaPago2 = dr.GetString(dr.GetOrdinal("FechaPago2")),
                         Importe2 = dr.GetDecimal(dr.GetOrdinal("Importe2")),
-                        ImporteDebe2 = dr.GetDecimal(dr.GetOrdinal("ImporteDebe2")),
+                        FechaPago3 = dr.GetString(dr.GetOrdinal("FechaPago3")),
+                        Importe3 = dr.GetDecimal(dr.GetOrdinal("Importe3")),
                         PagoDetraccion = dr.GetString(dr.GetOrdinal("PagoDetraccion")),
-                        Saldo = dr.GetString(dr.GetOrdinal("Saldo")),
+                        Saldo = dr.GetDecimal(dr.GetOrdinal("Saldo")),
                         Observacion1 = dr.GetString(dr.GetOrdinal("Observacion1")),
-                        Observacion2 = dr.GetString(dr.GetOrdinal("Observacion2")),
-                        Autodetraccion = dr.GetString(dr.GetOrdinal("Autodetraccion")),
-                        Tipo = dr.GetString(dr.GetOrdinal("Tipo"))
+                        Autodetraccion = dr.GetBoolean(dr.GetOrdinal("Autodetraccion")),
+                        NroOperacion = dr.GetString(dr.GetOrdinal("NroOperacion")),
+                        CodigoInterno = dr.GetString(dr.GetOrdinal("CodigoInterno"))
                     };
                     cobranzas.Add(cobranza);
                 }

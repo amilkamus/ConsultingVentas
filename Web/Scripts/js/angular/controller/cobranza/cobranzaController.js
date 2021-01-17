@@ -40,6 +40,12 @@
             if (data.data) {
                 $scope.model = data.data.Cotizacion;
                 $scope.cobranza = data.data.Cobranza;
+
+                $scope.cobranza.Importe1 = $scope.formatearDecimales($scope.cobranza.Importe1);
+                $scope.cobranza.Importe2 = $scope.formatearDecimales($scope.cobranza.Importe2);
+                $scope.cobranza.Importe3 = $scope.formatearDecimales($scope.cobranza.Importe3);
+                $scope.cobranza.Saldo = $scope.formatearDecimales($scope.cobranza.Saldo);
+
                 $scope.model.Fecha = data.data.Cotizacion.Fecha;
                 $scope.cliente.numeroDocumento = data.data.Cotizacion.RUC;
                 $scope.cliente.contacto = data.data.Cotizacion.Contacto;
@@ -69,8 +75,18 @@
             return;
         }
 
-        if ($scope.cobranza.FechaPago == undefined || $scope.cobranza.FechaPago == "") {
-            $scope.mensajeAlerta("Debe ingresar la fecha de pago");
+        if ($scope.cobranza.Importe1 > 0 && ($scope.cobranza.FechaPago1 == undefined || $scope.cobranza.FechaPago1 == "")) {
+            $scope.mensajeAlerta("Debe ingresar la fecha de pago 1");
+            return;
+        }
+
+        if ($scope.cobranza.Importe2 > 0 && ($scope.cobranza.FechaPago2 == undefined || $scope.cobranza.FechaPago2 == "")) {
+            $scope.mensajeAlerta("Debe ingresar la fecha de pago 2");
+            return;
+        }
+
+        if ($scope.cobranza.Importe3 > 0 && ($scope.cobranza.FechaPago3 == undefined || $scope.cobranza.FechaPago3 == "")) {
+            $scope.mensajeAlerta("Debe ingresar la fecha de pago 3");
             return;
         }
 
@@ -79,8 +95,8 @@
             return;
         }
 
-        if ($scope.cobranza.Saldo == "0") {
-            $scope.mensajeAlerta("Debe seleccionar el saldo");
+        if (parseFloat($scope.cobranza.Saldo) < 0) {
+            $scope.mensajeAlerta("El saldo no puede ser un valor negativo");
             return;
         }
 
@@ -98,7 +114,6 @@
             }
             $("#myModal").css("display", "none");
         });
-
     }
 
     $scope.mensajeAlerta = function (mensaje) {
@@ -115,6 +130,17 @@
             title: 'Éxito !',
             message: mensaje
         }, { type: 'success', z_index: 2000 });
+    }
+
+    $scope.calcularSaldo = function () {
+        var total = parseFloat($scope.model.Total);
+        var importe1 = parseFloat($scope.cobranza.Importe1);
+        var importe2 = parseFloat($scope.cobranza.Importe2);
+        var importe3 = parseFloat($scope.cobranza.Importe3);
+        var detraccion = parseFloat($scope.cobranza.Detraccion);
+        var preSaldo = total - importe1 - importe2 - importe3;
+        var saldo = ($scope.cobranza.Autodetraccion == true) ? preSaldo : preSaldo - detraccion;
+        $scope.cobranza.Saldo = $scope.formatearDecimales(saldo);
     }
 
     $scope.init();
