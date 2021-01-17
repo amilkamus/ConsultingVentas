@@ -180,9 +180,8 @@ namespace Web.Controllers
             CO_ComprobanteNEG comprobanteNEG = new CO_ComprobanteNEG();
             modelo.NombreUsuario = NombreUsuario(cotizacion.IdUsuarioRegistro);
             modelo.Cobranza = comprobanteNEG.ListarCobranzasPorCotizacion(id);
-            if (modelo.Cobranza == null)
+            if (string.IsNullOrEmpty(modelo.Cobranza.EjecutivoVenta))
             {
-                modelo.Cobranza = new EnCobranza();
                 modelo.Cobranza.PagoDetraccion = "-1";
                 modelo.Cobranza.Autodetraccion = false;
                 if (cotizacion.Total > 700)
