@@ -134,9 +134,9 @@
 
     $scope.calcularSaldo = function () {
         var total = parseFloat($scope.model.Total);
-        var importe1 = parseFloat($scope.cobranza.Importe1);
-        var importe2 = parseFloat($scope.cobranza.Importe2);
-        var importe3 = parseFloat($scope.cobranza.Importe3);
+        var importe1 = parseFloat(($scope.cobranza.Importe1 == undefined || $scope.cobranza.Importe1 == '') ? 0 : $scope.cobranza.Importe1);
+        var importe2 = parseFloat(($scope.cobranza.Importe2 == undefined || $scope.cobranza.Importe2 == '') ? 0 : $scope.cobranza.Importe2);
+        var importe3 = parseFloat(($scope.cobranza.Importe3 == undefined || $scope.cobranza.Importe3 == '') ? 0 : $scope.cobranza.Importe3);        
         var detraccion = parseFloat($scope.cobranza.Detraccion);
         var preSaldo = total - importe1 - importe2 - importe3;
         var saldo = ($scope.cobranza.Autodetraccion == true) ? preSaldo : preSaldo - detraccion;
