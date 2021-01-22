@@ -475,7 +475,7 @@ namespace Datos
                 EnCobranzaOut cobranza = null;
 
                 SqlCommand cmd = new SqlCommand("usp_ListarCobranzas", cn);
-                cmd.CommandType = CommandType.StoredProcedure;                
+                cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@NumeroCotizacion", SqlDbType.VarChar, 200).Value = cobranzaIn.NumeroCotizacion;
                 cmd.Parameters.Add("@RucSolicitante", SqlDbType.VarChar, 20).Value = cobranzaIn.RucSolicitante;
                 cmd.Parameters.Add("@NombreSolicitante", SqlDbType.VarChar, 200).Value = cobranzaIn.NombreSolicitante;
@@ -499,6 +499,7 @@ namespace Datos
                         IdCotizacion = dr.GetInt64(dr.GetOrdinal("IdCotizacion")),
                         Mes = dr.GetString(dr.GetOrdinal("Mes")),
                         TipoCotizacion = dr.GetString(dr.GetOrdinal("TipoCotizacion")),
+                        NumeroOrdenServicio = dr.GetString(dr.GetOrdinal("NumeroOrdenServicio")),
                         NumeroCotizacion = dr.GetString(dr.GetOrdinal("NumeroCotizacion")),
                         EjecutivoVenta = dr.GetString(dr.GetOrdinal("EjecutivoVenta")),
                         Solicitante = dr.GetString(dr.GetOrdinal("Solicitante")),
@@ -524,7 +525,9 @@ namespace Datos
                         Observacion1 = dr.GetString(dr.GetOrdinal("Observacion1")),
                         Autodetraccion = dr.GetBoolean(dr.GetOrdinal("Autodetraccion")),
                         NroOperacion = dr.GetString(dr.GetOrdinal("NroOperacion")),
-                        CodigoInterno = dr.GetString(dr.GetOrdinal("CodigoInterno"))
+                        CodigoInterno = dr.GetString(dr.GetOrdinal("CodigoInterno")),
+                        IGV = dr.GetDecimal(dr.GetOrdinal("IGV")),
+                        SubTotalFinal = dr.GetDecimal(dr.GetOrdinal("SubTotalFinal"))
                     };
                     cobranzas.Add(cobranza);
                 }

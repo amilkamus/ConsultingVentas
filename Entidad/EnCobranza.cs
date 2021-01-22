@@ -48,6 +48,7 @@ namespace Entidad
         public long IdCotizacion { get; set; }
         public string Mes { get; set; }
         public string TipoCotizacion { get; set; }
+        public string NumeroOrdenServicio { get; set; }
         public string NumeroCotizacion { get; set; }
         public string EjecutivoVenta { get; set; }
         public string Solicitante { get; set; }
@@ -74,5 +75,7 @@ namespace Entidad
         public bool Autodetraccion { get; set; }
         public string NroOperacion { get; set; }
         public string CodigoInterno { get; set; }
+        public decimal IGV { get; set; }
+        public decimal SubTotalFinal { get; set; }
     }
 }

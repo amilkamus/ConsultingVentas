@@ -67,23 +67,24 @@ namespace Web.Controllers
                 styleNegritaBorde.BorderLeft = BorderStyle.Thin;
                 styleNegritaBorde.BorderRight = BorderStyle.Thin;
 
-                ICellStyle styleBorde = wb.CreateCellStyle();
-                styleBorde.BorderBottom = BorderStyle.Thin;
-                styleBorde.BorderTop = BorderStyle.Thin;
-                styleBorde.BorderLeft = BorderStyle.Thin;
-                styleBorde.BorderRight = BorderStyle.Thin;
-
                 ICellStyle styleEntero = wb.CreateCellStyle();
                 styleEntero.DataFormat = wb.CreateDataFormat().GetFormat("0");
+                agregarBordes(styleEntero);
 
                 ICellStyle styleDecimal = wb.CreateCellStyle();
                 styleDecimal.DataFormat = wb.CreateDataFormat().GetFormat("0.00");
+                agregarBordes(styleDecimal);
 
                 ICellStyle styleFecha = wb.CreateCellStyle();
                 styleFecha.DataFormat = wb.CreateDataFormat().GetFormat("dd/mm/yyyy");
+                agregarBordes(styleFecha);
 
                 ICellStyle styleFechaHora = wb.CreateCellStyle();
                 styleFechaHora.DataFormat = wb.CreateDataFormat().GetFormat("dd/mm/yyyy HH:mm:ss");
+                agregarBordes(styleFechaHora);
+
+                ICellStyle styleTexto = wb.CreateCellStyle();
+                agregarBordes(styleTexto);
 
                 int rowIndex = 0;
 
@@ -95,8 +96,14 @@ namespace Web.Controllers
                 columnasCabecera.Add("FechaIngreso", "FECHA DOC");
                 columnasCabecera.Add("SerieNumero", "FACTURA");
                 columnasCabecera.Add("Solicitante", "RAZÓN SOCIAL");
+                columnasCabecera.Add("TipoCotizacion", "DIVISIÓN COMERCIAL");
+                columnasCabecera.Add("EjecutivoVenta", "EJECUTIVO DE CUENTA");
+                columnasCabecera.Add("NumeroCotizacion", "COTIZACIÓN");
+                columnasCabecera.Add("NumeroOrdenServicio", "ORDEN DE SERVICIO");
                 columnasCabecera.Add("CondicionPago_1", "CONDICIÓN DE PAGO 1");
                 columnasCabecera.Add("CondicionPago_2", "CONDICIÓN DE PAGO 2");
+                columnasCabecera.Add("SubTotalFinal", "VALOR VENTA");
+                columnasCabecera.Add("IGV", "IGV");
                 columnasCabecera.Add("Total", "MONTO");
                 columnasCabecera.Add("Importe1", "PAGO1");
                 columnasCabecera.Add("Importe2", "PAGO2");
@@ -116,7 +123,7 @@ namespace Web.Controllers
                 }
 
                 rowIndex += 1;
-                string[] columnasNumericas = new[] { "Total", "Importe1", "Importe2", "Importe3" };
+                string[] columnasNumericas = new[] { "Total", "Importe1", "Importe2", "Importe3", "Detraccion", "IGV", "SubTotalFinal", "Saldo" };
                 string[] columnasFecha = new[] { "FechaIngreso" };
                 string[] columnasFechaHora = new[] { "" };
                 filaError = rowIndex;
@@ -140,11 +147,17 @@ namespace Web.Controllers
                         {
                             cell.SetCellValue(item.GetType().GetProperty(cabecera.Key).GetValue(item, null).ToString());
                             cell.CellStyle = styleFecha;
+                        }else if (columnasFechaHora.Contains(nombreColumna))
+                        {
+                            cell.SetCellValue(item.GetType().GetProperty(cabecera.Key).GetValue(item, null).ToString());
+                            cell.CellStyle = styleFechaHora;
                         }
                         else
+                        {
                             cell.SetCellValue(item.GetType().GetProperty(cabecera.Key).GetValue(item, null).ToString());
-
-                        cell.CellStyle = styleBorde;
+                            cell.CellStyle = styleTexto;
+                        }
+                        
                         columna += 1;
                     }
                     rowIndex += 1;
@@ -170,6 +183,14 @@ namespace Web.Controllers
 
                 return Json(respuesta, JsonRequestBehavior.AllowGet);
             }
+        }
+
+        private void agregarBordes(ICellStyle style)
+        {
+            style.BorderBottom = BorderStyle.Thin;
+            style.BorderTop = BorderStyle.Thin;
+            style.BorderLeft = BorderStyle.Thin;
+            style.BorderRight = BorderStyle.Thin;
         }
 
         private CotizacionViewModelOut ObtenerCotizacionCobranza(Cotizacion cotizacion, long id)
