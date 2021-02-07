@@ -293,7 +293,10 @@ namespace Datos
                         IdCotizacion = dr.GetInt64(dr.GetOrdinal("IdCotizacion")),
                         Documento = dr.GetString(dr.GetOrdinal("Documento")),
                         NormaReferencia = dr.GetString(dr.GetOrdinal("NormaReferencia")),
-                        Precio = dr.GetDecimal(dr.GetOrdinal("Precio"))
+                        Precio = dr.GetDecimal(dr.GetOrdinal("Precio")),
+                        Cantidad = dr.GetInt32(dr.GetOrdinal("Cantidad")),
+                        TipoServicio = dr.GetString(dr.GetOrdinal("TipoServicio")),
+                        SubTotal = dr.GetDecimal(dr.GetOrdinal("SubTotal"))
                     };
                     certificados.Add(certificado);
                 }
@@ -343,7 +346,10 @@ namespace Datos
                         LugarMuestreo = dr.GetString(dr.GetOrdinal("LugarMuestreo")),
                         Precio = dr.GetDecimal(dr.GetOrdinal("Precio")),
                         Cantidad = dr.GetInt32(dr.GetOrdinal("Cantidad")),
-                        Subtotal = dr.GetDecimal(dr.GetOrdinal("Subtotal"))
+                        Subtotal = dr.GetDecimal(dr.GetOrdinal("Subtotal")),
+                        Documento = dr.GetString(dr.GetOrdinal("Documento")),
+                        Producto = dr.GetString(dr.GetOrdinal("Producto")),
+                        TipoServicio = dr.GetString(dr.GetOrdinal("TipoServicio"))
                     };
                     inspecciones.Add(inspeccion);
                 }

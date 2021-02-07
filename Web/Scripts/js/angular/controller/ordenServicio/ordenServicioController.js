@@ -1,23 +1,25 @@
 ﻿app.controller('ordenServicioController', ['$rootScope', '$scope', 'ordenServicioService', function ($rootScope, $scope, ordenServicioService) {
 
     $scope.model = {};
-    $scope.model.Cotizacion = {};    
+    $scope.model.Cotizacion = {};
     $scope.cliente = {};
     $scope.elementosCotizacion = { lista: [] };
     $scope.elementosDetalle = { lista: [] };
     $scope.elementosCertificado = { lista: [] };
     $scope.productosDetalle = [];
-    $scope.elementosInspeccion = { lista: [] };    
+    $scope.elementosInspeccion = { lista: [] };
     $scope.model.Cotizacion.EmisionDigital = "No";
 
     $scope.init = function () {
-        $('#FechaEnvioMateriales,#FechaInspeccion').datepicker({ format: "dd/mm/yyyy", language: "es" });
-
+        $("#myModal").css("display", "block");
+        $('#FechaEnvioMateriales,#FechaInspeccion').datepicker({ format: "dd/mm/yyyy", language: "es" });        
         var idOrdenServicio = $("#IdNumeroOrdenServicio").attr("value");
         var idCotizacion = $("#IdCotizacion").attr("value");
 
         if (idOrdenServicio != undefined) {
             obtenerDatosOrdenServicio(idOrdenServicio, idCotizacion);
+        } else {
+            $("#myModal").css("display", "none");
         }
     }
 
@@ -33,6 +35,7 @@
     }
 
     $scope.seleccionCotizacion = function (item) {
+        $("#myModal").css("display", "block");
         $scope.elementosDetalle = { lista: [] };
         $scope.elementosCertificado = { lista: [] };
         obtenerDatosCotizacion(item.ID);
@@ -102,9 +105,6 @@
         var parametro = { id: id }
         ordenServicioService.obtenerCotizacion(parametro).then(function (data) {
             if (data.data) {
-
-                console.log(data.data);
-
                 $scope.model.NumeroCotizacion = data.data.Cotizacion.NumeroCotizacion;
                 $scope.cliente.cliente = data.data.Cotizacion.Solicitante;
                 $scope.cliente.numeroDocumento = data.data.Cotizacion.RUC;
@@ -115,6 +115,7 @@
                 $scope.model.CantidadMuestra = data.data.Cotizacion.CantidadMuestra;
                 $scope.model.Cotizacion.Observaciones = data.data.Cotizacion.Observaciones;
                 $scope.model.Cotizacion.EmisionDigital = (data.data.Cotizacion.EmisionDigital) ? "Si" : "No";
+                $scope.model.TipoDocumentoSolicitado = data.data.Cotizacion.TipoDocumentoSolicitado;
 
                 for (var i = 0; i < data.data.Certificados.length; i++) {
                     var itemDetalle = data.data.Certificados[i];
@@ -147,10 +148,11 @@
 
                 }
             }
+            $("#myModal").css("display", "none");
         });
     }
 
-    $scope.listarCotizacion();
+    //$scope.listarCotizacion();
     $scope.init();
 
 }]);

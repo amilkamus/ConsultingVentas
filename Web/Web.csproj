@@ -1404,6 +1404,8 @@
     </Content>
     <Content Include="Content\Reportes\CotizacionAmbiental.rdlc" />
     <Content Include="Content\Reportes\CotizacionAlimentos.rdlc" />
+    <Content Include="Content\Reportes\OrdenServicioAlimentos.rdlc" />
+    <Content Include="Content\Reportes\OrdenServicioAmbiental.rdlc" />
     <None Include="DataSetCotizacion.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>

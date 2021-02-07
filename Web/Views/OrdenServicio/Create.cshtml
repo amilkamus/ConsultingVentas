@@ -4,9 +4,54 @@
 @section Scripts{
     <script src=@Url.Content("~/Scripts/js/angular/controller/ordenServicio/ordenServicioController.js")></script>
 }
+<style type="text/css">
+    th {
+        padding: 5px;
+        text-align: center;
+    }
 
+    td {
+        padding: 5px
+    }
+
+    .modalDetalle {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content/Box */
+    .modalDetalle-content {
+        background-color: #fefefe;
+        margin: 15% auto; /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 30%; /* Could be more or less, depending on screen size */
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+</style>
 <h2>Registrar Orden de Servicio</h2>
-
 <div ng-controller="ordenServicioController" class="col-md-12 formulario-mediano" style="background-color:white">
     <div class="form-horizontal col-md-12">
         <form name="ordenServicio" style="background-color:white">
@@ -59,7 +104,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="DescripcionProducto" class="control-label col-md-2">Descripción de producto:</label>
+                    <label for="DescripcionProducto" class="control-label col-md-2">Nombre del producto:</label>
                     <div class="col-md-4">
                         <textarea class="form-control" placeholder="Descripción de producto" ng-model="model.DescripcionProducto" rows="5" required disabled></textarea>
                     </div>
@@ -78,7 +123,7 @@
                 </div>
                 <br />
                 <div class="col-md-12">
-                    <h4 class="titulo1 texto-centrado">DETALLE A ANALIZAR</h4>
+                    <h4 class="titulo1 texto-centrado">ENSAYOS</h4>
                 </div>
                 <br />
                 <div class="form-group col-md-12" style="padding-left:3%">
@@ -86,11 +131,11 @@
                         <table id="tabla-productos-cotizacion" class="row-border hover table table-bordered table-striped tabla-bandeja">
                             <thead>
                                 <tr>
-                                    <th>Parámetro</th>
-                                    <th>Metodología</th>
-                                    <th>Tipo de Parámetro</th>
+                                    <th>Tipo de ensayo</th>
+                                    <th>Norma de referencia</th>
                                     <th>Límite de detección</th>
-                                    <th>Nº de muestras</th>
+                                    <th>Tipo de servicio</th>
+                                    <th>Cantidad</th>
                                 </tr>
                             </thead>
                             <tbody ng-repeat="item in productosDetalle">
@@ -100,8 +145,8 @@
                                 <tr ng-repeat="item2 in elementosDetalle.lista" ng-if="item.idProducto==item2.producto.idProducto">
                                     <td>{{item2.parametro.ParametroDescripcion}}</td>
                                     <td>{{item2.parametro.Metodologia}}</td>
-                                    <td>{{item2.tipoParametro.TipoParametroDescripcion}}</td>
                                     <td>{{item2.parametro.LimiteDeteccion}}</td>
+                                    <td>{{item2.tipoParametro.TipoParametroDescripcion}}</td>
                                     <td>{{item2.producto.cantidad}}</td>
                                 </tr>
                             </tbody>
@@ -109,42 +154,38 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <h4 class="titulo1 texto-centrado">INSPECCION / MUESTREO</h4>
+                    <h4 class="titulo1 texto-centrado">INSPECCIÓN / MUESTREO</h4>
                 </div>
                 <div class="form-group col-md-12" style="padding-left:3%">
                     <div class="table-responsive">
                         <table id="tabla-inspeccion-cotizacion" class="row-border hover table table-bordered table-striped tabla-bandeja">
                             <thead>
                                 <tr>
+                                    <th>Producto / Proceso / Servicio / Instalación a inspeccionar / muestrear</th>
                                     <th>Actividad de Inspección / Muestreo</th>
-                                    <th>Procedimiento de inspección / Muestreo</th>
-                                    <th>Referencia Normativa</th>
-                                    <th>Referencia de muestreo</th>
+                                    <th>Método / Procedimiento de Inspección / Muestreo</th>
+                                    <th>Documento Normativo</th>
                                     <th>Plan de muestreo / Nivel / NCA</th>
-                                    <th>Lugar de muestreo</th>
-                                    <th>Precio</th>
+                                    <th>Tipo de servicio</th>
                                     <th>Cantidad</th>
-                                    <th>Subtotal</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="item in elementosInspeccion.lista">
+                                    <td>{{item.Producto}}</td>
                                     <td>{{item.Actividad}}</td>
                                     <td>{{item.Procedimiento}}</td>
-                                    <td>{{item.ReferenciaNormativa}}</td>
-                                    <td>{{item.ReferenciaMuestreo}}</td>
+                                    <td>{{item.Documento}}</td>
                                     <td>{{item.PlanMuestreo}}</td>
-                                    <td>{{item.LugarMuestreo}}</td>
-                                    <td>{{item.Precio}}</td>
+                                    <td>{{item.TipoServicio}}</td>
                                     <td>{{item.Cantidad}}</td>
-                                    <td>{{item.Subtotal}}</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <h4 class="titulo1 texto-centrado">CERTIFICADOS</h4>
+                    <h4 class="titulo1 texto-centrado">CERTIFICADOS/INFORMES</h4>
                 </div>
                 <br />
                 <div class="form-group col-md-12" style="padding-left:3%">
@@ -154,32 +195,41 @@
                                 <tr>
                                     <th>Documento</th>
                                     <th>Norma de referencia</th>
-                                    <th>Precio Unit. Neto</th>
+                                    <th>Tipo de servicio</th>
+                                    <th>Cantidad</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="item in elementosCertificado.lista">
                                     <td>{{item.Documento}}</td>
                                     <td>{{item.NormaReferencia}}</td>
-                                    <td>{{item.Precio}}</td>
+                                    <td>{{item.TipoServicio}}</td>
+                                    <td>{{item.Cantidad}}</td>
                                 </tr>
                             </tbody>
                         </table>
+                        * AC: Acreditado, NAC: No Acreditado, SUB: Subcontratado
                     </div>
                 </div>
                 <br />
                 <div class="col-md-12">
-                    <h4 class="titulo1 texto-centrado">EMISION DE INFORMES</h4>
+                    <h4 class="titulo1 texto-centrado">EMISION DE DOCUMENTOS</h4>
                 </div>
                 <div class="form-group">
-                    <label for="NumeroCopiasInforme" class="control-label col-md-2">N°. de Copias:</label>
+                    <label for="NumeroCopiasInforme" class="control-label col-md-2">Tipo de documento:</label>
                     <div class="col-md-2">
-                        <input class="form-control" placeholder="N°. de Copias" ng-model="model.NumeroCopiasInforme" onkeypress="return soloNumeros(event);" />
+                        <input class="form-control" placeholder="Tipo de documento" ng-model="model.TipoDocumentoSolicitado" readonly />
                     </div>
                     <div class="col-md-2"></div>
                     <label for="idEmisionDigital" class="control-label col-md-2">Informes en físico:</label>
                     <div class="col-md-2">
                         <input id="idEmisionDigital" class="form-control" placeholder="Informes en físico" ng-model="model.Cotizacion.EmisionDigital" readonly />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="NumeroCopiasInforme" class="control-label col-md-2">N°. de Copias:</label>
+                    <div class="col-md-2">
+                        <input class="form-control" placeholder="N°. de Copias" ng-model="model.NumeroCopiasInforme" onkeypress="return soloNumeros(event);" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -271,17 +321,19 @@
                         <input class="form-control" placeholder="Cantidad de Lote" ng-model="model.CantidadLoteInspeccion" />
                     </div>
                     <div class="col-md-2"></div>
-                    <label for="CodigosLoteInspeccion" class="control-label col-md-2">Código(s) de Lote:</label>
+                    <label for="PresentacionInspeccion" class="control-label col-md-2">Tipo de empaque/envase:</label>
                     <div class="col-md-2">
+                        <input class="form-control" placeholder="Tipo de empaque/envase:" ng-model="model.PresentacionInspeccion" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="PresentacionInspeccion" class="control-label col-md-2">Código(s) de Lote:</label>
+                    <div class="col-md-6">
                         <input class="form-control" placeholder="Código(s) de Lote" ng-model="model.CodigosLoteInspeccion" />
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="PresentacionInspeccion" class="control-label col-md-2">Presentación:</label>
-                    <div class="col-md-6">
-                        <input class="form-control" placeholder="Presentación" ng-model="model.PresentacionInspeccion" />
-                    </div>
-                </div>
+
                 <div class="form-group">
                     <label for="ObservacionesInspeccion" class="control-label col-md-2">Observaciones de producto:</label>
                     <div class="col-md-8">
@@ -330,6 +382,12 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div id="myModal" class="modalDetalle">
+        <div class="modalDetalle-content">
+            <span class="close">&times;</span>
+            <p>Procesando la información, esta acción tomará unos segundos...</p>
         </div>
     </div>
 </div>

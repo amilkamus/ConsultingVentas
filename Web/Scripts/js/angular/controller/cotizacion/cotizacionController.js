@@ -21,6 +21,7 @@
     $scope.inspeccion = {};
     $scope.resumen = {};
     $scope.model.FlagControles = false;
+    $scope.FlagTipoServicio = "0";
 
     $scope.init = function () {
 
@@ -100,10 +101,10 @@
             $scope.model.IGV = parseFloat("0").toFixed(2);
             $scope.model.Total = parseFloat("0").toFixed(2);
 
-            $scope.model.Banco = "BANCO INTERBANK";
-            $scope.model.CuentaCorriente = "------";
-            $scope.model.CuentaAhorro = "091-310627109-5";
-            $scope.model.CCI = "003-091-013106271095-62";
+            $scope.model.Banco = ""; //BANCO INTERBANK";
+            $scope.model.CuentaCorriente = "";
+            $scope.model.CuentaAhorro = "";
+            $scope.model.CCI = "";
             $scope.model.Detracciones = "12% Banco de la Nación 00-004-130979 - TIPO BIEN / SERVICIO: 037";
         }
     }
@@ -196,7 +197,8 @@
         });
     }
 
-    $scope.listarTipoParametro = function () {
+    $scope.listarTipoParametro = function (flagTipoServicio) {
+        $scope.FlagTipoServicio = flagTipoServicio;
         cotizacionService.listarTipoParametro().then(function (data) {
             if (data.data) {
                 $scope.elementosTipoParametro.lista = data.data;
@@ -219,7 +221,14 @@
     }
 
     $scope.seleccionTipoParametro = function (itemTipoParametro) {
-        $scope.tipoParametro = itemTipoParametro;
+        if ($scope.FlagTipoServicio == "1")
+            $scope.tipoParametro = itemTipoParametro;
+
+        if ($scope.FlagTipoServicio == "2")
+            $scope.certificado.TipoServicio = itemTipoParametro.TipoParametroDescripcion;
+
+        if ($scope.FlagTipoServicio == "3")
+            $scope.inspeccion.TipoServicio = itemTipoParametro.TipoParametroDescripcion;
     }
 
     $scope.validacion = function (form) {
@@ -239,7 +248,6 @@
             $scope.model.Email = $scope.cliente.contactoCorreo;
             $scope.model.Solicitante = $scope.cliente.cliente;
             $scope.model.Certificados = $scope.elementosCertificado.lista;
-
 
             if ($scope.cliente.contactoTelefono != undefined) {
                 $scope.model.Telefono = $scope.cliente.contactoTelefono;//
@@ -531,12 +539,29 @@
         }
 
         $scope.certificado.IdCotizacion = $scope.model.IdCotizacion;
+        $scope.certificado.SubTotal = parseInt($scope.certificado.Cantidad) * parseFloat($scope.certificado.Precio);        
         $scope.elementosCertificado.lista.push($scope.certificado);
         $scope.recalcularSubtotal();
         $scope.certificado = {};
     }
 
     $scope.agregarInspeccion = function () {
+
+        var inspeccion = $scope.inspeccion;
+
+        if (inspeccion.Producto == undefined || inspeccion.Actividad == undefined || inspeccion.Procedimiento == undefined || inspeccion.Documento == undefined || inspeccion.PlanMuestreo == undefined || inspeccion.TipoServicio == undefined ||
+            inspeccion.Precio == undefined || inspeccion.Cantidad == undefined ||
+            $.trim(inspeccion.Producto) == "" || $.trim(inspeccion.Actividad) == "" || $.trim(inspeccion.Procedimiento) == "" || $.trim(inspeccion.Documento) == "" || $.trim(inspeccion.PlanMuestreo) == "" || $.trim(inspeccion.TipoServicio) == "" ||
+            $.trim(inspeccion.Precio) == "" || $.trim(inspeccion.Cantidad) == "" ) {
+            $scope.mensajeAlerta('Debe ingresar todos los datos de la inspección.');
+            return;
+        }
+
+        if (parseFloat(inspeccion.Precio) <= 0) {
+            $scope.mensajeAlerta('El precio de la inspección no puede ser negativo.');
+            return;
+        }
+
         $scope.inspeccion.Subtotal = parseInt($scope.inspeccion.Cantidad) * parseFloat($scope.inspeccion.Precio);
         $scope.elementosInspeccion.lista.push($scope.inspeccion);
         $scope.recalcularSubtotal();
@@ -661,7 +686,7 @@
 
         for (var i = 0; i < $scope.elementosCertificado.lista.length; i++) {
             var item = $scope.elementosCertificado.lista[i]
-            var precio = parseFloat(item.Precio) * 1;
+            var precio = parseFloat(item.Precio) * parseInt(item.Cantidad);
             subtotal += parseFloat(precio);
         }
 
@@ -704,10 +729,26 @@
         }, { type: 'success', z_index: 2000 });
     }
 
-    $scope.listarCliente();
+    $scope.seleccionarBanco = function (valor) {
+        if (valor == "BANCO INTERBANK") {
+            $scope.model.CuentaCorriente = "-";
+            $scope.model.CuentaAhorro = "091-310627109-5";
+            $scope.model.CCI = "003-091-013106271095-62";
+        } else if (valor == "BANCO DE CREDITO DEL PERU") {
+            $scope.model.CuentaCorriente = "191-9036694-0-35";
+            $scope.model.CuentaAhorro = "-";
+            $scope.model.CCI = "002-191-009036694035-52";
+        } else {
+            $scope.model.CuentaCorriente = "";
+            $scope.model.CuentaAhorro = "";
+            $scope.model.CCI = "";
+        }
+    }
+
+    /*$scope.listarCliente();
     $scope.listarProducto();
     $scope.listarParametro();
-    $scope.listarTipoParametro();
+    $scope.listarTipoParametro();*/
     $scope.listarComboMoneda();
     $scope.listarTipoCotizacion();
     $scope.init();

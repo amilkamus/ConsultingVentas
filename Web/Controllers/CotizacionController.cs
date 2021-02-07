@@ -336,7 +336,7 @@ namespace Web.Controllers
                 lr.SetParameters(new ReportParameter("DiasEntrega", ds.Tables[0].Rows[0]["DiasEntrega"].ToString()));
                 lr.SetParameters(new ReportParameter("CorreoConfirmacion", ds.Tables[0].Rows[0]["CorreoConfirmacion"].ToString()));
                 lr.SetParameters(new ReportParameter("CondicionPago1", ds.Tables[0].Rows[0]["CondicionPago_1"].ToString()));
-                lr.SetParameters(new ReportParameter("CondicionPago2", ds.Tables[0].Rows[0]["CondicionPago_2"].ToString()));
+                //lr.SetParameters(new ReportParameter("CondicionPago2", ds.Tables[0].Rows[0]["CondicionPago_2"].ToString()));
                 lr.SetParameters(new ReportParameter("Banco", ds.Tables[0].Rows[0]["Banco"].ToString()));
                 lr.SetParameters(new ReportParameter("Moneda", ds.Tables[0].Rows[0]["Moneda"].ToString()));
                 lr.SetParameters(new ReportParameter("CuentaCorriente", ds.Tables[0].Rows[0]["CuentaCorriente"].ToString()));
@@ -346,6 +346,7 @@ namespace Web.Controllers
                 lr.SetParameters(new ReportParameter("Usuario", NombreUsuario(cotizacion.IdUsuarioRegistro)));
                 lr.SetParameters(new ReportParameter("Observaciones", cotizacion.Observaciones));
                 lr.SetParameters(new ReportParameter("EmisionDigital", (cotizacion.EmisionDigital) ? "Si" : "No"));
+                lr.SetParameters(new ReportParameter("LugarInspeccionMuestreo", cotizacion.LugarInspeccionMuestreo));
 
                 lr.DataSources.Add(new ReportDataSource("CotizacionCabecera", ds.Tables[0]));
                 lr.DataSources.Add(new ReportDataSource("Productos", ds.Tables[1]));

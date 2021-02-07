@@ -425,6 +425,12 @@ namespace Web {
             
             private global::System.Data.DataColumn columnPrecio;
             
+            private global::System.Data.DataColumn columnCantidad;
+            
+            private global::System.Data.DataColumn columnSubtotal;
+            
+            private global::System.Data.DataColumn columnTipoServicio;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public CotizacionCertificadoesDataTable() {
@@ -484,6 +490,30 @@ namespace Web {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn CantidadColumn {
+                get {
+                    return this.columnCantidad;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn SubtotalColumn {
+                get {
+                    return this.columnSubtotal;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn TipoServicioColumn {
+                get {
+                    return this.columnTipoServicio;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -519,12 +549,15 @@ namespace Web {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public CotizacionCertificadoesRow AddCotizacionCertificadoesRow(string Documento, string NormaReferencia, decimal Precio) {
+            public CotizacionCertificadoesRow AddCotizacionCertificadoesRow(string Documento, string NormaReferencia, decimal Precio, string Cantidad, string Subtotal, string TipoServicio) {
                 CotizacionCertificadoesRow rowCotizacionCertificadoesRow = ((CotizacionCertificadoesRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Documento,
                         NormaReferencia,
-                        Precio};
+                        Precio,
+                        Cantidad,
+                        Subtotal,
+                        TipoServicio};
                 rowCotizacionCertificadoesRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowCotizacionCertificadoesRow);
                 return rowCotizacionCertificadoesRow;
@@ -550,6 +583,9 @@ namespace Web {
                 this.columnDocumento = base.Columns["Documento"];
                 this.columnNormaReferencia = base.Columns["NormaReferencia"];
                 this.columnPrecio = base.Columns["Precio"];
+                this.columnCantidad = base.Columns["Cantidad"];
+                this.columnSubtotal = base.Columns["Subtotal"];
+                this.columnTipoServicio = base.Columns["TipoServicio"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -561,6 +597,12 @@ namespace Web {
                 base.Columns.Add(this.columnNormaReferencia);
                 this.columnPrecio = new global::System.Data.DataColumn("Precio", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnPrecio);
+                this.columnCantidad = new global::System.Data.DataColumn("Cantidad", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCantidad);
+                this.columnSubtotal = new global::System.Data.DataColumn("Subtotal", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSubtotal);
+                this.columnTipoServicio = new global::System.Data.DataColumn("TipoServicio", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnTipoServicio);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -959,6 +1001,12 @@ namespace Web {
             
             private global::System.Data.DataColumn columnSubtotal;
             
+            private global::System.Data.DataColumn columnProducto;
+            
+            private global::System.Data.DataColumn columnDocumento;
+            
+            private global::System.Data.DataColumn columnTipoServicio;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public CotizacionInspeccionsDataTable() {
@@ -1066,6 +1114,30 @@ namespace Web {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn ProductoColumn {
+                get {
+                    return this.columnProducto;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn DocumentoColumn {
+                get {
+                    return this.columnDocumento;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn TipoServicioColumn {
+                get {
+                    return this.columnTipoServicio;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1101,7 +1173,7 @@ namespace Web {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public CotizacionInspeccionsRow AddCotizacionInspeccionsRow(string Actividad, string Procedimiento, string ReferenciaNormativa, string ReferenciaMuestreo, string PlanMuestreo, string LugarMuestreo, decimal Precio, int Cantidad, decimal Subtotal) {
+            public CotizacionInspeccionsRow AddCotizacionInspeccionsRow(string Actividad, string Procedimiento, string ReferenciaNormativa, string ReferenciaMuestreo, string PlanMuestreo, string LugarMuestreo, decimal Precio, int Cantidad, decimal Subtotal, string Producto, string Documento, string TipoServicio) {
                 CotizacionInspeccionsRow rowCotizacionInspeccionsRow = ((CotizacionInspeccionsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Actividad,
@@ -1112,7 +1184,10 @@ namespace Web {
                         LugarMuestreo,
                         Precio,
                         Cantidad,
-                        Subtotal};
+                        Subtotal,
+                        Producto,
+                        Documento,
+                        TipoServicio};
                 rowCotizacionInspeccionsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowCotizacionInspeccionsRow);
                 return rowCotizacionInspeccionsRow;
@@ -1144,6 +1219,9 @@ namespace Web {
                 this.columnPrecio = base.Columns["Precio"];
                 this.columnCantidad = base.Columns["Cantidad"];
                 this.columnSubtotal = base.Columns["Subtotal"];
+                this.columnProducto = base.Columns["Producto"];
+                this.columnDocumento = base.Columns["Documento"];
+                this.columnTipoServicio = base.Columns["TipoServicio"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1167,6 +1245,12 @@ namespace Web {
                 base.Columns.Add(this.columnCantidad);
                 this.columnSubtotal = new global::System.Data.DataColumn("Subtotal", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnSubtotal);
+                this.columnProducto = new global::System.Data.DataColumn("Producto", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnProducto);
+                this.columnDocumento = new global::System.Data.DataColumn("Documento", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDocumento);
+                this.columnTipoServicio = new global::System.Data.DataColumn("TipoServicio", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnTipoServicio);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1993,6 +2077,57 @@ namespace Web {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string Cantidad {
+                get {
+                    try {
+                        return ((string)(this[this.tableCotizacionCertificadoes.CantidadColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Cantidad\' de la tabla \'CotizacionCertificadoes\' es DBNull" +
+                                ".", e);
+                    }
+                }
+                set {
+                    this[this.tableCotizacionCertificadoes.CantidadColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string Subtotal {
+                get {
+                    try {
+                        return ((string)(this[this.tableCotizacionCertificadoes.SubtotalColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Subtotal\' de la tabla \'CotizacionCertificadoes\' es DBNull" +
+                                ".", e);
+                    }
+                }
+                set {
+                    this[this.tableCotizacionCertificadoes.SubtotalColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string TipoServicio {
+                get {
+                    try {
+                        return ((string)(this[this.tableCotizacionCertificadoes.TipoServicioColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'TipoServicio\' de la tabla \'CotizacionCertificadoes\' es DB" +
+                                "Null.", e);
+                    }
+                }
+                set {
+                    this[this.tableCotizacionCertificadoes.TipoServicioColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsDocumentoNull() {
                 return this.IsNull(this.tableCotizacionCertificadoes.DocumentoColumn);
             }
@@ -2025,6 +2160,42 @@ namespace Web {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetPrecioNull() {
                 this[this.tableCotizacionCertificadoes.PrecioColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsCantidadNull() {
+                return this.IsNull(this.tableCotizacionCertificadoes.CantidadColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetCantidadNull() {
+                this[this.tableCotizacionCertificadoes.CantidadColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsSubtotalNull() {
+                return this.IsNull(this.tableCotizacionCertificadoes.SubtotalColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetSubtotalNull() {
+                this[this.tableCotizacionCertificadoes.SubtotalColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsTipoServicioNull() {
+                return this.IsNull(this.tableCotizacionCertificadoes.TipoServicioColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetTipoServicioNull() {
+                this[this.tableCotizacionCertificadoes.TipoServicioColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -2237,6 +2408,56 @@ namespace Web {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string Producto {
+                get {
+                    try {
+                        return ((string)(this[this.tableCotizacionInspeccions.ProductoColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Producto\' de la tabla \'CotizacionInspeccions\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCotizacionInspeccions.ProductoColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string Documento {
+                get {
+                    try {
+                        return ((string)(this[this.tableCotizacionInspeccions.DocumentoColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Documento\' de la tabla \'CotizacionInspeccions\' es DBNull." +
+                                "", e);
+                    }
+                }
+                set {
+                    this[this.tableCotizacionInspeccions.DocumentoColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string TipoServicio {
+                get {
+                    try {
+                        return ((string)(this[this.tableCotizacionInspeccions.TipoServicioColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'TipoServicio\' de la tabla \'CotizacionInspeccions\' es DBNu" +
+                                "ll.", e);
+                    }
+                }
+                set {
+                    this[this.tableCotizacionInspeccions.TipoServicioColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsActividadNull() {
                 return this.IsNull(this.tableCotizacionInspeccions.ActividadColumn);
             }
@@ -2341,6 +2562,42 @@ namespace Web {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetSubtotalNull() {
                 this[this.tableCotizacionInspeccions.SubtotalColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsProductoNull() {
+                return this.IsNull(this.tableCotizacionInspeccions.ProductoColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetProductoNull() {
+                this[this.tableCotizacionInspeccions.ProductoColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsDocumentoNull() {
+                return this.IsNull(this.tableCotizacionInspeccions.DocumentoColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetDocumentoNull() {
+                this[this.tableCotizacionInspeccions.DocumentoColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsTipoServicioNull() {
+                return this.IsNull(this.tableCotizacionInspeccions.TipoServicioColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetTipoServicioNull() {
+                this[this.tableCotizacionInspeccions.TipoServicioColumn] = global::System.Convert.DBNull;
             }
         }
         

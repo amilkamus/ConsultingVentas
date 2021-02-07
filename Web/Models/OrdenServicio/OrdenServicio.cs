@@ -53,5 +53,6 @@ namespace Web.Models.OrdenServicio
         public DateTime FechaRegistro { get; set; }
         public string IdUsuarioModificacion { get; set; }
         public DateTime? FechaModificacion { get; set; }
+        public string TipoEmpaqueEnvase { get; set; }
     }
 }

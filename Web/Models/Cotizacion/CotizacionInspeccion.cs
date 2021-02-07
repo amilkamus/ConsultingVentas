@@ -18,6 +18,9 @@ namespace Web.Models.Cotizacion
         public decimal Precio { get; set; }
         public int Cantidad { get; set; }
         public decimal Subtotal { get; set; }
+        public string Producto { get; set; }
+        public string Documento { get; set; }
+        public string TipoServicio { get; set; }
     }
 
     public class CotizacionResumen

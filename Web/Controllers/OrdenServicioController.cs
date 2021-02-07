@@ -320,6 +320,9 @@ namespace Web.Controllers
                 lr.SetParameters(new ReportParameter("FechaRegistro", ordenServicio.FechaRegistro.ToString("dd/MM/yyyy")));
                 lr.SetParameters(new ReportParameter("EmisionDigital", (cotizacion.EmisionDigital) ? "Si" : "No"));
 
+                lr.SetParameters(new ReportParameter("TipoDocumento", cotizacion.TipoDocumentoSolicitado));
+                lr.SetParameters(new ReportParameter("Observaciones", cotizacion.Observaciones));
+                
                 lr.DataSources.Add(new ReportDataSource("CotizacionCabecera", ds.Tables[0]));
                 lr.DataSources.Add(new ReportDataSource("Productos", ds.Tables[1]));
                 lr.DataSources.Add(new ReportDataSource("Certificados", ds.Tables[2]));
@@ -355,13 +358,19 @@ namespace Web.Controllers
 
         private OrdenServicioViewModel ObtenerOrdenServicioViewModel(Cotizacion cotizacion, OrdenServicio ordenServicio)
         {
+            ClienteNEG clienteNEG = new ClienteNEG();
             WH_ProductoServicioNEG productoServicioNEG = new WH_ProductoServicioNEG();
             ParametroContext dbParam = new ParametroContext();
             TipoParametroContext dbTipo = new TipoParametroContext();
             List<WH_ProductoServicio> resultado = productoServicioNEG.listarProducto();
             List<MostrarProductoServicioViewModels> productos = MostrarProductoServicioViewModels.convert(resultado);
             OrdenServicioViewModel modelo = new OrdenServicioViewModel();
+            List<Cliente> clientes = clienteNEG.listarCliente();
+            List<MostrarClienteViewModel> listaClientes = MostrarClienteViewModel.convert(clientes);
 
+            modelo.Cliente = (from c in listaClientes
+                              where c.empresaNumeroDocumento == cotizacion.RUC
+                              select c).FirstOrDefault();
             modelo.Cotizacion = cotizacion;
             modelo.OrdenServicio = ordenServicio;
             modelo.Certificados = (from c in db.CotizacionCertificado.ToList()
