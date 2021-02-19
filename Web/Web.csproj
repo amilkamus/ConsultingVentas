@@ -47,7 +47,7 @@
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Lib\ICSharpCode.SharpZipLib.dll</HintPath>
+      <HintPath>..\..\ConsultingVentas-master-30.12.20\Web\Lib\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
@@ -103,19 +103,19 @@
     </Reference>
     <Reference Include="NPOI, Version=2.1.3.1, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Lib\NPOI.dll</HintPath>
+      <HintPath>..\..\ConsultingVentas-master-30.12.20\Web\Lib\NPOI.dll</HintPath>
     </Reference>
     <Reference Include="NPOI.OOXML, Version=2.1.3.1, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Lib\NPOI.OOXML.dll</HintPath>
+      <HintPath>..\..\ConsultingVentas-master-30.12.20\Web\Lib\NPOI.OOXML.dll</HintPath>
     </Reference>
     <Reference Include="NPOI.OpenXml4Net, Version=2.1.3.1, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Lib\NPOI.OpenXml4Net.dll</HintPath>
+      <HintPath>..\..\ConsultingVentas-master-30.12.20\Web\Lib\NPOI.OpenXml4Net.dll</HintPath>
     </Reference>
     <Reference Include="NPOI.OpenXmlFormats, Version=2.1.3.1, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Lib\NPOI.OpenXmlFormats.dll</HintPath>
+      <HintPath>..\..\ConsultingVentas-master-30.12.20\Web\Lib\NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
     <Reference Include="Rotativa, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Rotativa.1.6.4\lib\net40\Rotativa.dll</HintPath>
@@ -1404,8 +1404,6 @@
     </Content>
     <Content Include="Content\Reportes\CotizacionAmbiental.rdlc" />
     <Content Include="Content\Reportes\CotizacionAlimentos.rdlc" />
-    <Content Include="Content\Reportes\OrdenServicioAlimentos.rdlc" />
-    <Content Include="Content\Reportes\OrdenServicioAmbiental.rdlc" />
     <None Include="DataSetCotizacion.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -1705,6 +1703,8 @@
     <Content Include="Service References\Service.RC.FactElect\Web.Service.RC.FactElect.En_SalidaListarComprobante.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <Content Include="Views\Cotizacion\Payment.cshtml" />
+    <Content Include="Views\Cobranza\Index.cshtml" />
     <None Include="Service References\Service.RC.FactElect\Service111.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -1723,8 +1723,6 @@
     <None Include="Service References\Service.RC.FactElect\Service16.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Views\Cotizacion\Payment.cshtml" />
-    <Content Include="Views\Cobranza\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

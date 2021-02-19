@@ -468,6 +468,25 @@ namespace Web.Controllers
                 string numeroOrdenServicio = "";
                 string idUsuario = (string)Session["IdUser"];
 
+                //10.10.2020 - CR - L
+                string str_idUsuario = "";
+                try
+                {
+                    if (idUsuario ==null)
+                    { 
+                        str_idUsuario = (from c in db.Cotizacions
+                                           where c.NumeroCotizacion == ordenServicio.NumeroCotizacion
+                                           select c.IdUsuarioRegistro).SingleOrDefault();
+
+                        idUsuario = str_idUsuario;
+                    }
+                }
+                catch
+                {
+                    str_idUsuario = "";
+                }
+                //10.10.2020 - CR - L
+
                 if (string.IsNullOrEmpty(ordenServicio.NumeroOrdenServicio) || string.IsNullOrWhiteSpace(ordenServicio.NumeroOrdenServicio))
                 {
                     DateTime fechaRegistro = DateTime.Now;

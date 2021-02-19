@@ -1,6 +1,7 @@
 ﻿using Entidad;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -99,7 +100,9 @@ namespace Datos
 
         public EnCobranza ListarCobranzasPorCotizacion(long idCotizacion)
         {
-            SqlConnection cn = new SqlConnection(_db.Database.Connection.ConnectionString);
+            //SqlConnection cn = new SqlConnection(_db.Database.Connection.ConnectionString);
+            string conn = ConfigurationManager.ConnectionStrings["CobranzaConn"].ConnectionString;
+            SqlConnection cn = new SqlConnection(conn);
 
             try
             {
@@ -473,7 +476,9 @@ namespace Datos
 
         public List<EnCobranzaOut> ListarCobranzas(EnCobranzaIn cobranzaIn)
         {
-            SqlConnection cn = new SqlConnection(_db.Database.Connection.ConnectionString);
+            //SqlConnection cn = new SqlConnection(_db.Database.Connection.ConnectionString);
+            string conn = ConfigurationManager.ConnectionStrings["CobranzaConn"].ConnectionString;
+            SqlConnection cn = new SqlConnection(conn);
 
             try
             {

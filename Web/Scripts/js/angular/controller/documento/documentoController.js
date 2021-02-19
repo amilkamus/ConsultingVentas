@@ -152,6 +152,7 @@
     $scope.listarUsuarios();
     $scope.listarDocumento();
     $scope.listarCotizaciones();
+    $scope.listarOrdenesServicio();
     $scope.listarCobranzas();
 
 }]);

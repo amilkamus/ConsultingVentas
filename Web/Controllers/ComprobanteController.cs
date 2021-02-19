@@ -22,7 +22,7 @@ namespace Web.Controllers
             return View();
         }
 
-        [Authorize(Roles = "ADMINISTRADOR, OPERADOR")]
+        [Authorize(Roles = "ADMINISTRADOR, OPERADOR, FACTURACION")]
         public JsonResult ListarComprobanteElectronicos(En_EntradaListarComprobante entrada)
         {
             try
@@ -53,7 +53,7 @@ namespace Web.Controllers
             }
         }
 
-        [Authorize(Roles = "ADMINISTRADOR, OPERADOR")]
+        [Authorize(Roles = "ADMINISTRADOR, FACTURACION")]
         public ActionResult Exportar(Web.Models.Comprobante.ComprobanteViewModel entrada)
         {
             int filaError = 0;
@@ -202,7 +202,7 @@ namespace Web.Controllers
             }
         }
 
-        [Authorize(Roles = "ADMINISTRADOR, OPERADOR")]
+        [Authorize(Roles = "ADMINISTRADOR, OPERADOR, FACTURACION")]
         public JsonResult ObtenerDocumentoComprobante(long id)
         {
             try
@@ -226,7 +226,7 @@ namespace Web.Controllers
             }
         }
 
-        [Authorize(Roles = "ADMINISTRADOR, OPERADOR")]
+        [Authorize(Roles = "ADMINISTRADOR, OPERADOR, FACTURACION")]
         public JsonResult ObtenerRepresentacionImpresa(long id)
         {
             try
@@ -250,7 +250,7 @@ namespace Web.Controllers
             }
         }
 
-        [Authorize(Roles = "ADMINISTRADOR, OPERADOR")]
+        [Authorize(Roles = "ADMINISTRADOR, OPERADOR, FACTURACION")]
         public JsonResult ObtenerRespuestaComprobante(long id)
         {
             try
@@ -274,7 +274,7 @@ namespace Web.Controllers
             }
         }
 
-        [Authorize(Roles = "ADMINISTRADOR, OPERADOR")]
+        [Authorize(Roles = "ADMINISTRADOR, OPERADOR, FACTURACION")]
         public JsonResult GenerarNotaCredito(ComprobanteViewModel parametro)
         {
             try
