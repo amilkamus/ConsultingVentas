@@ -456,7 +456,8 @@ namespace Datos
                         ObservacionesInforme = dr.GetString(dr.GetOrdinal("ObservacionesInforme")),
                         RUC = dr.GetString(dr.GetOrdinal("RUC")),
                         Solicitante = dr.GetString(dr.GetOrdinal("Solicitante")),
-                        UsuarioRegistro = dr.GetString(dr.GetOrdinal("UsuarioRegistro"))
+                        UsuarioRegistro = dr.GetString(dr.GetOrdinal("UsuarioRegistro")),
+                        TotalCotizacion = dr.GetDecimal(dr.GetOrdinal("TotalCotizacion"))
                     };
                     ordenesServicio.Add(ordenServicio);
                 }

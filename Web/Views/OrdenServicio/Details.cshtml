@@ -164,7 +164,7 @@
                     </tr>
                     <tr>
                         <th>Otros / Observaciones:</th>
-                        <td colspan="3">@Html.DisplayFor(model => model.Cotizacion.Observaciones)</td>
+                        <td colspan="3">@Html.DisplayFor(model => model.OrdenServicio.ObservacionesInspeccion)</td>
                     </tr>
                     @{ var listaProductos = (from d in Model.Detalles
                                               select d.producto).ToList().Distinct(); }

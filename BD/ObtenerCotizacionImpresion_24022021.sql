@@ -1,4 +1,4 @@
-ALTER PROCEDURE [dbo].[ObtenerCotizacionImpresion] 
+ALTER PROCEDURE ObtenerCotizacionImpresion
 	@idCotizacion BIGINT
 AS
 BEGIN
@@ -40,7 +40,7 @@ BEGIN
 	where IdCotizacion = @idCotizacion
 	group by ps.IdProducto, ps.descripcion
 	union all
-	select Documento, Precio, '-' NumeroDias, Precio Total
+	select Documento, Precio, Cantidad NumeroDias, SubTotal Total
 	from CotizacionCertificadoes where IdCotizacion = @idCotizacion
 	union all
 	select Actividad, Precio, cast(Cantidad as varchar(20)) NumeroDias, Subtotal Total from CotizacionInspeccions where IdCotizacion = @idCotizacion

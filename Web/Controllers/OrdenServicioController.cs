@@ -78,23 +78,24 @@ namespace Web.Controllers
                 styleNegritaBorde.BorderLeft = BorderStyle.Thin;
                 styleNegritaBorde.BorderRight = BorderStyle.Thin;
 
-                ICellStyle styleBorde = wb.CreateCellStyle();
-                styleBorde.BorderBottom = BorderStyle.Thin;
-                styleBorde.BorderTop = BorderStyle.Thin;
-                styleBorde.BorderLeft = BorderStyle.Thin;
-                styleBorde.BorderRight = BorderStyle.Thin;
-
                 ICellStyle styleEntero = wb.CreateCellStyle();
                 styleEntero.DataFormat = wb.CreateDataFormat().GetFormat("0");
+                agregarBordes(styleEntero);
 
                 ICellStyle styleDecimal = wb.CreateCellStyle();
                 styleDecimal.DataFormat = wb.CreateDataFormat().GetFormat("0.00");
+                agregarBordes(styleDecimal);
 
                 ICellStyle styleFecha = wb.CreateCellStyle();
                 styleFecha.DataFormat = wb.CreateDataFormat().GetFormat("dd/mm/yyyy");
+                agregarBordes(styleFecha);
 
                 ICellStyle styleFechaHora = wb.CreateCellStyle();
                 styleFechaHora.DataFormat = wb.CreateDataFormat().GetFormat("dd/mm/yyyy HH:mm:ss");
+                agregarBordes(styleFechaHora);
+
+                ICellStyle styleTexto = wb.CreateCellStyle();
+                agregarBordes(styleTexto);
 
                 int rowIndex = 0;
 
@@ -112,6 +113,7 @@ namespace Web.Controllers
                 columnasCabecera.Add("Observaciones", "Observaciones Producto");
                 columnasCabecera.Add("ObservacionesInforme", "Observaciones Informe");
                 columnasCabecera.Add("UsuarioRegistro", "Usuario Registro");
+                columnasCabecera.Add("TotalCotizacion", "Total cotización");
 
                 foreach (KeyValuePair<string, string> cabecera in columnasCabecera)
                 {
@@ -122,7 +124,7 @@ namespace Web.Controllers
                 }
 
                 rowIndex += 1;
-                string[] columnasNumericas = new[] { "" };
+                string[] columnasNumericas = new[] { "TotalCotizacion" };
                 string[] columnasFecha = new[] { "Fecha" };
                 string[] columnasFechaHora = new[] { "" };
                 filaError = rowIndex;
@@ -147,10 +149,17 @@ namespace Web.Controllers
                             cell.SetCellValue(item.GetType().GetProperty(cabecera.Key).GetValue(item, null).ToString());
                             cell.CellStyle = styleFecha;
                         }
-                        else
+                        else if (columnasFechaHora.Contains(nombreColumna))
+                        {
                             cell.SetCellValue(item.GetType().GetProperty(cabecera.Key).GetValue(item, null).ToString());
+                            cell.CellStyle = styleFechaHora;
+                        }
+                        else
+                        {
+                            cell.SetCellValue(item.GetType().GetProperty(cabecera.Key).GetValue(item, null).ToString());
+                            cell.CellStyle = styleTexto;
+                        }
 
-                        cell.CellStyle = styleBorde;
                         columna += 1;
                     }
                     rowIndex += 1;
@@ -176,6 +185,14 @@ namespace Web.Controllers
 
                 return Json(respuesta, JsonRequestBehavior.AllowGet);
             }
+        }
+
+        private void agregarBordes(ICellStyle style)
+        {
+            style.BorderBottom = BorderStyle.Thin;
+            style.BorderTop = BorderStyle.Thin;
+            style.BorderLeft = BorderStyle.Thin;
+            style.BorderRight = BorderStyle.Thin;
         }
 
         [Authorize(Roles = "ADMINISTRADOR, OPERADOR")]
@@ -305,7 +322,7 @@ namespace Web.Controllers
                 lr.SetParameters(new ReportParameter("EmailInspeccion", ordenServicio.EmailInspeccion));
                 lr.SetParameters(new ReportParameter("TelefonoInspeccion", ordenServicio.TelefonoInspeccion));
                 lr.SetParameters(new ReportParameter("CoordinadorInspeccion", ordenServicio.CoordinadorInspeccion));
-                lr.SetParameters(new ReportParameter("LugarInspeccion", ordenServicio.LugarInspeccion));
+                lr.SetParameters(new ReportParameter("LugarInspeccion", cotizacion.LugarInspeccionMuestreo));
                 lr.SetParameters(new ReportParameter("FechaInspeccion", ordenServicio.FechaInspeccion));
                 lr.SetParameters(new ReportParameter("HoraInspeccion", ordenServicio.HoraInspeccion));
                 lr.SetParameters(new ReportParameter("TipoServicioInspeccion", ordenServicio.TipoServicioInspeccion));
@@ -313,8 +330,8 @@ namespace Web.Controllers
                 lr.SetParameters(new ReportParameter("PresentacionInspeccion", ordenServicio.PresentacionInspeccion));
                 lr.SetParameters(new ReportParameter("CantidadLoteInspeccion", ordenServicio.CantidadLoteInspeccion));
                 lr.SetParameters(new ReportParameter("CodigosLoteInspeccion", ordenServicio.CodigosLoteInspeccion));
-                //lr.SetParameters(new ReportParameter("OtrosInspeccion", ordenServicio.ObservacionesInspeccion));
-                lr.SetParameters(new ReportParameter("OtrosInspeccion", cotizacion.Observaciones));
+                lr.SetParameters(new ReportParameter("OtrosInspeccion", ordenServicio.ObservacionesInspeccion));
+                //lr.SetParameters(new ReportParameter("OtrosInspeccion", cotizacion.Observaciones));
 
                 lr.SetParameters(new ReportParameter("Usuario", NombreUsuario(ordenServicio.IdUsuarioRegistro)));
                 lr.SetParameters(new ReportParameter("FechaRegistro", ordenServicio.FechaRegistro.ToString("dd/MM/yyyy")));

@@ -1,7 +1,4 @@
-if object_id('usp_ListarOrdenServicios', 'P') is not null
-	drop procedure usp_ListarOrdenServicios
-go
-create procedure usp_ListarOrdenServicios
+alter procedure usp_ListarOrdenServicios
 	@NumeroOrdenServicio varchar(20) = '',
 	@NumeroCotizacion varchar(200) = '',
 	@RucSolicitante varchar(20) = '',
@@ -28,7 +25,8 @@ begin
 		DescripcionProducto, 
 		Observaciones, 
 		ISNULL(o.ObservacionesInforme, '') ObservacionesInforme,
-		CONCAT(FirstName, ' ', LastName) UsuarioRegistro
+		CONCAT(FirstName, ' ', LastName) UsuarioRegistro,
+		C.Total TotalCotizacion
 	from OrdenServicios O 
 		inner join Cotizacions C on C.NumeroCotizacion = O.NumeroCotizacion
 		inner join AspNetUsers U on C.IdUsuarioRegistro = U.Id
@@ -38,11 +36,11 @@ begin
 		and RUC like @RucSolicitante + '%'
 		and Solicitante like @NombreSolicitante + '%'
 		and cast(Fecha as date) between cast(@FechaInicio as date) and cast(@FechaFin as date)
-		and DescripcionProducto like @DescripcionProducto + '%'
-		and Observaciones like @ObservacionesProducto + '%'
-		and Contacto like @NombreContacto + '%'
-		and SerieNumero like @SerieNumero + '%'
+		and isnull(DescripcionProducto,'') like @DescripcionProducto + '%'
+		and isnull(Observaciones, '') like @ObservacionesProducto + '%'
+		and isnull(Contacto,'') like @NombreContacto + '%'
+		and isnull(SerieNumero, '') like @SerieNumero + '%'
 		and (O.IdUsuarioRegistro = @IdUsuarioRegistro or '0' = @IdUsuarioRegistro)
 	order by o.FechaRegistro desc
 end
-go
+GO

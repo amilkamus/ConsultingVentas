@@ -221,7 +221,7 @@
         <Source>Embedded</Source>
         <Value>LogoITS</Value>
         <Sizing>FitProportional</Sizing>
-        <Left>0.00005cm</Left>
+        <Left>0.00006cm</Left>
         <Height>1.42063cm</Height>
         <Width>4.93959cm</Width>
         <Style>
@@ -258,7 +258,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
         <Top>1.42063cm</Top>
-        <Left>0.00004cm</Left>
+        <Left>0.00005cm</Left>
         <Height>0.46771cm</Height>
         <Width>16.98626cm</Width>
         <ZIndex>1</ZIndex>
@@ -291,7 +291,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
         <Top>1.88834cm</Top>
-        <Left>0.00005cm</Left>
+        <Left>0.00006cm</Left>
         <Height>0.49417cm</Height>
         <Width>1.04479cm</Width>
         <ZIndex>2</ZIndex>
@@ -324,7 +324,7 @@
         </Paragraphs>
         <rd:DefaultName>Fecha</rd:DefaultName>
         <Top>1.88834cm</Top>
-        <Left>1.04484cm</Left>
+        <Left>1.04485cm</Left>
         <Height>0.49417cm</Height>
         <Width>3.30763cm</Width>
         <ZIndex>3</ZIndex>
@@ -1127,7 +1127,7 @@
         </TablixRowHierarchy>
         <DataSetName>CotizacionCabecera</DataSetName>
         <Top>2.48834cm</Top>
-        <Left>0.0001cm</Left>
+        <Left>0.00011cm</Left>
         <Height>4.2973cm</Height>
         <Width>16.98612cm</Width>
         <ZIndex>4</ZIndex>
@@ -1456,7 +1456,7 @@
         </TablixRowHierarchy>
         <DataSetName>CotizacionCabecera</DataSetName>
         <Top>6.82917cm</Top>
-        <Left>0.0001cm</Left>
+        <Left>0.00011cm</Left>
         <Height>2.04546cm</Height>
         <Width>16.98625cm</Width>
         <ZIndex>5</ZIndex>
@@ -1621,7 +1621,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Tipo de servicio</Value>
+                              <Value>Tipo de servicio *</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -2046,6 +2046,7 @@
         </TablixRowHierarchy>
         <DataSetName>Productos</DataSetName>
         <Top>9.04368cm</Top>
+        <Left>0.00001cm</Left>
         <Height>2.37353cm</Height>
         <Width>16.98635cm</Width>
         <ZIndex>6</ZIndex>
@@ -2347,7 +2348,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Tipo de servicio</Value>
+                              <Value>Tipo de servicio *</Value>
                               <Style>
                                 <FontStyle>Normal</FontStyle>
                                 <FontSize>7pt</FontSize>
@@ -2816,7 +2817,7 @@
         </TablixRowHierarchy>
         <DataSetName>PlanInspeccion</DataSetName>
         <Top>11.60326cm</Top>
-        <Left>0.00005cm</Left>
+        <Left>0.00006cm</Left>
         <Height>2.59375cm</Height>
         <Width>16.98617cm</Width>
         <ZIndex>7</ZIndex>
@@ -3774,7 +3775,7 @@
         <KeepTogether>true</KeepTogether>
         <DataSetName>Resumen</DataSetName>
         <Top>17.57844cm</Top>
-        <Left>0.00015cm</Left>
+        <Left>0.00016cm</Left>
         <Height>3.43271cm</Height>
         <Width>16.98625cm</Width>
         <ZIndex>8</ZIndex>
@@ -3802,6 +3803,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox23</rd:DefaultName>
         <Top>21.30646cm</Top>
+        <Left>0.00001cm</Left>
         <Height>0.45889cm</Height>
         <Width>9.60554cm</Width>
         <ZIndex>9</ZIndex>
@@ -3996,7 +3998,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox26</rd:DefaultName>
         <Top>22.40035cm</Top>
-        <Left>0.0001cm</Left>
+        <Left>0.00011cm</Left>
         <Height>4.30417cm</Height>
         <Width>16.9862cm</Width>
         <ZIndex>10</ZIndex>
@@ -4034,7 +4036,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox29</rd:DefaultName>
         <Top>26.62514cm</Top>
-        <Left>0.0001cm</Left>
+        <Left>0.00011cm</Left>
         <Height>0.46771cm</Height>
         <Width>16.9862cm</Width>
         <ZIndex>11</ZIndex>
@@ -4071,6 +4073,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox30</rd:DefaultName>
         <Top>27.26924cm</Top>
+        <Left>0.00001cm</Left>
         <Height>0.46771cm</Height>
         <Width>16.9863cm</Width>
         <ZIndex>12</ZIndex>
@@ -4467,7 +4470,7 @@
         </TablixRowHierarchy>
         <DataSetName>CotizacionCabecera</DataSetName>
         <Top>27.91334cm</Top>
-        <Left>0.0001cm</Left>
+        <Left>0.00011cm</Left>
         <Height>0.96187cm</Height>
         <Width>16.98625cm</Width>
         <ZIndex>13</ZIndex>
@@ -4503,7 +4506,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox48</rd:DefaultName>
         <Top>28.91049cm</Top>
-        <Left>0.00015cm</Left>
+        <Left>0.00016cm</Left>
         <Height>0.49417cm</Height>
         <Width>16.98635cm</Width>
         <ZIndex>14</ZIndex>
@@ -4539,7 +4542,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox49</rd:DefaultName>
         <Top>29.51959cm</Top>
-        <Left>0.00015cm</Left>
+        <Left>0.00016cm</Left>
         <Height>0.47653cm</Height>
         <Width>2.5cm</Width>
         <ZIndex>15</ZIndex>
@@ -4575,7 +4578,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox50</rd:DefaultName>
         <Top>29.99612cm</Top>
-        <Left>0.0001cm</Left>
+        <Left>0.00011cm</Left>
         <Height>0.54709cm</Height>
         <Width>16.9862cm</Width>
         <ZIndex>16</ZIndex>
@@ -4613,7 +4616,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox62</rd:DefaultName>
-        <Left>12.53278cm</Left>
+        <Left>12.53279cm</Left>
         <Height>1.24424cm</Height>
         <Width>4.45352cm</Width>
         <ZIndex>17</ZIndex>
@@ -4704,7 +4707,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox6</rd:DefaultName>
         <Top>30.64904cm</Top>
-        <Left>0.0003cm</Left>
+        <Left>0.00031cm</Left>
         <Height>2.33715cm</Height>
         <Width>16.9862cm</Width>
         <ZIndex>18</ZIndex>
@@ -4873,7 +4876,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Tipo de servicio</Value>
+                              <Value>Tipo de servicio *</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -5238,7 +5241,7 @@
         </TablixRowHierarchy>
         <DataSetName>Certificados</DataSetName>
         <Top>14.30559cm</Top>
-        <Left>0.00004cm</Left>
+        <Left>0.00005cm</Left>
         <Height>1.82646cm</Height>
         <Width>16.98615cm</Width>
         <ZIndex>19</ZIndex>
@@ -5266,6 +5269,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox97</rd:DefaultName>
         <Top>16.13205cm</Top>
+        <Left>0.00001cm</Left>
         <Height>0.6cm</Height>
         <Width>16.9862cm</Width>
         <ZIndex>20</ZIndex>
@@ -5388,7 +5392,7 @@
         </TablixRowHierarchy>
         <DataSetName>CotizacionCabecera</DataSetName>
         <Top>16.62594cm</Top>
-        <Left>0.00015cm</Left>
+        <Left>0.00016cm</Left>
         <Height>0.6cm</Height>
         <Width>16.98605cm</Width>
         <ZIndex>21</ZIndex>
@@ -5432,7 +5436,22 @@
 11) El Informe de Ensayo emitido por ITS del Peru S.A.C. tiene el alcance y vigencia solo para el producto, muestra o lote analizado, siempre y cuando mantenga las mismas condiciones en que se realizaron los análisis, el muestreo o tma de muestra se encuentra fuera del alcance de la acreditación. 
 12) No está permitido el uso del nombre de ITS del Peru S.A.C. para fines publicitarios, sin previa autorización escrita de ITS del Peru S.A.C. 
 13) Si tuviese alguna queja y/o sugerencia del servicio prestado, por favor contactarse al correo electrónico: ventas@itsper.com 
-14) La muestra proporcionada por el cliente al laboratorio es única, no puede ser complementada con otra muestra. 
+14) La muestra proporcionada por el cliente al laboratorio es única, no puede ser complementada con otra muestra. </Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>7pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>15) Los informes de ensayo se emitirán de manera electrónica en formato PDF, si el cliente desea el documento en físico deberá indicar al área comercial para considerar los costos respectivos en la cotización.
 </Value>
                 <Style>
                   <FontStyle>Normal</FontStyle>
@@ -5448,8 +5467,8 @@
         </Paragraphs>
         <rd:DefaultName>Textbox8</rd:DefaultName>
         <Top>32.98619cm</Top>
-        <Left>0.00061cm</Left>
-        <Height>11.63312cm</Height>
+        <Left>0.00062cm</Left>
+        <Height>12.23285cm</Height>
         <Width>16.98589cm</Width>
         <ZIndex>22</ZIndex>
         <Style>
@@ -5511,11 +5530,26 @@
             </TextRuns>
             <Style />
           </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>17) Los informes y certificados de inspección se emitirán de manera electrónica en formato PDF, si el cliente desea el documento en físico deberá indicar al área comercial para considerar los costos respectivos en la cotización.</Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>7pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox13</rd:DefaultName>
-        <Top>44.65459cm</Top>
-        <Left>0.00061cm</Left>
-        <Height>14.86104cm</Height>
+        <Top>45.28959cm</Top>
+        <Left>0.00062cm</Left>
+        <Height>15.31965cm</Height>
         <Width>16.98589cm</Width>
         <ZIndex>23</ZIndex>
         <Style>
@@ -5588,7 +5622,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>3) Todo Cliente con más de 60 días de morosidad, será reportando inmediatamente y sin previo aviso a las centrales de riesgo del País, hasta la cancelación total de la deuda. Todo pago deberá ser reportado
+                <Value>3) Todo Cliente con más de 60 días de morosidad, será reportado inmediatamente y sin previo aviso a las centrales de riesgo del País, hasta la cancelación total de la deuda. Todo pago deberá ser reportado
 directamente al área de cobranzas de ITS del Perú para su descargo respectivo, siendo el correo directo del área: </Value>
                 <Style>
                   <FontStyle>Normal</FontStyle>
@@ -5635,48 +5669,9 @@ compromete expresamente a pagar intereses de demora a favor de ITS DEL PERU al t
               <TextAlign>Left</TextAlign>
             </Style>
           </Paragraph>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value />
-                <Style>
-                  <FontStyle>Normal</FontStyle>
-                  <FontSize>7pt</FontSize>
-                  <FontWeight>Normal</FontWeight>
-                  <TextDecoration>None</TextDecoration>
-                  <Color>#000000</Color>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <LeftIndent>0cm</LeftIndent>
-            <RightIndent>0cm</RightIndent>
-            <Style>
-              <TextAlign>Left</TextAlign>
-            </Style>
-          </Paragraph>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value />
-                <Style>
-                  <FontStyle>Normal</FontStyle>
-                  <FontSize>8pt</FontSize>
-                  <FontWeight>Normal</FontWeight>
-                  <TextDecoration>None</TextDecoration>
-                  <Color>#000000</Color>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <LeftIndent>0cm</LeftIndent>
-            <RightIndent>0cm</RightIndent>
-            <Style>
-              <TextAlign>Left</TextAlign>
-            </Style>
-          </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox51</rd:DefaultName>
-        <Top>59.51563cm</Top>
-        <Left>0.00061cm</Left>
+        <Top>60.6798cm</Top>
         <Height>4.33062cm</Height>
         <Width>16.9862cm</Width>
         <ZIndex>24</ZIndex>
@@ -5764,8 +5759,7 @@ Telf. (01) 7504454</Value>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox15</rd:DefaultName>
-        <Top>63.88152cm</Top>
-        <Left>0.00092cm</Left>
+        <Top>65.08097cm</Top>
         <Height>2.34625cm</Height>
         <Width>16.98589cm</Width>
         <ZIndex>25</ZIndex>
@@ -5780,7 +5774,7 @@ Telf. (01) 7504454</Value>
         </Style>
       </Textbox>
     </ReportItems>
-    <Height>26.07393in</Height>
+    <Height>26.54615in</Height>
     <Style />
   </Body>
   <ReportParameters>
@@ -5915,10 +5909,10 @@ Telf. (01) 7504454</Value>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <Width>6.68772in</Width>
+  <Width>6.68773in</Width>
   <Page>
     <PageFooter>
-      <Height>2.97296cm</Height>
+      <Height>3.00824cm</Height>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
         <Textbox Name="Textbox58">
@@ -5961,6 +5955,7 @@ Telf. (01) 7504454</Value>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox58</rd:DefaultName>
+          <Left>0.00001cm</Left>
           <Height>0.76756cm</Height>
           <Width>16.9862cm</Width>
           <Visibility>
@@ -6003,6 +5998,7 @@ Telf.: 01 750-4454 Cel: 955248222</Value>
           </Paragraphs>
           <rd:DefaultName>Textbox60</rd:DefaultName>
           <Top>0.75873cm</Top>
+          <Left>0.00001cm</Left>
           <Height>1.15562cm</Height>
           <Width>16.9863cm</Width>
           <ZIndex>1</ZIndex>
@@ -6043,7 +6039,8 @@ Fecha de revisión: 01/02/2021</Value>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox60</rd:DefaultName>
-          <Top>1.94963cm</Top>
+          <Top>1.9849cm</Top>
+          <Left>0.00001cm</Left>
           <Height>1.02333cm</Height>
           <Width>4.93961cm</Width>
           <ZIndex>2</ZIndex>

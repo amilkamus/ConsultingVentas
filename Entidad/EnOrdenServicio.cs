@@ -33,5 +33,6 @@ namespace Entidad
         public string Observaciones { get; set; }
         public string ObservacionesInforme { get; set; }
         public string UsuarioRegistro { get; set; }
+        public decimal TotalCotizacion { get; set; }
     }
 }

@@ -451,7 +451,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Tipo de  servicio</Value>
+                              <Value>Tipo de  servicio *</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -1063,7 +1063,7 @@ inspeccionar/muestrear</Value>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Tipo de servicio</Value>
+                              <Value>Tipo de servicio *</Value>
                               <Style>
                                 <FontStyle>Normal</FontStyle>
                                 <FontSize>7pt</FontSize>
@@ -3325,7 +3325,7 @@ inspeccionar/muestrear</Value>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Tipo de Servicio:</Value>
+                              <Value>Actividad a realizar:</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -3976,7 +3976,7 @@ inspeccionar/muestrear</Value>
         <Top>28.79187cm</Top>
         <Left>6.43462cm</Left>
         <Height>1.2cm</Height>
-        <Width>10.55158cm</Width>
+        <Width>10.55159cm</Width>
         <ZIndex>6</ZIndex>
         <Style>
           <Border>
@@ -3991,10 +3991,10 @@ inspeccionar/muestrear</Value>
               <Width>1.35956in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.35948in</Width>
+              <Width>3.18104in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.98425in</Width>
+              <Width>1.16269in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.98425in</Width>
@@ -4013,7 +4013,7 @@ inspeccionar/muestrear</Value>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>CERTIFICADOS</Value>
+                              <Value>CERTIFICADOS / INFORMES</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -4130,7 +4130,7 @@ inspeccionar/muestrear</Value>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Tipo de servicio</Value>
+                              <Value>Tipo de servicio *</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -4510,7 +4510,7 @@ inspeccionar/muestrear</Value>
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>CotizacionCabecera</DataSetName>
-        <Top>27.35cm</Top>
+        <Top>27.38902cm</Top>
         <Height>0.96187cm</Height>
         <Width>16.96827cm</Width>
         <ZIndex>8</ZIndex>
@@ -4699,7 +4699,7 @@ inspeccionar/muestrear</Value>
   <Width>6.68754in</Width>
   <Page>
     <PageFooter>
-      <Height>1.02333cm</Height>
+      <Height>1.34083cm</Height>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
         <Textbox Name="Textbox64">
@@ -4726,6 +4726,7 @@ Fecha de revisión: 01/02/2021</Value>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox60</rd:DefaultName>
+          <Top>0.3175cm</Top>
           <Left>0.01794cm</Left>
           <Height>1.02333cm</Height>
           <Width>4.93961cm</Width>
