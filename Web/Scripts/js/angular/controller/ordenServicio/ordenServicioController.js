@@ -113,6 +113,7 @@
                 $scope.model.Telefono = data.data.Cotizacion.Telefono;
                 $scope.model.DescripcionProducto = data.data.Cotizacion.DescripcionProducto;
                 $scope.model.CantidadMuestra = data.data.Cotizacion.CantidadMuestra;
+                $scope.model.Cotizacion = data.data.Cotizacion;
                 $scope.model.Cotizacion.Observaciones = data.data.Cotizacion.Observaciones;
                 $scope.model.Cotizacion.EmisionDigital = (data.data.Cotizacion.EmisionDigital) ? "Si" : "No";
                 $scope.model.TipoDocumentoSolicitado = data.data.Cotizacion.TipoDocumentoSolicitado;

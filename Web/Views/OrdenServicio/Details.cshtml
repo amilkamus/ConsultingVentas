@@ -42,128 +42,128 @@
                         <th colspan="4" class="fondoCabecera" style="text-align:center!important">DATOS DEL CLIENTE</th>
                     </tr>
                     <tr>
-                        <th>Cliente:</th>
+                        <th class="fondoCabecera">Cliente:</th>
                         <td colspan="3">@Html.DisplayFor(model => model.Cotizacion.Solicitante)</td>
                     </tr>
                     <tr>
-                        <th>RUC:</th>
+                        <th class="fondoCabecera">RUC:</th>
                         <td colspan="3">@Html.DisplayFor(model => model.Cotizacion.RUC)</td>
                     </tr>
                     
                     @if (Model.Cliente.empresaDomicilio == null)
                     {
                         <tr>
-                            <th>Dirección legal:</th>
+                            <th class="fondoCabecera">Dirección legal:</th>
                             <td colspan="3">@Html.DisplayFor(model => model.Cliente.titularDomicilio)</td>
                         </tr>
                     }
                     else
                     {
                         <tr>
-                            <th>Dirección legal:</th>
+                            <th class="fondoCabecera">Dirección legal:</th>
                             <td colspan="3">@Html.DisplayFor(model => model.Cliente.empresaDomicilio)</td>
                         </tr>
                     }
                     
                     <tr>
-                        <th>Contacto:</th>
+                        <th class="fondoCabecera">Contacto:</th>
                         <td colspan="3">@Html.DisplayFor(model => model.Cotizacion.Contacto)</td>
                     </tr>
                     <tr>
-                        <th>Email:</th>
+                        <th class="fondoCabecera">Email:</th>
                         <td colspan="3">@Html.DisplayFor(model => model.Cotizacion.Email)</td>
                     </tr>
                     <tr>
-                        <th>Teléfono:</th>
+                        <th class="fondoCabecera">Teléfono:</th>
                         <td colspan="3">@Html.DisplayFor(model => model.Cotizacion.Telefono)</td>
                     </tr>
                     <tr>
-                        <th>Nombre del producto:</th>
+                        <th class="fondoCabecera">Nombre del producto:</th>
                         <td colspan="3">@Html.DisplayFor(model => model.Cotizacion.DescripcionProducto)</td>
                     </tr>
                     <tr>
                         <th colspan="4" class="fondoCabecera" style="text-align:center!important">EMISIÓN DE DOCUMENTOS</th>
                     </tr>
                     <tr>
-                        <th>Tipo de documento</th>
+                        <th class="fondoCabecera">Tipo de documento</th>
                         <td>@Html.DisplayFor(model => model.Cotizacion.TipoDocumentoSolicitado)</td>
-                        <th>Informes en físico:</th>
+                        <th class="fondoCabecera">Informes en físico:</th>
                         <td>@(Model.Cotizacion.EmisionDigital?"Si":"No")</td>
                     </tr>
                     <tr>
-                        <th>N° Copias:</th>
+                        <th class="fondoCabecera">N° Copias:</th>
                         <td colspan="3">@Html.DisplayFor(model => model.OrdenServicio.NumeroCopiasInforme)</td>
                     </tr>
                     <tr>
-                        <th>Otros / Observaciones:</th>
+                        <th class="fondoCabecera">Otros / Observaciones:</th>
                         <td colspan="3">@Html.DisplayFor(model => model.OrdenServicio.ObservacionesInforme)</td>
                     </tr>
                     <tr>
                         <th colspan="4" class="fondoCabecera" style="text-align:center!important">PREPARACIÓN DE MATERIALES</th>
                     </tr>
                     <tr>
-                        <th>Dirección de envío:</th>
+                        <th class="fondoCabecera">Dirección de envío:</th>
                         <td colspan="3">@Html.DisplayFor(model => model.OrdenServicio.DireccionEnvioMateriales)</td>
                     </tr>
                     <tr>
-                        <th>Fecha de envío de materiales:</th>
+                        <th class="fondoCabecera">Fecha de envío de materiales:</th>
                         <td colspan="3">@Html.DisplayFor(model => model.OrdenServicio.FechaEnvioMateriales)</td>
                     </tr>
                     <tr>
-                        <th>Contacto:</th>
+                        <th class="fondoCabecera">Contacto:</th>
                         <td colspan="3">@Html.DisplayFor(model => model.OrdenServicio.ContactoMateriales)</td>
                     </tr>
                     <tr>
                         <th colspan="4" class="fondoCabecera" style="text-align:center!important">INSPECCIÓN / MUESTREO</th>
                     </tr>
                     <tr>
-                        <th>Contacto:</th>
+                        <th class="fondoCabecera">Contacto:</th>
                         <td colspan="3">@Html.DisplayFor(model => model.OrdenServicio.ContactoInspeccion)</td>
                     </tr>
                     <tr>
-                        <th>Email:</th>
+                        <th class="fondoCabecera">Email:</th>
                         <td colspan="3">@Html.DisplayFor(model => model.OrdenServicio.EmailInspeccion)</td>
                     </tr>
                     <tr>
-                        <th>Teléfono:</th>
+                        <th class="fondoCabecera">Teléfono:</th>
                         <td colspan="3">@Html.DisplayFor(model => model.OrdenServicio.TelefonoInspeccion)</td>
                     </tr>
                     <tr>
-                        <th>Coordinador de inspección:</th>
+                        <th class="fondoCabecera">Coordinador de inspección:</th>
                         <td colspan="3">@Html.DisplayFor(model => model.OrdenServicio.CoordinadorInspeccion)</td>
                     </tr>
                     <tr>
-                        <th>Lugar de Inspección / Muestreo:</th>
-                        <td colspan="3">@Html.DisplayFor(model => model.OrdenServicio.LugarInspeccion)</td>
+                        <th class="fondoCabecera">Lugar de Inspección / Muestreo:</th>
+                        <td colspan="3">@Html.DisplayFor(model => model.Cotizacion.LugarInspeccionMuestreo)</td>
                     </tr>
                     <tr>
-                        <th>Fecha de Inspección / Muestreo:</th>
+                        <th class="fondoCabecera">Fecha de Inspección / Muestreo:</th>
                         <td colspan="3">@Html.DisplayFor(model => model.OrdenServicio.FechaInspeccion)</td>
                     </tr>
                     <tr>
-                        <th>Hora de Inspección / Muestreo:</th>
+                        <th class="fondoCabecera">Hora de Inspección / Muestreo:</th>
                         <td colspan="3">@Html.DisplayFor(model => model.OrdenServicio.HoraInspeccion)</td>
                     </tr>
                     <tr>
-                        <th>Tipo de Servicio:</th>
+                        <th class="fondoCabecera">Actividad a realizar:</th>
                         <td colspan="3">@Html.DisplayFor(model => model.OrdenServicio.TipoServicioInspeccion)</td>
                     </tr>
                     <tr>
-                        <th>Nombre del producto:</th>
+                        <th class="fondoCabecera">Nombre del producto:</th>
                         <td colspan="3">@Html.DisplayFor(model => model.OrdenServicio.NombreProductoInspeccion)</td>
                     </tr>
                     <tr>
-                        <th>Cantidad de Lote:</th>
+                        <th class="fondoCabecera">Cantidad de Lote:</th>
                         <td>@Html.DisplayFor(model => model.OrdenServicio.CantidadLoteInspeccion)</td>
-                        <th>Tipo de empaque/envase:</th>
+                        <th class="fondoCabecera">Tipo de empaque/envase:</th>
                         <td>@Html.DisplayFor(model => model.OrdenServicio.PresentacionInspeccion)</td>
                     </tr>
                     <tr>
-                        <th>Código(s) de Lote:</th>
+                        <th class="fondoCabecera">Código(s) de Lote:</th>
                         <td colspan="3">@Html.DisplayFor(model => model.OrdenServicio.CodigosLoteInspeccion)</td>
                     </tr>
                     <tr>
-                        <th>Otros / Observaciones:</th>
+                        <th class="fondoCabecera">Otros / Observaciones:</th>
                         <td colspan="3">@Html.DisplayFor(model => model.OrdenServicio.ObservacionesInspeccion)</td>
                     </tr>
                     @{ var listaProductos = (from d in Model.Detalles
@@ -181,7 +181,7 @@
                                     <th>Tipo de ensayo</th>
                                     <th>Norma de referencia</th>
                                     <th>Límite de detección</th>
-                                    <th>Tipo de servicio</th>
+                                    <th>Tipo de servicio *</th>
                                     <th>Cantidad</th>
                                 </tr>
                                 @foreach (var item in listaProductos)
@@ -220,7 +220,7 @@
                                         <th>Método / Procedimiento de Inspección / Muestreo</th>
                                         <th>Documento normativo</th>
                                         <th>Plan de muestreo / Nivel / NCA</th>
-                                        <th>Tipo de servicio</th>
+                                        <th>Tipo de servicio *</th>
                                         <th>Cantidad</th>
                                     </tr>
                                 </thead>
@@ -249,7 +249,7 @@
                                 <tr class="fondoCabecera">
                                     <th>Documento</th>
                                     <th>Norma de referencia</th>
-                                    <th>Tipo de servicio</th>
+                                    <th>Tipo de servicio *</th>
                                     <th>Cantidad</th>
                                 </tr>
                                 @{ if (Model.Certificados.Count == 0)
@@ -266,7 +266,7 @@
                                     </tr>
                                 }
                             </table>
-                            <table border="1" width="100%" style="border-top:hidden">
+                            <table border="1" width="100%" style="border:hidden;">
                                 <tr>
                                     <td>* AC: Acreditado, NAC: No Acreditado, SUB: Subcontratado</td>
                                 </tr>
@@ -288,11 +288,11 @@
                         <td colspan="4" style="border-left:hidden;border-right:hidden">&nbsp;</td>
                     </tr>
                     <tr>
-                        <th colspan="3" style="text-align:right">Registrado por:</th>
+                        <th colspan="3" style="text-align:right" class="fondoCabecera">Registrado por:</th>
                         <td>@Model.NombreUsuario</td>
                     </tr>
                     <tr>
-                        <th colspan="3" style="text-align:right">Fecha:</th>
+                        <th colspan="3" style="text-align:right" class="fondoCabecera">Fecha:</th>
                         <td>@Model.OrdenServicio.FechaRegistro.ToString("dd/MM/yyyy")</td>
                     </tr>
                 </table>

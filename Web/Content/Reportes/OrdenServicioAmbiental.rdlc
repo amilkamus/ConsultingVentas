@@ -4352,7 +4352,7 @@ inspeccionar/muestrear</Value>
                       <rd:DefaultName>Textbox4</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Style>Solid</Style>
+                          <Style>None</Style>
                         </Border>
                         <VerticalAlign>Middle</VerticalAlign>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -4362,6 +4362,7 @@ inspeccionar/muestrear</Value>
                       </Style>
                     </Textbox>
                     <ColSpan>4</ColSpan>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell />
@@ -4398,7 +4399,7 @@ inspeccionar/muestrear</Value>
         <DataSetName>Certificados</DataSetName>
         <Top>25.43cm</Top>
         <Height>1.92375cm</Height>
-        <Width>16.95024cm</Width>
+        <Width>16.95023cm</Width>
         <ZIndex>7</ZIndex>
         <Style>
           <Border>
@@ -4699,7 +4700,7 @@ inspeccionar/muestrear</Value>
   <Width>6.68754in</Width>
   <Page>
     <PageFooter>
-      <Height>1.34082cm</Height>
+      <Height>1.34083cm</Height>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
         <Textbox Name="Textbox64">
