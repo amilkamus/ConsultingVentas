@@ -458,6 +458,7 @@ namespace Web.Controllers
                 {
                     respuesta.Descripcion += " Comprobante: " + comprobante.SerieNumero;
                     comprobanteNEG.ActualizarSerieCorrelativo(serie, "NOTA DE CREDITO");
+                    comprobanteNEG.QuitarFacturaCotizacion(comprobante.DocumentoReferenciaNota[0].SerieNumero);
                 }
 
                 stream.Dispose();

@@ -889,7 +889,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Parameters!RazonSocial.Value</Value>
+                              <Value>=Parameters!FacturacionRazonSocial.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -953,7 +953,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Parameters!RUC.Value</Value>
+                              <Value>=Parameters!FacturacionRUC.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -5847,7 +5847,32 @@ compromete expresamente a pagar intereses de demora a favor de ITS DEL PERU al t
               <TextRun>
                 <Value>Area Comercial 
 ITS del Perú S.A.C. 
-Telf. (01) 7504454</Value>
+</Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>8pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>=Parameters!CorreoUsuario.Value</Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontSize>8pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Parameters!TelefonoUsuario.Value</Value>
                 <Style>
                   <FontStyle>Normal</FontStyle>
                   <FontSize>8pt</FontSize>
@@ -5882,7 +5907,7 @@ Telf. (01) 7504454</Value>
         <rd:DefaultName>Textbox15</rd:DefaultName>
         <Top>65.43376cm</Top>
         <Left>0.00031cm</Left>
-        <Height>2.34625cm</Height>
+        <Height>2.90187cm</Height>
         <Width>16.98589cm</Width>
         <ZIndex>25</ZIndex>
         <Style>
@@ -5896,7 +5921,7 @@ Telf. (01) 7504454</Value>
         </Style>
       </Textbox>
     </ReportItems>
-    <Height>26.68504in</Height>
+    <Height>26.90379in</Height>
     <Style />
   </Body>
   <ReportParameters>
@@ -6030,6 +6055,30 @@ Telf. (01) 7504454</Value>
       <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
+    <ReportParameter Name="CorreoUsuario">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="TelefonoUsuario">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="FacturacionRUC">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="FacturacionRazonSocial">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
   </ReportParameters>
   <Width>6.68786in</Width>
   <Page>
@@ -6077,7 +6126,6 @@ Telf. (01) 7504454</Value>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox58</rd:DefaultName>
-          <Top>0cm</Top>
           <Left>0.00032cm</Left>
           <Height>0.76756cm</Height>
           <Width>16.9862cm</Width>

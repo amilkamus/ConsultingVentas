@@ -20,6 +20,8 @@ using Web.Models.OrdenServicio;
 using Web.Models.Parametro;
 using Entidad;
 using NPOI.SS.UserModel;
+using System.Web;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace Web.Controllers
 {
@@ -265,7 +267,22 @@ namespace Web.Controllers
             modelo.Resumen = comprobanteNEG.ObtenerResumenesCotizacion(id);
             modelo.NombreUsuario = NombreUsuario(cotizacion.IdUsuarioRegistro);
             modelo.Cobranza = comprobanteNEG.ListarCobranzasPorCotizacion(id);
+            modelo.Usuario = ObtenerUsuario(cotizacion.IdUsuarioRegistro);
+
             return modelo;
+        }
+
+        private ApplicationRoleManager _roleManager;
+        private ApplicationRoleManager RoleManager
+        {
+            get
+            {
+                return _roleManager ?? HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
+            }
+            set
+            {
+                _roleManager = value;
+            }
         }
 
         [HttpGet]
@@ -336,7 +353,6 @@ namespace Web.Controllers
                 lr.SetParameters(new ReportParameter("DiasEntrega", ds.Tables[0].Rows[0]["DiasEntrega"].ToString()));
                 lr.SetParameters(new ReportParameter("CorreoConfirmacion", ds.Tables[0].Rows[0]["CorreoConfirmacion"].ToString()));
                 lr.SetParameters(new ReportParameter("CondicionPago1", ds.Tables[0].Rows[0]["CondicionPago_1"].ToString()));
-                //lr.SetParameters(new ReportParameter("CondicionPago2", ds.Tables[0].Rows[0]["CondicionPago_2"].ToString()));
                 lr.SetParameters(new ReportParameter("Banco", ds.Tables[0].Rows[0]["Banco"].ToString()));
                 lr.SetParameters(new ReportParameter("Moneda", ds.Tables[0].Rows[0]["Moneda"].ToString()));
                 lr.SetParameters(new ReportParameter("CuentaCorriente", ds.Tables[0].Rows[0]["CuentaCorriente"].ToString()));
@@ -347,6 +363,14 @@ namespace Web.Controllers
                 lr.SetParameters(new ReportParameter("Observaciones", cotizacion.Observaciones));
                 lr.SetParameters(new ReportParameter("EmisionDigital", (cotizacion.EmisionDigital) ? "Si" : "No"));
                 lr.SetParameters(new ReportParameter("LugarInspeccionMuestreo", cotizacion.LugarInspeccionMuestreo));
+
+                var usuario = ObtenerUsuario(cotizacion.IdUsuarioRegistro);
+
+                lr.SetParameters(new ReportParameter("CorreoUsuario", usuario.Email ?? ""));
+                lr.SetParameters(new ReportParameter("TelefonoUsuario", usuario.PhoneNumber ?? ""));
+
+                lr.SetParameters(new ReportParameter("FacturacionRUC", (string.IsNullOrEmpty(cotizacion.FacturacionRUC)) ? cotizacion.RUC : cotizacion.FacturacionRUC));
+                lr.SetParameters(new ReportParameter("FacturacionRazonSocial", (string.IsNullOrEmpty(cotizacion.FacturacionRazonSocial)) ? cotizacion.Solicitante : cotizacion.FacturacionRazonSocial));
 
                 lr.DataSources.Add(new ReportDataSource("CotizacionCabecera", ds.Tables[0]));
                 lr.DataSources.Add(new ReportDataSource("Productos", ds.Tables[1]));
@@ -582,14 +606,36 @@ namespace Web.Controllers
                 Cotizacion cotizacionMod = db.Cotizacions.Find(cotizacionViewModel.Cotizacion.ID);
                 Cotizacion cotizacion = cotizacionViewModel.Cotizacion;
                 DateTime fechaRegistro = DateTime.Now;
+                string numeroCotizacion = "", numeroCotizacionBD = cotizacion.NumeroCotizacion, letra = "";
+                decimal totalCotizacionMod = 0;
+                DateTime dt;
+                var usuario = ObtenerUsuario(idUsuario);
+
+                string idAdmin = "";
+                foreach (var role in RoleManager.Roles.ToList())
+                {
+                    if (role.Name == "ADMINISTRADOR")
+                    {
+                        idAdmin = role.Id;
+                        break;
+                    }
+                }
+                bool isAdmin = false;
+                foreach (var rol in usuario.Roles)
+                {
+                    if (rol.RoleId == idAdmin)
+                    {
+                        isAdmin = true;
+                        break;
+                    }
+                }
 
                 if (cotizacionMod != null)
+                {
                     fechaRegistro = cotizacionMod.FechaRegistro;
-
-                string numeroCotizacion = "", numeroCotizacionBD = cotizacion.NumeroCotizacion, letra = "";
-
-                DateTime dt;
-                if (cotizacionMod == null)
+                    totalCotizacionMod = cotizacionMod.Total;
+                }
+                else
                 {
                     try//15.07.2020 - 13L
                     {
@@ -607,6 +653,31 @@ namespace Web.Controllers
                 }
 
 
+                decimal totalCotizacion = cotizacionViewModel.Cotizacion.Total;
+                bool cambiarCorrelativo = true;
+
+                if (totalCotizacion == totalCotizacionMod)
+                {
+                    cambiarCorrelativo = false;
+                }
+
+                if (isAdmin)
+                    cambiarCorrelativo = false;
+
+                OrdenServicio ordenServicio = null;
+                if (!string.IsNullOrEmpty(numeroCotizacionBD))
+                {
+                    ordenServicio = (from o in db.OrdenServicio.ToList()
+                                     where o.NumeroCotizacion == cotizacionMod.NumeroCotizacion
+                                     select o).FirstOrDefault();
+                }
+                if (ordenServicio != null)
+                {
+                    cambiarCorrelativo = true;
+                    if (isAdmin)
+                        cambiarCorrelativo = false;
+                }
+
                 if (string.IsNullOrEmpty(numeroCotizacionBD))
                 {
                     List<Cotizacion> cotizaciones = (from c in db.Cotizacions.ToList()
@@ -623,20 +694,28 @@ namespace Web.Controllers
                 }
                 else
                 {
-                    List<Cotizacion> cotizaciones = (from c in db.Cotizacions.ToList()
-                                                     where c.FechaRegistro.Date == fechaRegistro.Date && c.TipoCotizacion == cotizacion.TipoCotizacion && c.CorrelativoInicial == false
-                                                     && c.Correlativo == cotizacion.Correlativo
-                                                     select c).ToList();
+                    if (cambiarCorrelativo)
+                    {
+                        List<Cotizacion> cotizaciones = (from c in db.Cotizacions.ToList()
+                                                         where c.FechaRegistro.Date == fechaRegistro.Date && c.TipoCotizacion == cotizacion.TipoCotizacion && c.CorrelativoInicial == false
+                                                         && c.Correlativo == cotizacion.Correlativo
+                                                         select c).ToList();
 
-                    Util.ObtenerCorrelativoAlfabetico(cotizaciones.Count + 1, ref letra);
+                        Util.ObtenerCorrelativoAlfabetico(cotizaciones.Count + 1, ref letra);
 
-                    string formato = (cotizacion.TipoCotizacion == "AMB") ? "{0}{1}.DA" : "{0}{1}";
+                        string formato = (cotizacion.TipoCotizacion == "AMB") ? "{0}{1}.DA" : "{0}{1}";
 
-                    if (cotizacion.TipoCotizacion == "AMB")
-                        numeroCotizacionBD = numeroCotizacionBD.Replace(".DA", "");
+                        if (cotizacion.TipoCotizacion == "AMB")
+                            numeroCotizacionBD = numeroCotizacionBD.Replace(".DA", "");
 
-                    string ultimo = numeroCotizacionBD.Substring(numeroCotizacionBD.Length - 1);
-                    numeroCotizacion = string.Format(formato, (Util.IsNumeric(ultimo)) ? numeroCotizacionBD : numeroCotizacionBD.Substring(0, numeroCotizacionBD.Length - letra.Length), letra);
+                        string ultimo = numeroCotizacionBD.Substring(numeroCotizacionBD.Length - 1);
+                        numeroCotizacion = string.Format(formato, (Util.IsNumeric(ultimo)) ? numeroCotizacionBD : numeroCotizacionBD.Substring(0, numeroCotizacionBD.Length - letra.Length), letra);
+                    }
+                    else
+                    {
+                        numeroCotizacion = numeroCotizacionBD;
+                    }
+
                     cotizacionViewModel.Cotizacion.CorrelativoInicial = false;
                     cotizacionViewModel.Cotizacion.Correlativo = cotizacion.Correlativo;
                     cotizacionViewModel.Cotizacion.IdUsuarioRegistro = cotizacionMod.IdUsuarioRegistro;
@@ -648,14 +727,18 @@ namespace Web.Controllers
                 cotizacionViewModel.Cotizacion.NumeroCotizacion = numeroCotizacion;
                 cotizacionViewModel.Cotizacion.FechaRegistro = fechaRegistro;
 
-                db.Cotizacions.Add(cotizacionViewModel.Cotizacion);
+                if (cambiarCorrelativo)
+                    db.Cotizacions.Add(cotizacionViewModel.Cotizacion);
+                else
+                    db.Cotizacions.AddOrUpdate(cotizacionViewModel.Cotizacion);
+
                 db.SaveChanges();
 
                 if (!string.IsNullOrEmpty(numeroCotizacionBD))
                 {
-                    OrdenServicio ordenServicio = (from o in db.OrdenServicio.ToList()
-                                                   where o.NumeroCotizacion == cotizacionMod.NumeroCotizacion
-                                                   select o).FirstOrDefault();
+                    ordenServicio = (from o in db.OrdenServicio.ToList()
+                                     where o.NumeroCotizacion == cotizacionMod.NumeroCotizacion
+                                     select o).FirstOrDefault();
 
                     if (ordenServicio != null)
                     {
@@ -674,7 +757,12 @@ namespace Web.Controllers
                     foreach (CotizacionCertificado certificado in cotizacionViewModel.Certificados)
                     {
                         certificado.IdCotizacion = idCotizacion;
-                        db.CotizacionCertificado.Add(certificado);
+
+                        if (cambiarCorrelativo)
+                            db.CotizacionCertificado.Add(certificado);
+                        else
+                            db.CotizacionCertificado.AddOrUpdate(certificado);
+
                         db.SaveChanges();
                     }
                 }
@@ -682,7 +770,12 @@ namespace Web.Controllers
                 foreach (CotizacionProducto producto in cotizacionViewModel.Productos)
                 {
                     producto.IdCotizacion = idCotizacion;
-                    db.CotizacionProducto.Add(producto);
+
+                    if (cambiarCorrelativo)
+                        db.CotizacionProducto.Add(producto);
+                    else
+                        db.CotizacionProducto.AddOrUpdate(producto);
+
                     db.SaveChanges();
                 }
 
@@ -691,7 +784,12 @@ namespace Web.Controllers
                     foreach (CotizacionInspeccion inspeccion in cotizacionViewModel.Inspeccion)
                     {
                         inspeccion.IdCotizacion = idCotizacion;
-                        db.CotizacionInspeccion.Add(inspeccion);
+
+                        if (cambiarCorrelativo)
+                            db.CotizacionInspeccion.Add(inspeccion);
+                        else
+                            db.CotizacionInspeccion.AddOrUpdate(inspeccion);
+
                         db.SaveChanges();
                     }
                 }
@@ -701,7 +799,12 @@ namespace Web.Controllers
                     foreach (CotizacionResumen resumen in cotizacionViewModel.Resumen)
                     {
                         resumen.IdCotizacion = idCotizacion;
-                        db.CotizacionResumen.Add(resumen);
+
+                        if (cambiarCorrelativo)
+                            db.CotizacionResumen.Add(resumen);
+                        else
+                            db.CotizacionResumen.AddOrUpdate(resumen);
+
                         db.SaveChanges();
                     }
                 }
@@ -730,7 +833,7 @@ namespace Web.Controllers
             base.Dispose(disposing);
         }
 
-        public JsonResult GenerarComprobante(long id)
+        public JsonResult GenerarComprobante(EnRegistrarCotizacion registro)
         {
             try
             {
@@ -738,7 +841,7 @@ namespace Web.Controllers
                 ServicePointManager.ServerCertificateValidationCallback = (snder, cert, chain, error) => true;
 
                 CO_ComprobanteNEG comprobanteNEG = new CO_ComprobanteNEG();
-                Cotizacion cotizacion = db.Cotizacions.Find(id);
+                Cotizacion cotizacion = db.Cotizacions.Find(registro.Id);
                 if (cotizacion == null)
                     throw new Exception("No se encontró la cotización.");
 
@@ -765,18 +868,18 @@ namespace Web.Controllers
                     CodigoUbigeo = "150101",
                     Contacto = new En_Contacto
                     {
-                        Correo = cliente.contactoCorreo,
+                        Correo = (string.IsNullOrEmpty(registro.FacturacionCorreo)) ? cliente.contactoCorreo : registro.FacturacionCorreo,
                         Nombre = string.Format("{0} {1}", cliente.contactoNombre, cliente.contactoApellidos),
                         Telefono = cliente.contactoTelefono
                     },
                     //Departamento = "LIMA",
                     Direccion = cliente.empresaDomicilio,
                     //Distrito = "SAN JUAN DE LURIGANCHO",
-                    NombreComercial = cliente.empresaNombre,
-                    NumeroDocumentoIdentidad = cliente.empresaNumeroDocumento,
+                    NombreComercial = (string.IsNullOrEmpty(registro.FacturacionRazonSocial)) ? cliente.empresaNombre : registro.FacturacionRazonSocial,
+                    NumeroDocumentoIdentidad = (string.IsNullOrEmpty(registro.FacturacionRuc)) ? cliente.empresaNumeroDocumento : registro.FacturacionRuc,
                     PaginaWeb = "",
                     //Provincia = "LIMA",
-                    RazonSocial = cliente.empresaNombre,
+                    RazonSocial = (string.IsNullOrEmpty(registro.FacturacionRazonSocial)) ? cliente.empresaNombre : registro.FacturacionRazonSocial,
                     TipoDocumentoIdentidad = "6",
                     //Urbanizacion = ""
                 };
@@ -880,6 +983,9 @@ namespace Web.Controllers
                 {
                     respuesta.Descripcion += " Comprobante: " + cotizacion.SerieNumero;
                     comprobanteNEG.ActualizarSerieCorrelativo(serie, "FACTURA");
+                    cotizacion.FacturacionRUC = registro.FacturacionRuc;
+                    cotizacion.FacturacionRazonSocial = registro.FacturacionRazonSocial;
+                    cotizacion.FacturacionCorreo = registro.FacturacionCorreo;
                     db.Set<Cotizacion>().AddOrUpdate(cotizacion);
                     db.SaveChanges();
                 }

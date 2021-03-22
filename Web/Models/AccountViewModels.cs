@@ -87,9 +87,11 @@ namespace Web.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "La contraseña y la contraseña de confirmación no coinciden.")]
         public string ConfirmPassword { get; set; }
-        
+
         public string RoleName { get; set; }
-        
+
+        public string PhoneNumber { get; set; }
+
     }
 
     public class ResetPasswordViewModel
@@ -120,7 +122,7 @@ namespace Web.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
-    
+
     //Agregado UserToRolViewModel
     public class UserToRolViewModel
     {
@@ -136,6 +138,7 @@ namespace Web.Models
         public bool EsUsuarioPrincipal { get; set; }
         public List<System.Web.Mvc.SelectListItem> ApplicationRoles { get; set; }
         public string ApplicationRoleId { get; set; }
+        public string PhoneNumber { get; set; }
     }
     //Agregado UserRolesViewModel
     public class UserRolesViewModel

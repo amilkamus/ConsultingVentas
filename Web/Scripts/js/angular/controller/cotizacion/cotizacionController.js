@@ -22,8 +22,15 @@
     $scope.resumen = {};
     $scope.model.FlagControles = false;
     $scope.FlagTipoServicio = "0";
+    $scope.habilitarReceptor = true;
+    $scope.FacturacionRUC = "";
+    $scope.FacturacionRazonSocial = "";
 
     $scope.init = function () {
+
+        $(".cerrar").on("click", function () {
+            $("#divModalReceptor").css("display", "none");
+        });
 
         $('.txtFecha').datepicker({
             todayHighlight: true,
@@ -71,6 +78,7 @@
                     for (var i = 0; i < data.data.Detalles.length; i++) {
                         var itemDetalle = data.data.Detalles[i];
                         itemDetalle.IdCotizacion = $scope.model.IdCotizacion;
+                        itemDetalle.producto.ID = itemDetalle.productoCotizacion.ID;
                         itemDetalle.producto.cantidad = itemDetalle.productoCotizacion.Cantidad;
                         $scope.elementosDetalle.lista.push(itemDetalle);
 
@@ -266,6 +274,7 @@
                     var item = $scope.elementosDetalle.lista[i];
                     var parametro = $("#idDetalle").attr("value");
                     var itemDetalle = {
+                        ID: item.producto.ID,
                         IdCotizacion: item.IdCotizacion,
                         IdProducto: item.producto.idProducto,
                         IdTipoParametro: item.tipoParametro.ID,
@@ -314,27 +323,48 @@
         }
     }
 
+    $scope.elegirReceptor = function () {
+        $("#divModalReceptor").css("display", "block");
+    }
+
     $scope.registrarComprobante = function (idCotizacion) {
 
         var parametro = {
-            id: idCotizacion
+            Id: idCotizacion,
+            FacturacionRuc: $scope.FacturacionRUC,
+            FacturacionRazonSocial: $scope.FacturacionRazonSocial,
+            FacturacionCorreo: ''
         };
-
-        $("#myModal").css("display", "block");
-        cotizacionService.generarComprobante(parametro).then(function (data) {
-            if (data.data) {
-                if (data.data.Codigo == "0") {
-                    $("#linkRegistrarComprobante").css("display", "none");
-                    $scope.mensajeExito(data.data.Descripcion);
-                } else {
-                    $scope.mensajeAlerta(data.data.Descripcion);
+        
+        $.confirm({
+            title: 'Confirmación',
+            content: '¿Desea continuar con la generación del comprobante?',
+            buttons: {
+                confirm: {
+                    text: 'Continuar',
+                    action: function () {
+                        $("#modalCliente").click();
+                        $("#myModal").css("display", "block");
+                        cotizacionService.generarComprobante(parametro).then(function (data) {
+                            if (data.data) {
+                                if (data.data.Codigo == "0") {
+                                    $("#linkRegistrarComprobante").css("display", "none");
+                                    $scope.mensajeExito(data.data.Descripcion);
+                                } else {
+                                    $scope.mensajeAlerta(data.data.Descripcion);
+                                }
+                            } else {
+                                $scope.mensajeAlerta('Ocurrió un error en el registro, contáctese con el administrador.');
+                            }
+                            $("#myModal").css("display", "none");
+                        });
+                    }
+                },
+                cancel: {
+                    text: 'Cancelar'
                 }
-            } else {
-                $scope.mensajeAlerta('Ocurrió un error en el registro, contáctese con el administrador.');
             }
-            $("#myModal").css("display", "none");
         });
-
     }
 
     $scope.registrarCobranza = function (idCotizacion) {
@@ -539,7 +569,7 @@
         }
 
         $scope.certificado.IdCotizacion = $scope.model.IdCotizacion;
-        $scope.certificado.SubTotal = parseInt($scope.certificado.Cantidad) * parseFloat($scope.certificado.Precio);        
+        $scope.certificado.SubTotal = parseInt($scope.certificado.Cantidad) * parseFloat($scope.certificado.Precio);
         $scope.elementosCertificado.lista.push($scope.certificado);
         $scope.recalcularSubtotal();
         $scope.certificado = {};
@@ -552,7 +582,7 @@
         if (inspeccion.Producto == undefined || inspeccion.Actividad == undefined || inspeccion.Procedimiento == undefined || inspeccion.Documento == undefined || inspeccion.PlanMuestreo == undefined || inspeccion.TipoServicio == undefined ||
             inspeccion.Precio == undefined || inspeccion.Cantidad == undefined ||
             $.trim(inspeccion.Producto) == "" || $.trim(inspeccion.Actividad) == "" || $.trim(inspeccion.Procedimiento) == "" || $.trim(inspeccion.Documento) == "" || $.trim(inspeccion.PlanMuestreo) == "" || $.trim(inspeccion.TipoServicio) == "" ||
-            $.trim(inspeccion.Precio) == "" || $.trim(inspeccion.Cantidad) == "" ) {
+            $.trim(inspeccion.Precio) == "" || $.trim(inspeccion.Cantidad) == "") {
             $scope.mensajeAlerta('Debe ingresar todos los datos de la inspección.');
             return;
         }
@@ -745,10 +775,10 @@
         }
     }
 
-    /*$scope.listarCliente();
-    $scope.listarProducto();
-    $scope.listarParametro();
-    $scope.listarTipoParametro();*/
+    $scope.activarReceptor = function () {
+        $scope.habilitarReceptor = !$scope.habilitarReceptor;
+    }
+
     $scope.listarComboMoneda();
     $scope.listarTipoCotizacion();
     $scope.init();

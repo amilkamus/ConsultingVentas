@@ -29,6 +29,7 @@ namespace Web.Models.Cotizacion
         public List<EnCotizacionResumen> Resumen { get; set; }
         public string NombreUsuario { get; set; }
         public EnCobranza Cobranza { get; set; }
+        public ApplicationUser Usuario { get; set; }
     }
 
     public class DetalleCotizacionViewModel

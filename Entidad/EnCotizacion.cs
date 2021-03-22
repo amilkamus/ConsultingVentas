@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 
 namespace Entidad
 {
+    public class EnRegistrarCotizacion
+    {
+        public long Id { get; set; }
+        public string FacturacionRuc { get; set; }
+        public string FacturacionRazonSocial { get; set; }
+        public string FacturacionCorreo { get; set; }
+    }
     public class EnContizacionIn
     {
         public string TipoCotizacion { get; set; }

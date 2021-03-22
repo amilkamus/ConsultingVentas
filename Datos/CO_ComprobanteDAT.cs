@@ -58,6 +58,28 @@ namespace Datos
             }
         }
 
+        public void QuitarFacturaCotizacion(string serieNumeroReferenciado)
+        {
+            SqlConnection cn = new SqlConnection(_db.Database.Connection.ConnectionString);
+            try
+            {
+                SqlCommand cmd = new SqlCommand("QuitarFacturaCotizacion", cn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@serieNumeroReferenciado", System.Data.SqlDbType.VarChar, 20).Value = serieNumeroReferenciado;
+                cn.Open();
+                cmd.ExecuteNonQuery();
+                cn.Close();
+            }
+            catch (Exception e)
+            {
+                if (cn.State == System.Data.ConnectionState.Open)
+                {
+                    cn.Close();
+                }
+                throw e;
+            }
+        }
+
         public void RegistrarCobranza(EnCobranza cobranza)
         {
             SqlConnection cn = new SqlConnection(_db.Database.Connection.ConnectionString);

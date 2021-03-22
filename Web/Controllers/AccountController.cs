@@ -241,7 +241,7 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser() { FirstName = model.FirstName, LastName = model.LastName, UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser() { FirstName = model.FirstName, LastName = model.LastName, UserName = model.Email, Email = model.Email, PhoneNumber = model.PhoneNumber };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -268,6 +268,12 @@ namespace Web.Controllers
                 AddErrors(result);
             }
 
+            List<SelectListItem> list = new List<SelectListItem>();
+            foreach (var role in RoleManager.Roles.ToList())
+            {
+                list.Add(new SelectListItem() { Value = role.Name, Text = role.Name });
+            }
+            ViewBag.Roles = list;
             // If we got this far, something failed, redisplay form
             return View(model);
         }
@@ -665,6 +671,7 @@ namespace Web.Controllers
             objExpandedUserDTO.LastName = result.LastName;
             objExpandedUserDTO.UserName = result.UserName;
             objExpandedUserDTO.Email = result.Email;
+            objExpandedUserDTO.PhoneNumber = result.PhoneNumber;
 
             var roleName = UserManager.GetRoles(result.Id).Single();
 
@@ -692,6 +699,7 @@ namespace Web.Controllers
             result.LastName = paramExpandedUserDTO.LastName;
             result.Email = paramExpandedUserDTO.Email;
             result.UserName = paramExpandedUserDTO.Email;
+            result.PhoneNumber = paramExpandedUserDTO.PhoneNumber;
 
             // Comprobemos si la cuenta debe ser desbloqueada
             if (UserManager.IsLockedOut(result.Id))

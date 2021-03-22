@@ -34,13 +34,21 @@
 
     /* Modal Content/Box */
     .modalDetalle-content {
-        background-color: #fefefe;
+        background-color: #fff;
         margin: 15% auto; /* 15% from the top and centered */
         padding: 20px;
         border: 1px solid #888;
         width: 30%; /* Could be more or less, depending on screen size */
     }
 
+    .modalDetalle-contentReceptor {
+        background-color: #fff;
+        margin: 15% auto; /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 50%;
+        height: 40%;
+    }
     /* The Close Button */
     .close {
         color: #aaa;
@@ -87,22 +95,20 @@
 
                         @if (Model.Cliente.empresaDomicilio == null)
                         {
-                            <tr>
-                                <td>Dirección legal:</td>
-                                <td>@Html.DisplayFor(model => model.Cliente.titularDomicilio)</td>
-                                <td Font-Bold="true" Font-Size="16px">Teléfono:</td>
-                                <td>@Html.DisplayFor(model => model.Cotizacion.Telefono)</td>
-                            </tr>
-                        }
+            <tr>
+                <td>Dirección legal:</td>
+                <td>@Html.DisplayFor(model => model.Cliente.titularDomicilio)</td>
+                <td Font-Bold="true" Font-Size="16px">Teléfono:</td>
+                <td>@Html.DisplayFor(model => model.Cotizacion.Telefono)</td>
+            </tr> }
                         else
                         {
-                            <tr>
-                                <td>Dirección legal:</td>
-                                <td>@Html.DisplayFor(model => model.Cliente.empresaDomicilio)</td>
-                                <td Font-Bold="true" Font-Size="16px">Teléfono:</td>
-                                <td>@Html.DisplayFor(model => model.Cotizacion.Telefono)</td>
-                            </tr>
-                        }
+            <tr>
+                <td>Dirección legal:</td>
+                <td>@Html.DisplayFor(model => model.Cliente.empresaDomicilio)</td>
+                <td Font-Bold="true" Font-Size="16px">Teléfono:</td>
+                <td>@Html.DisplayFor(model => model.Cotizacion.Telefono)</td>
+            </tr>}
 
                         <tr>
                             <td>Contacto:</td>
@@ -112,19 +118,28 @@
                         </tr>
                         @if (Model.Cotizacion.TipoCotizacion == "AMB")
                         {
-                            <tr>
-                                <td>Proyecto:</td>
-                                <td colspan="3">@Html.DisplayFor(model => model.Cotizacion.Proyecto)</td>
-                            </tr>
-                        }
+            <tr>
+                <td>Proyecto:</td>
+                <td colspan="3">@Html.DisplayFor(model => model.Cotizacion.Proyecto)</td>
+            </tr>}
                         <tr>
                             <td Width="38%" colspan="4" align="center" style="background-color:Highlight">Datos de facturación</td>
                         </tr>
                         <tr>
                             <td>Facturar a nombre de:</td>
-                            <td>@Html.DisplayFor(model => model.Cotizacion.Solicitante)</td>
-                            <td Font-Bold="true" Font-Size="16px">RUC:</td>
-                            <td>@Html.DisplayFor(model => model.Cotizacion.RUC)</td>
+                            @if (string.IsNullOrEmpty(Model.Cotizacion.FacturacionRUC))
+                            {
+                                <td>@Html.DisplayFor(model => model.Cotizacion.Solicitante)</td>
+                                <td Font-Bold="true" Font-Size="16px">RUC:</td>
+                                <td>@Html.DisplayFor(model => model.Cotizacion.RUC)</td>
+                            }
+                            else
+                            {
+                                <td>@Html.DisplayFor(model => model.Cotizacion.FacturacionRazonSocial)</td>
+                                <td Font-Bold="true" Font-Size="16px">RUC:</td>
+                                <td>@Html.DisplayFor(model => model.Cotizacion.FacturacionRUC)</td>
+                            }
+
                         </tr>
                         <tr>
                             <td colspan="4" style="background-color:Highlight">Nos dirigimos a usted con el fin de cotizarle los servicios solicitados</td>
@@ -168,41 +183,38 @@
                         </tr>
                         @foreach (var item in listaProductos)
                         {
-                            <tbody>
-                                <tr style="background-color:lightskyblue">
-                                    <th colspan="6" style="text-align:center">@item.nombre</th>
-                                </tr>
-                                @{ var elementosDetalle = (from n in Model.Detalles
-                                                            where n.producto.idProducto == item.idProducto
-                                                            select n).ToList(); }
-                                @foreach (var item2 in elementosDetalle)
-                                {
-                                    var subTotalDetalle = item2.productoCotizacion.Cantidad * item2.Precio;
-                                    if (Model.Cotizacion.TipoCotizacion == "AMB")
-                                    {
-                                        <tr>
-                                            <td>@item2.parametro.ParametroDescripcion</td>
-                                            <td>@item2.parametro.Metodologia</td>
-                                            <td>@item2.tipoParametro.TipoParametroDescripcion</td>
-                                            <td>S/ @item2.Precio</td>
-                                            <th width="12%">Cantidad</th>
-                                            <td>S/ @subTotalDetalle</td>
-                                        </tr>
-                                    }
-                                    else
-                                    {
-                                        <tr>
-                                            <td>@item2.parametro.ParametroDescripcion</td>
-                                            <td>@item2.parametro.Metodologia</td>
-                                            <td>@item2.tipoParametro.TipoParametroDescripcion</td>
-                                            <td>&nbsp;</td>
-                                            <td>@item2.productoCotizacion.Cantidad</td>
-                                            <td>&nbsp;</td>
-                                        </tr>
-                                    }
-                                }
-                            </tbody>
-                        }
+            <tbody>
+                <tr style="background-color:lightskyblue">
+                    <th colspan="6" style="text-align:center">@item.nombre</th>
+                </tr>
+                @{ var elementosDetalle = (from n in Model.Detalles
+                                            where n.producto.idProducto == item.idProducto
+                                            select n).ToList(); }
+                @foreach (var item2 in elementosDetalle)
+                {
+                    var subTotalDetalle = item2.productoCotizacion.Cantidad * item2.Precio;
+                    if (Model.Cotizacion.TipoCotizacion == "AMB")
+                    {
+<tr>
+    <td>@item2.parametro.ParametroDescripcion</td>
+    <td>@item2.parametro.Metodologia</td>
+    <td>@item2.tipoParametro.TipoParametroDescripcion</td>
+    <td>S/ @item2.Precio</td>
+    <th width="12%">Cantidad</th>
+    <td>S/ @subTotalDetalle</td>
+</tr> }
+                    else
+                    {
+<tr>
+    <td>@item2.parametro.ParametroDescripcion</td>
+    <td>@item2.parametro.Metodologia</td>
+    <td>@item2.tipoParametro.TipoParametroDescripcion</td>
+    <td>&nbsp;</td>
+    <td>@item2.productoCotizacion.Cantidad</td>
+    <td>&nbsp;</td>
+</tr>}
+                }
+            </tbody>}
                     </table>
                 </p>
                 <br />
@@ -229,32 +241,30 @@
                             {
                                 if (Model.Cotizacion.TipoCotizacion == "AMB")
                                 {
-                                    <tr>
-                                        <td>@item.Producto</td>
-                                        <td>@item.Actividad</td>
-                                        <td>@item.Procedimiento</td>
-                                        <td>@item.Documento</td>
-                                        <td>@item.PlanMuestreo</td>
-                                        <td>@item.TipoServicio</td>
-                                        <td>S/ @item.Precio</td>
-                                        <td>@item.Cantidad</td>
-                                        <td>S/ @item.Subtotal</td>
-                                    </tr>
-                                }
+                <tr>
+                    <td>@item.Producto</td>
+                    <td>@item.Actividad</td>
+                    <td>@item.Procedimiento</td>
+                    <td>@item.Documento</td>
+                    <td>@item.PlanMuestreo</td>
+                    <td>@item.TipoServicio</td>
+                    <td>S/ @item.Precio</td>
+                    <td>@item.Cantidad</td>
+                    <td>S/ @item.Subtotal</td>
+                </tr> }
                                 else
                                 {
-                                    <tr>
-                                        <td>@item.Producto</td>
-                                        <td>@item.Actividad</td>
-                                        <td>@item.Procedimiento</td>
-                                        <td>@item.Documento</td>
-                                        <td>@item.PlanMuestreo</td>
-                                        <td>@item.TipoServicio</td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                    </tr>
-                                }
+                <tr>
+                    <td>@item.Producto</td>
+                    <td>@item.Actividad</td>
+                    <td>@item.Procedimiento</td>
+                    <td>@item.Documento</td>
+                    <td>@item.PlanMuestreo</td>
+                    <td>@item.TipoServicio</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>}
                             }
                         </tbody>
                     </table>
@@ -277,26 +287,24 @@
                         {
                             if (Model.Cotizacion.TipoCotizacion == "AMB")
                             {
-                                <tr>
-                                    <td>@item.Documento</td>
-                                    <td>@item.NormaReferencia</td>
-                                    <td>@item.TipoServicio</td>
-                                    <td>S/ @item.Precio</td>
-                                    <td>@item.Cantidad</td>
-                                    <td>S/ @item.SubTotal</td>
-                                </tr>
-                            }
+            <tr>
+                <td>@item.Documento</td>
+                <td>@item.NormaReferencia</td>
+                <td>@item.TipoServicio</td>
+                <td>S/ @item.Precio</td>
+                <td>@item.Cantidad</td>
+                <td>S/ @item.SubTotal</td>
+            </tr> }
                             else
                             {
-                                <tr>
-                                    <td>@item.Documento</td>
-                                    <td>@item.NormaReferencia</td>
-                                    <td>@item.TipoServicio</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                </tr>
-                            }
+            <tr>
+                <td>@item.Documento</td>
+                <td>@item.NormaReferencia</td>
+                <td>@item.TipoServicio</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>}
                         }
                     </table>
                     * AC: Acreditado NAC: No Acreditado SUB: Subcontratado
@@ -331,43 +339,39 @@
 
                                 var suma = elementosDetalle.Where(x => x.producto.idProducto == item.idProducto).Sum(x => x.productoCotizacion.Cantidad * x.Precio);
 
-                                <tr>
-                                    <td>@index.- @item.descripcion</td>
-                                    <td>S/ @suma</td>
-                                    <td>-</td>
-                                    <td>S/ @suma</td>
-                                </tr>
-                                index++;
+                <tr>
+                    <td>@index.- @item.descripcion</td>
+                    <td>S/ @suma</td>
+                    <td>-</td>
+                    <td>S/ @suma</td>
+                </tr>index++;
                             }
                             @foreach (var item in Model.Certificados)
                             {
-                                <tr>
-                                    <td>@index.- @item.Documento</td>
-                                    <td>S/ @item.Precio</td>
-                                    <td>@item.Cantidad</td>
-                                    <td>S/ @item.SubTotal</td>
-                                </tr>
-                                index++;
+                <tr>
+                    <td>@index.- @item.Documento</td>
+                    <td>S/ @item.Precio</td>
+                    <td>@item.Cantidad</td>
+                    <td>S/ @item.SubTotal</td>
+                </tr>index++;
                             }
                             @foreach (var item in Model.Inspeccion)
                             {
-                                <tr>
-                                    <td>@index.- @item.Actividad</td>
-                                    <td>S/ @item.Precio</td>
-                                    <td>@item.Cantidad</td>
-                                    <td>S/ @item.Subtotal</td>
-                                </tr>
-                                index++;
+                <tr>
+                    <td>@index.- @item.Actividad</td>
+                    <td>S/ @item.Precio</td>
+                    <td>@item.Cantidad</td>
+                    <td>S/ @item.Subtotal</td>
+                </tr>index++;
                             }
                             @foreach (var item in Model.Resumen)
                             {
-                                <tr>
-                                    <td>@index.- @item.Descripcion</td>
-                                    <td>S/ @item.Precio</td>
-                                    <td>@item.NumeroDias</td>
-                                    <td>S/ @item.Total</td>
-                                </tr>
-                                index++;
+                <tr>
+                    <td>@index.- @item.Descripcion</td>
+                    <td>S/ @item.Precio</td>
+                    <td>@item.NumeroDias</td>
+                    <td>S/ @item.Total</td>
+                </tr>index++;
                             }
                             <tr>
                                 <td style="background-color:#fff;border-left:hidden;border-bottom:hidden">&nbsp;</td>
@@ -434,12 +438,12 @@
                             <td>Código interbancario - CCI</td>
                         </tr>
                         @*<tr align="center">
-                            <td width="20%">@Html.DisplayFor(model => model.Cotizacion.Banco)</td>
-                            <td width="35%">@Html.DisplayFor(model => model.Cotizacion.Moneda)</td>
-                            <td>@Html.DisplayFor(model => model.Cotizacion.CuentaCorriente)</td>
-                            <td>@Html.DisplayFor(model => model.Cotizacion.CuentaAhorro)</td>
-                            <td>@Html.DisplayFor(model => model.Cotizacion.CCI)</td>
-                        </tr>*@
+                                <td width="20%">@Html.DisplayFor(model => model.Cotizacion.Banco)</td>
+                                <td width="35%">@Html.DisplayFor(model => model.Cotizacion.Moneda)</td>
+                                <td>@Html.DisplayFor(model => model.Cotizacion.CuentaCorriente)</td>
+                                <td>@Html.DisplayFor(model => model.Cotizacion.CuentaAhorro)</td>
+                                <td>@Html.DisplayFor(model => model.Cotizacion.CCI)</td>
+                            </tr>*@
                         <tr align="center">
                             <td width="20%">BANCO INTERBANK</td>
                             <td width="35%">M.N. S/</td>
@@ -541,7 +545,8 @@
                     <br /><strong>@Model.NombreUsuario</strong>
                     <br />Area Comercial
                     <br />ITS del Perú S.A.C.
-                    <br />Telf. (01) 7504454
+                    <br />@Model.Usuario.Email
+                    <br />@Model.Usuario.PhoneNumber <!--Telf. (01) 7504454-->
                     <br /><a href="http://www.itsper.com">www.itsper.com</a>
                 </p>
                 <p>
@@ -572,18 +577,61 @@
         @Html.ActionLink("Imprimir", "PrintCotizacion", new { id = Model.Cotizacion.ID }, new { @class = "btn btn-sm btn-primary" }) |
         @if (string.IsNullOrEmpty(Model.Cotizacion.SerieNumero))
         {
-            <a id="linkRegistrarComprobante" ng-click="registrarComprobante(@Model.Cotizacion.ID)" class="btn btn-sm btn-primary">Generar factura</a>
-        }
-        else
-        {
-            @Html.ActionLink("Registrar cobranza", "Payment", new { id = Model.Cotizacion.ID }, new { @class = "btn btn-sm btn-primary" })
-        }
+<a id="linkRegistrarComprobante" data-toggle="modal" data-target="#modal-editarCliente" class="btn btn-sm btn-primary">Generar factura</a> }
+else
+{
+@Html.ActionLink("Registrar cobranza", "Payment", new { id = Model.Cotizacion.ID }, new { @class = "btn btn-sm btn-primary" })}
         @Html.ActionLink("Regresar a Listado", "Index", null, new { @class = "btn btn-sm btn-danger cancelar" })
     </p>
     <div id="myModal" class="modalDetalle">
         <div class="modalDetalle-content">
-            <span class="close">&times;</span>
             <p>Se está registrando el comprobante, esta acción tomará unos segundos...</p>
         </div>
     </div>
+
+    <div id="modal-editarCliente" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a  id="modalCliente" class="close" data-dismiss="modal">&times;</a>
+                    <h4 class="modal-title">Editar Receptor</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container" style="width:auto">
+                        <form name="cliente" class="form-horizontal" ng-cloak>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">Cambiar receptor</label>
+                                <div class="col-md-9">
+                                    <input type="checkbox" value="false" ng-click="activarReceptor()" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">Razon Social</label>
+                                <div class="col-md-9">
+                                    <input class="form-control lowercase padding-left-right-3" placeholder="Ingrese razon social" ng-model="FacturacionRazonSocial" ng-disabled="habilitarReceptor" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">N° Documento</label>
+                                <div class="col-md-4">
+                                    <input class="form-control lowercase padding-left-right-3" onkeypress="return soloNumeros(event);" placeholder="Ingrese numero documento" ng-model="FacturacionRUC" ng-disabled="habilitarReceptor" />
+                                </div>
+                            </div>
+                            <!--div class="form-group">
+                                <label class="control-label col-md-3">Correo</label>
+                                <div class="col-md-6">
+                                    <input class="form-control lowercase padding-left-right-3" placeholder="Ingrese correo" ng-model="FacturacionCorreo" ng-disabled="habilitarReceptor" />
+                                </div>
+                            </div-->
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-sm btn-primary" ng-disabled="cliente.$invalid" ng-click="registrarComprobante(@Model.Cotizacion.ID)">Guardar</a>
+                    <a class="btn btn-sm btn-danger" data-dismiss="modal">Cancelar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>

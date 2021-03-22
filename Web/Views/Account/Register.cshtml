@@ -37,11 +37,17 @@
                             </div>
                         </div>
                         <div class="form-group col-md-6">
+                            <label class="control-label col-md-4">Teléfono</label>
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
                             <label class="control-label col-md-4">E-mail</label>
                             <div class="col-md-8">
                                 @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
                             </div>
-                        </div>
+                        </div>                        
                         <div class="form-group col-md-6">
                             <label class="control-label col-md-4">Contraseña</label>
                             <div class="col-md-8">

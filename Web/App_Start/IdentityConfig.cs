@@ -52,7 +52,7 @@ namespace Web
             smtpClient.Credentials = credentials;
 
             smtpClient.EnableSsl = true;
-            smtpClient.Send(msg);
+            //smtpClient.Send(msg);
         }
     }
 

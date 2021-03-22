@@ -28,6 +28,11 @@ namespace Negocio
             comprobanteDAT.ActualizarSerieCorrelativo(serie, tipoComprobante);
         }
 
+        public void QuitarFacturaCotizacion(string serieNumeroReferenciado)
+        {
+            comprobanteDAT.QuitarFacturaCotizacion(serieNumeroReferenciado);
+        }
+        
         public void RegistrarCobranza(EnCobranza cobranza)
         {
             comprobanteDAT = new CO_ComprobanteDAT();

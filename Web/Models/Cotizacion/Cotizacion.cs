@@ -49,6 +49,9 @@ namespace Web.Models.Cotizacion
         public string Proyecto { get; set; }
         public bool EmisionDigital { get; set; }
         public string LugarInspeccionMuestreo { get; set; }
+        public string FacturacionRUC { get; set; }
+        public string FacturacionRazonSocial { get; set; }
+        public string FacturacionCorreo { get; set; }
         public enum TeaType
         {
             Tea, Coffee, GreenTea, BlackTea

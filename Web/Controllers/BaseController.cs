@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Web.Models;
 
 namespace Web.Controllers
 {
@@ -33,6 +34,12 @@ namespace Web.Controllers
 
             return string.Format("{0} {1}", usuario.FirstName, usuario.LastName); ;
         }
+        public ApplicationUser ObtenerUsuario(string id)
+        {
+            var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            return userManager.Users.Where(u => u.Id == id).FirstOrDefault();
+        }
+
         #endregion
     }
 }
